@@ -523,3 +523,108 @@ button{font-family:'Poppins',sans-serif;cursor:pointer;border:none;outline:none}
 .haldi-ic{background:radial-gradient(circle at 35% 35%,rgba(255,200,50,0.35),#080101 70%)}
 .baraat-ic{background:radial-gradient(circle at 35% 35%,rgba(255,140,0,0.35),#080101 70%)}
 .vidaai-ic{background:radial-gradient(circle at 35% 35%,rgba(255,100,150,0.35),#080101 70%)}
+
+/* STORY SECTION */
+.story-s{background:linear-gradient(180deg,#0a0202,#110303);text-align:center}
+.story-intro{font-size:0.78rem;color:var(--dim);font-style:italic;margin-bottom:28px;position:relative;z-index:1}
+
+/* Story Cards Grid */
+.story-cards{display:flex;flex-direction:column;gap:16px;position:relative;z-index:1;text-align:left}
+
+.story-card{
+  background:linear-gradient(145deg,rgba(30,4,4,0.9),rgba(15,2,2,0.95));
+  border:1px solid rgba(201,168,76,0.18);
+  border-radius:20px;padding:22px 20px;
+  transition:all 0.32s cubic-bezier(0.4,0,0.2,1);
+  box-shadow:0 4px 24px rgba(0,0,0,0.4);
+  position:relative;overflow:hidden;
+}
+.story-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,rgba(201,168,76,0.4),transparent);
+}
+.story-card:hover{
+  transform:translateY(-4px);
+  border-color:rgba(201,168,76,0.32);
+  box-shadow:0 12px 40px rgba(107,15,26,0.3);
+}
+
+.sc-header{display:flex;align-items:flex-start;gap:14px;margin-bottom:14px}
+.sc-emoji{
+  font-size:2.2rem;flex-shrink:0;
+  width:52px;height:52px;border-radius:50%;
+  background:rgba(107,15,26,0.3);border:1px solid rgba(201,168,76,0.2);
+  display:flex;align-items:center;justify-content:center;
+}
+.sc-meta{flex:1}
+.sc-tag{
+  font-family:'Cinzel',serif;
+  font-size:0.55rem;letter-spacing:3px;text-transform:uppercase;
+  color:var(--gold);display:block;margin-bottom:5px;
+}
+.sc-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.15rem;color:var(--cream);font-weight:600;line-height:1.3;
+}
+
+.sc-preview p{
+  font-size:0.8rem;color:var(--dim);line-height:1.8;
+  margin-bottom:16px;font-style:italic;
+}
+
+.sc-read-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(107,15,26,0.3);border:1px solid rgba(201,168,76,0.25);
+  color:var(--gold);border-radius:50px;padding:9px 20px;
+  font-size:0.75rem;font-weight:500;letter-spacing:0.5px;
+  transition:all 0.25s;cursor:pointer;
+}
+.sc-read-btn:hover{background:rgba(107,15,26,0.6);border-color:rgba(201,168,76,0.5);transform:translateX(3px)}
+.sc-arrow{transition:transform 0.25s}
+.sc-read-btn:hover .sc-arrow{transform:translateX(4px)}
+
+/* STORY FULL MODAL */
+.story-modal{
+  position:fixed;inset:0;z-index:850;
+  display:none;align-items:flex-end;justify-content:center;
+}
+.story-modal.hidden{display:none!important}
+.sm-bg{position:absolute;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px)}
+.sm-card{
+  position:relative;z-index:1;
+  background:linear-gradient(180deg,#1c0404,#0e0202);
+  border:1px solid var(--bdr);
+  border-top:2px solid rgba(201,168,76,0.4);
+  border-radius:24px 24px 0 0;
+  padding:28px 24px 52px;
+  width:min(480px,100vw);
+  max-height:85vh;overflow-y:auto;
+  animation:slideUp 0.38s cubic-bezier(0.4,0,0.2,1);
+}
+.sm-card::-webkit-scrollbar{width:2px}
+.sm-card::-webkit-scrollbar-thumb{background:rgba(201,168,76,0.3);border-radius:2px}
+.sm-close{
+  position:absolute;top:16px;right:16px;
+  background:rgba(201,168,76,0.08);border:1px solid var(--bdr);
+  color:var(--gold);width:36px;height:36px;border-radius:50%;
+  font-size:0.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:background 0.2s;
+}
+.sm-close:hover{background:rgba(201,168,76,0.2)}
+.sm-emoji{font-size:3rem;text-align:center;margin-bottom:8px}
+.sm-tag{
+  display:block;text-align:center;
+  font-family:'Cinzel',serif;font-size:0.58rem;
+  letter-spacing:4px;text-transform:uppercase;
+  color:var(--gold);margin-bottom:10px;
+}
+.sm-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.5rem;color:var(--cream);text-align:center;
+  margin-bottom:24px;font-weight:600;line-height:1.3;
+}
+.sm-body{
+  font-size:0.85rem;color:rgba(237,224,204,0.8);
+  line-height:2;white-space:pre-line;
+}
+.sm-body strong{color:var(--gold)}

@@ -350,23 +350,81 @@
   <!-- STORY -->
   <section id="s-story" class="s story-s reveal">
     <div class="sf-l"></div>
-    <div class="s-label">Our Journey</div>
+    <div class="s-label">❤️ आमची प्रेमकहाणी</div>
     <h2 class="s-title">Our Story</h2>
-    <div class="story-tl">
-      <div class="tl-item reveal-child" style="--i:0">
-        <div class="tl-dot"><span>💫</span></div>
-        <div class="tl-card"><span class="tl-yr">2021</span><h3>Our Journey Begins</h3><p>Built a relationship filled with shared memories, laughter, and beautiful dreams together.</p></div>
+    <p class="story-intro reveal-child">Three moments that changed everything — told in their own words.</p>
+
+    <!-- Story Cards -->
+    <div class="story-cards">
+
+      <!-- Story 1: EDC Practical -->
+      <div class="story-card reveal-child" style="--i:0">
+        <div class="sc-header">
+          <div class="sc-emoji">💥</div>
+          <div class="sc-meta">
+            <span class="sc-tag">College Days</span>
+            <h3 class="sc-title">आमची EDC प्रॅक्टिकल स्टोरी</h3>
+          </div>
+        </div>
+        <div class="sc-preview">
+          <p>त्या दिवशी EDC चा प्रॅक्टिकल एक्झाम होता… मी अजिबात तयार नव्हतो 😅 आणि नशिबाने प्राची माझ्या ग्रुपमध्ये आली…</p>
+        </div>
+        <button class="sc-read-btn" onclick="openStory(0)">
+          <span>पूर्ण स्टोरी वाचा</span>
+          <span class="sc-arrow">→</span>
+        </button>
       </div>
-      <div class="tl-item reveal-child" style="--i:1">
-        <div class="tl-dot"><span>💌</span></div>
-        <div class="tl-card"><span class="tl-yr">2023</span><h3>The Proposal</h3><p>Nikhil proposed and Prachi said yes — the beginning of their forever together.</p></div>
+
+      <!-- Story 2: Chichaati Trip -->
+      <div class="story-card reveal-child" style="--i:1">
+        <div class="sc-header">
+          <div class="sc-emoji">🌄</div>
+          <div class="sc-meta">
+            <span class="sc-tag">First Trip Together</span>
+            <h3 class="sc-title">चिचाटी ट्रिप आणि 5:45 ची ट्विस्ट</h3>
+          </div>
+        </div>
+        <div class="sc-preview">
+          <p>मी प्राचीला चिचाटीला घेऊन गेलो… उन्हाळ्यात! जिथे पाणी असायला हवं होतं तिथे फक्त दगड आणि कडक ऊन… 😄</p>
+        </div>
+        <button class="sc-read-btn" onclick="openStory(1)">
+          <span>पूर्ण स्टोरी वाचा</span>
+          <span class="sc-arrow">→</span>
+        </button>
       </div>
-      <div class="tl-item reveal-child" style="--i:2">
-        <div class="tl-dot"><span>💍</span></div>
-        <div class="tl-card"><span class="tl-yr">2026</span><h3>Forever Begins</h3><p>Join us on 10 May 2026 as we celebrate our love and begin our forever.</p></div>
+
+      <!-- Story 3: Goa Trip -->
+      <div class="story-card reveal-child" style="--i:2">
+        <div class="sc-header">
+          <div class="sc-emoji">🌴</div>
+          <div class="sc-meta">
+            <span class="sc-tag">Goa Trip</span>
+            <h3 class="sc-title">गोवा ट्रिप… आणि प्रेमाची सुरुवात</h3>
+          </div>
+        </div>
+        <div class="sc-preview">
+          <p>कोरोनानंतरचं ते वर्ष… मित्रांनी गोवा ट्रिपचा प्लॅन केला… सुरुवातीला मी नाही म्हणालो होतो… पण नंतर कळलं — प्राची पण येणार आहे 😏</p>
+        </div>
+        <button class="sc-read-btn" onclick="openStory(2)">
+          <span>पूर्ण स्टोरी वाचा</span>
+          <span class="sc-arrow">→</span>
+        </button>
       </div>
+
     </div>
   </section>
+
+  <!-- STORY FULL READ MODAL -->
+  <div id="story-modal" class="story-modal hidden">
+    <div class="sm-bg" onclick="closeStory()"></div>
+    <div class="sm-card">
+      <button class="sm-close" onclick="closeStory()">✕</button>
+      <div class="sm-emoji" id="sm-emoji"></div>
+      <span class="sm-tag" id="sm-tag"></span>
+      <h2 class="sm-title" id="sm-title"></h2>
+      <div class="sm-body" id="sm-body"></div>
+    </div>
+  </div>
 
 <!-- GALLERY -->
   <section id="s-gallery" class="s gallery-s reveal">
