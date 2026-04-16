@@ -233,7 +233,7 @@ document.addEventListener('DOMContentLoaded', function(){
   const AMRAVATI='Nikhil\'s Home, Rajapeth Chatrapati Sahu Nagar, Near Shitla Mata Mandir, Amravati – 444607';
   const AMAP='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3723.0!2d77.7523!3d20.9374!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd6a9e4b7c3b1a1%3A0xabc!2sRajapeth%2C+Amravati!5e0!3m2!1sen!2sin!4v1680000000000';
   const AURL='https://maps.google.com/?q=Rajapeth+Chatrapati+Sahu+Nagar+Amravati';
-  const PUNE='Sweta Lawn, Mata Amritanandamayi Math, Nigdi, Pune – 411044';
+  const PUNE='Mata Amritanandamayi Math, Nigdi, Pune – 411044';
   const PMAP='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3781.0!2d73.7700!3d18.6500!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2b9e4b7c3b1a1%3A0xabc!2sNigdi%2C+Pune!5e0!3m2!1sen!2sin!4v1680000000000';
   const PURL='https://maps.google.com/?q=Mata+Amritanandamayi+Math+Nigdi+Pune';
   const EVDATA={
@@ -315,7 +315,7 @@ document.addEventListener('DOMContentLoaded', function(){
   };
   // WhatsApp with actual URL
   const waBtn=el('wa-share-btn');
-  if(waBtn){ const msg=encodeURIComponent("You're invited to Nikhil & Prachi's Wedding! 💍\n📅 10 May 2026 | Sweta Lawn, Nigdi, Pune\n\nOpen invitation → "+window.location.href); waBtn.href='https://wa.me/?text='+msg; }
+  if(waBtn){ const msg=encodeURIComponent("You're invited to Nikhil & Prachi's Wedding! 💍\n📅 10 May 2026 | Mata Amritanandamayi Math, Nigdi, Pune\n\nOpen invitation → "+window.location.href); waBtn.href='https://wa.me/?text='+msg; }
 
   // ── STORIES ──
   const STORIES=[
@@ -553,7 +553,7 @@ document.addEventListener('DOMContentLoaded', function(){
     if(delay < 2147483647){ // max setTimeout value
       setTimeout(()=>{
         new Notification('Wedding Tomorrow! 💍', {
-          body: `Nikhil & Prachi's wedding is in ${daysBefore} day${daysBefore>1?'s':''}! 10 May 2026, Sweta Lawn, Pune`,
+          body: `Nikhil & Prachi's wedding is in ${daysBefore} day${daysBefore>1?'s':''}! 10 May 2026, Mata Amritanandamayi Math, Pune`,
           icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">💍</text></svg>'
         });
       }, delay);
@@ -575,42 +575,51 @@ document.addEventListener('DOMContentLoaded', function(){
     ctx.strokeStyle='rgba(201,168,76,0.2)'; ctx.lineWidth=1;
     ctx.strokeRect(14,14,W-28,H-28);
     // Rose decorations
-    ctx.font='28px serif'; ctx.fillText('🌹',12,40); ctx.fillText('🌹',W-42,40);
-    ctx.fillText('🌸',12,H-12); ctx.fillText('🌸',W-42,H-12);
-    // Save the Date text
-    ctx.fillStyle='rgba(201,168,76,0.7)';
-    ctx.font='600 11px Cinzel,serif';
+    ctx.font='22px serif';
+    ctx.fillText('🌹',14,36); ctx.fillText('🌹',W-38,36);
+    ctx.fillText('🌸',14,H-8); ctx.fillText('🌸',W-38,H-8);
+    // Save the Date label
+    ctx.fillStyle='rgba(201,168,76,0.75)';
+    ctx.font='bold 10px Arial,sans-serif';
     ctx.textAlign='center';
-    ctx.fillText('✦  SAVE THE DATE  ✦', W/2, 50);
-    // Names
+    ctx.letterSpacing='3px';
+    ctx.fillText('✦  SAVE THE DATE  ✦', W/2, 48);
+    // Nikhil name — left side
     ctx.fillStyle='#ffffff';
-    ctx.font='italic 42px Georgia,serif';
-    ctx.fillText('Nikhil', W/2-60, 105);
+    ctx.font='italic 38px Georgia,serif';
+    ctx.textAlign='right';
+    ctx.fillText('Nikhil', W/2 - 18, 100);
+    // Ampersand — center
     ctx.fillStyle='#C9A84C';
-    ctx.font='italic 32px Georgia,serif';
-    ctx.fillText('&', W/2, 100);
+    ctx.font='italic 28px Georgia,serif';
+    ctx.textAlign='center';
+    ctx.fillText('&', W/2, 97);
+    // Prachi name — right side
     ctx.fillStyle='#ffffff';
-    ctx.font='italic 42px Georgia,serif';
-    ctx.fillText('Prachi', W/2+55, 105);
-    // Divider
+    ctx.font='italic 38px Georgia,serif';
+    ctx.textAlign='left';
+    ctx.fillText('Prachi', W/2 + 18, 100);
+    // Divider line
     ctx.strokeStyle='rgba(201,168,76,0.4)'; ctx.lineWidth=1;
-    ctx.beginPath(); ctx.moveTo(80,118); ctx.lineTo(W-80,118); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(60,112); ctx.lineTo(W-60,112); ctx.stroke();
     // Date
     ctx.fillStyle='#C9A84C';
-    ctx.font='600 16px Cinzel,serif';
-    ctx.fillText('10 · MAY · 2026', W/2, 142);
-    // Venue
-    ctx.fillStyle='rgba(237,224,204,0.6)';
-    ctx.font='12px Poppins,sans-serif';
-    ctx.fillText('Sweta Lawn, Nigdi, Pune', W/2, 165);
-    // Bottom
-    ctx.fillStyle='rgba(201,168,76,0.4)';
-    ctx.font='10px Poppins,sans-serif';
-    ctx.fillText('Together Forever  💍', W/2, 195);
+    ctx.font='bold 15px Arial,sans-serif';
+    ctx.textAlign='center';
+    ctx.fillText('10  ·  MAY  ·  2026', W/2, 135);
+    // Venue — two lines
+    ctx.fillStyle='rgba(237,224,204,0.65)';
+    ctx.font='11px Arial,sans-serif';
+    ctx.fillText('Mata Amritanandamayi Math', W/2, 158);
+    ctx.fillText('Nigdi, Pune — Maharashtra', W/2, 174);
+    // Bottom tagline
+    ctx.fillStyle='rgba(201,168,76,0.45)';
+    ctx.font='10px Arial,sans-serif';
+    ctx.fillText('Together Forever  💍', W/2, 200);
     // Update WhatsApp share link
     const waBtn = el('std-wa-btn');
     if(waBtn){
-      const msg = encodeURIComponent("Save the Date! 💍\nNikhil & Prachi are getting married!\n📅 10 May 2026\n📍 Sweta Lawn, Nigdi, Pune\n\nOpen invitation → "+window.location.href);
+      const msg = encodeURIComponent("Save the Date! 💍\nNikhil & Prachi are getting married!\n📅 10 May 2026\n📍 Mata Amritanandamayi Math, Nigdi, Pune\n\nOpen invitation → "+window.location.href);
       waBtn.href = 'https://wa.me/?text='+msg;
     }
   }
@@ -650,3 +659,4 @@ document.addEventListener('DOMContentLoaded', function(){
   }
 
 });
+
