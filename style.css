@@ -438,3 +438,70 @@ button{font-family:'Poppins',sans-serif;cursor:pointer;border:none;outline:none}
   #fab-top-btn{right:calc(50% - 224px) !important}
   #music-fab{left:calc(50% - 224px) !important}
 }
+
+/* ═══ ORDER OF EVENTS TIMELINE ═══ */
+.events-s{background:linear-gradient(180deg,#080101,#0d0202);text-align:center;padding-bottom:48px}
+
+/* Header */
+.oe-header{position:relative;z-index:1;margin-bottom:32px;padding:0 16px}
+.oe-top-label{font-size:0.65rem;letter-spacing:5px;text-transform:uppercase;color:rgba(201,168,76,0.6);margin-bottom:8px}
+.oe-main-title{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:400;color:var(--cream);line-height:1.1;margin-bottom:8px;text-transform:uppercase;letter-spacing:2px}
+.oe-main-title em{font-family:'Great Vibes',cursive;font-size:3.2rem;color:var(--gold);font-style:normal;text-transform:none;letter-spacing:0}
+.oe-tap-hint{font-size:0.62rem;color:var(--dim2);letter-spacing:2px}
+
+/* Timeline container */
+.oe-timeline{position:relative;z-index:1;padding:0 8px;max-width:400px;margin:0 auto}
+
+/* Each row */
+.oe-row{display:grid;grid-template-columns:1fr 56px 1fr;align-items:stretch;min-height:80px;cursor:pointer;transition:opacity 0.2s}
+.oe-row:hover{opacity:0.85}
+.oe-row:active{opacity:0.7}
+
+/* Left content */
+.oe-left-side{display:flex;flex-direction:column;justify-content:center;align-items:flex-end;padding:8px 12px 8px 0;text-align:right}
+.oe-left-empty{pointer-events:none}
+
+/* Right content */
+.oe-right-side{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:8px 0 8px 12px;text-align:left}
+.oe-right-empty{pointer-events:none}
+
+/* Event text */
+.oe-ev-time{font-size:0.6rem;color:var(--gold);letter-spacing:1px;font-weight:500;margin-bottom:4px;text-transform:uppercase}
+.oe-ev-name{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--cream);font-weight:600;line-height:1.2}
+.oe-ev-gold{color:var(--gold)!important;font-size:1.1rem!important}
+
+/* Center column — icon + vertical line */
+.oe-center-col{display:flex;flex-direction:column;align-items:center;position:relative}
+.oe-v-line{flex:1;width:1px;background:linear-gradient(180deg,rgba(201,168,76,0.4),rgba(201,168,76,0.4));min-height:12px}
+
+/* Icon circles */
+.oe-icon-circle{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;border:1px solid rgba(201,168,76,0.3);box-shadow:0 0 16px rgba(0,0,0,0.5);transition:box-shadow 0.25s,transform 0.25s;position:relative;z-index:1}
+.oe-row:hover .oe-icon-circle{transform:scale(1.1);box-shadow:0 0 24px rgba(201,168,76,0.25)}
+.mehndi-ic{background:radial-gradient(circle at 40% 40%,rgba(76,175,80,0.3),#0d0202 70%)}
+.sangeet-ic{background:radial-gradient(circle at 40% 40%,rgba(156,39,176,0.3),#0d0202 70%)}
+.wedding-ic{background:radial-gradient(circle at 40% 40%,rgba(201,168,76,0.3),#0d0202 70%);border-color:rgba(201,168,76,0.55)!important;box-shadow:0 0 20px rgba(201,168,76,0.2)!important;animation:calPulse 2.5s ease-in-out infinite}
+.reception-ic{background:radial-gradient(circle at 40% 40%,rgba(230,74,25,0.3),#0d0202 70%)}
+
+/* Featured row highlight */
+.oe-row-featured .oe-left-side,.oe-row-featured .oe-right-side{background:rgba(201,168,76,0.03);border-radius:10px}
+
+/* Footer */
+.oe-footer-block{margin-top:28px;padding-top:20px;border-top:1px solid rgba(201,168,76,0.15);position:relative;z-index:1}
+.oe-thank{font-size:0.75rem;color:var(--dim);letter-spacing:1px;margin-bottom:6px}
+.oe-couple-name{font-family:'Great Vibes',cursive;font-size:2rem;color:var(--gold);text-shadow:0 0 20px rgba(201,168,76,0.3)}
+
+/* ═══ EVENT DETAIL MODAL ═══ */
+.ev-modal{position:fixed;inset:0;z-index:800;display:flex;align-items:flex-end;justify-content:center}
+.ev-modal-bg{position:absolute;inset:0;background:rgba(0,0,0,0.8);backdrop-filter:blur(8px)}
+.ev-modal-card{position:relative;z-index:1;background:linear-gradient(180deg,#1c0404,#0e0202);border:1px solid var(--bdr);border-top:2px solid rgba(201,168,76,0.3);border-radius:24px 24px 0 0;padding:28px 24px 44px;width:min(480px,100vw);max-height:88vh;overflow-y:auto;animation:slideUp 0.38s cubic-bezier(0.4,0,0.2,1)}
+.ev-modal-close{position:absolute;top:16px;right:16px;background:rgba(201,168,76,0.08);border:1px solid var(--bdr);color:var(--gold);width:36px;height:36px;border-radius:50%;font-size:0.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s}
+.ev-modal-close:hover{background:rgba(201,168,76,0.18)}
+.ev-modal-icon{font-size:3.2rem;text-align:center;margin-bottom:8px}
+.ev-modal-title{font-family:'Cormorant Garamond',serif;font-size:1.7rem;color:var(--cream);text-align:center;margin-bottom:22px;font-weight:600}
+.ev-modal-info{display:flex;flex-direction:column;gap:14px;margin-bottom:20px;background:rgba(255,255,255,0.02);border:1px solid var(--bdr);border-radius:14px;padding:16px}
+.ev-modal-row{display:flex;align-items:flex-start;gap:12px;font-size:0.84rem;color:var(--text)}
+.ev-modal-row span:first-child{font-size:1.1rem;flex-shrink:0;margin-top:1px}
+.ev-modal-map{border-radius:14px;overflow:hidden;margin-bottom:18px;box-shadow:0 4px 24px rgba(0,0,0,0.5)}
+.ev-modal-btns{display:flex;gap:12px}
+.ev-modal-btns a{flex:1;justify-content:center}
+@keyframes slideUp{from{transform:translateY(60px);opacity:0}to{transform:translateY(0);opacity:1}}

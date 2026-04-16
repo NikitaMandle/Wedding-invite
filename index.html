@@ -209,34 +209,105 @@
     </div>
   </section>
 
-  <!-- EVENTS -->
+  <!-- EVENTS — Order of Events Timeline -->
   <section id="s-events" class="s events-s reveal">
     <div class="sf-l"></div><div class="sf-r"></div>
-    <div class="s-label">Programme</div>
-    <h2 class="s-title">Timing</h2>
-    <div class="ev-cards">
-      <div class="ev-card reveal-child" style="--i:0">
-        <div class="ev-accent" style="background:linear-gradient(180deg,#4CAF50,#2E7D32)"></div>
-        <div class="ev-left"><span class="ev-emoji">🌿</span><span class="ev-day">08<br/>May</span></div>
-        <div class="ev-right"><h3>Mehndi Ceremony</h3><p class="ev-time">4:00 PM onwards</p><p class="ev-place">Sweta Lawn, Nigdi, Pune</p><span class="ev-tag">Yellow / Green</span></div>
+
+    <!-- Header matching reference image -->
+    <div class="oe-header">
+      <p class="oe-top-label">✦ The Big Day ✦</p>
+      <h2 class="oe-main-title">Order <em>of</em> Events</h2>
+      <p class="oe-tap-hint">Tap any event to see venue, map &amp; outfit</p>
+    </div>
+
+    <!-- Timeline — alternating left/right like reference image -->
+    <div class="oe-timeline">
+      <!-- Center vertical line drawn via CSS -->
+
+      <!-- LEFT: Mehndi -->
+      <div class="oe-row oe-row-left reveal-child" style="--i:0" onclick="openEventModal('mehndi')">
+        <div class="oe-left-side">
+          <p class="oe-ev-time">08 May · 4:00 PM</p>
+          <h3 class="oe-ev-name">Mehndi Ceremony</h3>
+        </div>
+        <div class="oe-center-col">
+          <div class="oe-icon-circle mehndi-ic">🌿</div>
+          <div class="oe-v-line"></div>
+        </div>
+        <div class="oe-right-side oe-right-empty"></div>
       </div>
-      <div class="ev-card reveal-child" style="--i:1">
-        <div class="ev-accent" style="background:linear-gradient(180deg,#9C27B0,#6A1B9A)"></div>
-        <div class="ev-left"><span class="ev-emoji">🎶</span><span class="ev-day">09<br/>May</span></div>
-        <div class="ev-right"><h3>Sangeet Night</h3><p class="ev-time">7:00 PM onwards</p><p class="ev-place">Sweta Lawn, Nigdi, Pune</p><span class="ev-tag">Cocktail / Festive</span></div>
+
+      <!-- RIGHT: Sangeet -->
+      <div class="oe-row oe-row-right reveal-child" style="--i:1" onclick="openEventModal('sangeet')">
+        <div class="oe-left-side oe-left-empty"></div>
+        <div class="oe-center-col">
+          <div class="oe-v-line"></div>
+          <div class="oe-icon-circle sangeet-ic">🎶</div>
+          <div class="oe-v-line"></div>
+        </div>
+        <div class="oe-right-side">
+          <p class="oe-ev-time">09 May · 7:00 PM</p>
+          <h3 class="oe-ev-name">Sangeet Night</h3>
+        </div>
       </div>
-      <div class="ev-card ev-featured reveal-child" style="--i:2">
-        <div class="ev-accent" style="background:linear-gradient(180deg,#C9A84C,#E8C97A)"></div>
-        <div class="ev-left"><span class="ev-emoji">💍</span><span class="ev-day">10<br/>May</span></div>
-        <div class="ev-right"><h3>Wedding Ceremony</h3><p class="ev-time">11:00 AM</p><p class="ev-place">Sweta Lawn, Nigdi, Pune</p><span class="ev-tag">Traditional / Formal</span></div>
+
+      <!-- LEFT: Wedding (featured) -->
+      <div class="oe-row oe-row-left oe-row-featured reveal-child" style="--i:2" onclick="openEventModal('wedding')">
+        <div class="oe-left-side">
+          <p class="oe-ev-time">10 May · 11:00 AM</p>
+          <h3 class="oe-ev-name oe-ev-gold">Wedding Ceremony</h3>
+        </div>
+        <div class="oe-center-col">
+          <div class="oe-v-line"></div>
+          <div class="oe-icon-circle wedding-ic">💍</div>
+          <div class="oe-v-line"></div>
+        </div>
+        <div class="oe-right-side oe-right-empty"></div>
       </div>
-      <div class="ev-card reveal-child" style="--i:3">
-        <div class="ev-accent" style="background:linear-gradient(180deg,#E64A19,#BF360C)"></div>
-        <div class="ev-left"><span class="ev-emoji">🥂</span><span class="ev-day">10<br/>May</span></div>
-        <div class="ev-right"><h3>Wedding Reception</h3><p class="ev-time">7:00 PM onwards</p><p class="ev-place">Sweta Lawn, Nigdi, Pune</p><span class="ev-tag">Ethnic / Formal</span></div>
+
+      <!-- RIGHT: Reception -->
+      <div class="oe-row oe-row-right reveal-child" style="--i:3" onclick="openEventModal('reception')">
+        <div class="oe-left-side oe-left-empty"></div>
+        <div class="oe-center-col">
+          <div class="oe-v-line"></div>
+          <div class="oe-icon-circle reception-ic">🥂</div>
+        </div>
+        <div class="oe-right-side">
+          <p class="oe-ev-time">10 May · 7:00 PM</p>
+          <h3 class="oe-ev-name">Wedding Reception</h3>
+        </div>
       </div>
     </div>
+
+    <!-- Footer like reference image -->
+    <div class="oe-footer-block">
+      <p class="oe-thank">Thank you for celebrating this day with us</p>
+      <p class="oe-couple-name">Nikhil &amp; Prachi</p>
+    </div>
   </section>
+
+  <!-- EVENT DETAIL MODAL (slide up) -->
+  <div id="event-modal" class="ev-modal hidden">
+    <div class="ev-modal-bg" onclick="closeEventModal()"></div>
+    <div class="ev-modal-card">
+      <button class="ev-modal-close" onclick="closeEventModal()">✕</button>
+      <div class="ev-modal-icon" id="em-icon"></div>
+      <h2 class="ev-modal-title" id="em-title"></h2>
+      <div class="ev-modal-info">
+        <div class="ev-modal-row"><span>📅</span><span id="em-date"></span></div>
+        <div class="ev-modal-row"><span>⏰</span><span id="em-time"></span></div>
+        <div class="ev-modal-row"><span>📍</span><span id="em-venue"></span></div>
+        <div class="ev-modal-row"><span>👗</span><span id="em-dress"></span></div>
+      </div>
+      <div class="ev-modal-map">
+        <iframe id="em-map" src="" width="100%" height="160" style="border:0;border-radius:12px;" allowfullscreen loading="lazy"></iframe>
+      </div>
+      <div class="ev-modal-btns">
+        <a id="em-dir-btn" href="#" target="_blank" class="btn-p">📍 Get Directions</a>
+        <a id="em-cal-btn" href="#" target="_blank" class="btn-o">📅 Add to Calendar</a>
+      </div>
+    </div>
+  </div>
 
   <!-- LOCATION -->
   <section id="s-loc" class="s loc-s reveal">
@@ -416,9 +487,10 @@
   <span id="music-fab-label">Play Music</span>
 </button>
 
-<!-- Wedding background music — Indian classical/shehnai style -->
+<!-- Wedding background music -->
 <audio id="aud" loop preload="auto">
-  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3" type="audio/mpeg"/>
+  <source src="https://cdn.pixabay.com/audio/2024/03/13/audio_3d7f8e4b2a.mp3" type="audio/mpeg"/>
+  <source src="https://cdn.pixabay.com/audio/2022/10/30/audio_946b4b8a4e.mp3" type="audio/mpeg"/>
 </audio>
 <script src="script.js"></script>
 </body>

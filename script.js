@@ -147,6 +147,32 @@ document.addEventListener('DOMContentLoaded', function(){
   window.lbN     = function(){ lbI=(lbI+1)%lbBg.length; showLb(); };
   window.openLb  = openLb;
 
+  // ── EVENT MODAL ──
+  const VENUE='Sweta Lawn, Mata Amritanandamayi Math, Nigdi, Pune – 411044';
+  const MURL='https://maps.google.com/?q=Mata+Amritanandamayi+Math+Nigdi+Pune';
+  const MSRC='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3781.0!2d73.7700!3d18.6500!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2b9e4b7c3b1a1%3A0xabc!2sNigdi%2C+Pune!5e0!3m2!1sen!2sin!4v1680000000000';
+  const EVDATA={
+    mehndi:  {icon:'🌿',title:'Mehndi Ceremony',  date:'8 May 2026', time:'4:00 PM onwards',venue:VENUE,dress:'Yellow / Green Traditional', mapSrc:MSRC,mapUrl:MURL,calUrl:'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Mehndi+Ceremony&dates=20260508T160000/20260508T210000&location=Sweta+Lawn,+Nigdi,+Pune'},
+    sangeet: {icon:'🎶',title:'Sangeet Night',    date:'9 May 2026', time:'7:00 PM onwards',venue:VENUE,dress:'Cocktail / Festive Colourful',mapSrc:MSRC,mapUrl:MURL,calUrl:'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Sangeet+Night&dates=20260509T190000/20260509T235900&location=Sweta+Lawn,+Nigdi,+Pune'},
+    wedding: {icon:'💍',title:'Wedding Ceremony', date:'10 May 2026',time:'11:00 AM',        venue:VENUE,dress:'Traditional / Formal',        mapSrc:MSRC,mapUrl:MURL,calUrl:'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Nikhil+%26+Prachi+Wedding&dates=20260510T110000/20260510T180000&location=Sweta+Lawn,+Nigdi,+Pune'},
+    reception:{icon:'🥂',title:'Wedding Reception',date:'10 May 2026',time:'7:00 PM onwards',venue:VENUE,dress:'Ethnic / Formal Elegant',     mapSrc:MSRC,mapUrl:MURL,calUrl:'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Wedding+Reception&dates=20260510T190000/20260510T235900&location=Sweta+Lawn,+Nigdi,+Pune'}
+  };
+  window.openEventModal = function(key){
+    const d=EVDATA[key]; if(!d)return;
+    const m=el('event-modal'); if(!m)return;
+    el('em-icon').textContent=d.icon; el('em-title').textContent=d.title;
+    el('em-date').textContent=d.date; el('em-time').textContent=d.time;
+    el('em-venue').textContent=d.venue; el('em-dress').textContent=d.dress;
+    el('em-map').src=d.mapSrc; el('em-dir-btn').href=d.mapUrl; el('em-cal-btn').href=d.calUrl;
+    m.classList.remove('hidden'); m.style.display='flex';
+    document.body.style.overflow='hidden';
+  };
+  window.closeEventModal = function(){
+    const m=el('event-modal'); if(!m)return;
+    m.classList.add('hidden'); m.style.display='none';
+    document.body.style.overflow='';
+  };
+
   // ── RSVP ──
   window.doRSVP = function(e){
     e.preventDefault();
