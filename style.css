@@ -1018,3 +1018,13 @@ button{font-family:'Poppins',sans-serif;cursor:pointer;border:none;outline:none}
   background:linear-gradient(90deg,transparent,rgba(201,168,76,0.4));
 }
 .cal-wedding-label::after{background:linear-gradient(90deg,rgba(201,168,76,0.4),transparent)}
+
+/* Wedding date — bigger prominent gold circle */
+.ev-wedding{
+  background:linear-gradient(135deg,#6B0F1A,#8B1A2A)!important;
+  color:#C9A84C!important;
+  border:2px solid #C9A84C!important;
+  box-shadow:0 0 0 3px rgba(201,168,76,0.15),0 0 20px rgba(201,168,76,0.35)!important;
+  font-weight:700!important;font-size:0.9rem!important;
+  animation:calPulse 1.8s ease-in-out infinite!important;
+}
