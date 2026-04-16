@@ -520,3 +520,32 @@ button{font-family:'Poppins',sans-serif;cursor:pointer;border:none;outline:none}
   animation:gwNamePop 0.6s cubic-bezier(0.4,0,0.2,1) 0.3s both;
 }
 @keyframes gwNamePop{from{opacity:0;transform:scale(0.85)}to{opacity:1;transform:scale(1)}}
+
+/* GROOM/BRIDE TOGGLE */
+.oe-toggle-wrap{display:flex;align-items:center;justify-content:center;gap:0;margin-bottom:24px;position:relative;z-index:1;background:rgba(255,255,255,0.03);border:1px solid rgba(201,168,76,0.2);border-radius:50px;padding:4px;width:fit-content;margin-left:auto;margin-right:auto}
+.oe-toggle-btn{display:flex;align-items:center;gap:8px;padding:10px 20px;border-radius:46px;font-family:'Poppins',sans-serif;font-size:0.76rem;font-weight:500;color:rgba(237,224,204,0.45);background:transparent;transition:all 0.35s cubic-bezier(0.4,0,0.2,1);min-height:42px;cursor:pointer;white-space:nowrap}
+.oe-toggle-btn.active{background:linear-gradient(135deg,var(--maroon),var(--rose));color:var(--gold);box-shadow:0 4px 20px rgba(107,15,26,0.5)}
+.oe-toggle-btn:hover:not(.active){color:rgba(237,224,204,0.7)}
+.oe-toggle-divider{width:1px;height:22px;background:rgba(201,168,76,0.15);flex-shrink:0}
+
+/* Timeline slide animation */
+.ev-cards{transition:opacity 0.3s ease,transform 0.3s ease}
+.ev-cards.tl-exit{opacity:0;transform:translateX(-10px);pointer-events:none}
+.ev-cards.tl-enter{opacity:0;transform:translateX(10px)}
+
+/* EVENT MODAL */
+.ev-modal{position:fixed;inset:0;z-index:800;display:none;align-items:flex-end;justify-content:center}
+.ev-modal.hidden{display:none!important}
+.ev-modal-bg{position:absolute;inset:0;background:rgba(0,0,0,0.82);backdrop-filter:blur(8px)}
+.ev-modal-card{position:relative;z-index:1;background:linear-gradient(180deg,#1c0404,#0e0202);border:1px solid var(--bdr);border-top:2px solid rgba(201,168,76,0.35);border-radius:24px 24px 0 0;padding:28px 24px 48px;width:min(480px,100vw);max-height:88vh;overflow-y:auto;animation:slideUp 0.38s cubic-bezier(0.4,0,0.2,1)}
+.ev-modal-close{position:absolute;top:16px;right:16px;background:rgba(201,168,76,0.08);border:1px solid var(--bdr);color:var(--gold);width:36px;height:36px;border-radius:50%;font-size:0.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s}
+.ev-modal-close:hover{background:rgba(201,168,76,0.2)}
+.ev-modal-icon{font-size:3rem;text-align:center;margin-bottom:8px}
+.ev-modal-title{font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--cream);text-align:center;margin-bottom:20px;font-weight:600}
+.ev-modal-info{display:flex;flex-direction:column;gap:12px;margin-bottom:20px;background:rgba(255,255,255,0.025);border:1px solid var(--bdr);border-radius:14px;padding:16px}
+.ev-modal-row{display:flex;align-items:flex-start;gap:12px;font-size:0.84rem;color:var(--text)}
+.ev-modal-row span:first-child{font-size:1rem;flex-shrink:0;margin-top:1px}
+.ev-modal-map{border-radius:14px;overflow:hidden;margin-bottom:18px;box-shadow:0 4px 24px rgba(0,0,0,0.5)}
+.ev-modal-btns{display:flex;gap:12px}
+.ev-modal-btns a{flex:1;justify-content:center}
+@keyframes slideUp{from{transform:translateY(60px);opacity:0}to{transform:translateY(0);opacity:1}}
