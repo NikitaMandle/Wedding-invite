@@ -485,3 +485,41 @@ button{font-family:'Poppins',sans-serif;cursor:pointer;border:none;outline:none}
 .ev-modal-btns{display:flex;gap:12px}
 .ev-modal-btns a{flex:1;justify-content:center}
 @keyframes slideUp{from{transform:translateY(60px);opacity:0}to{transform:translateY(0);opacity:1}}
+
+/* GROOM/BRIDE TOGGLE */
+.oe-toggle-wrap{
+  display:flex;align-items:center;justify-content:center;
+  gap:0;margin-bottom:32px;position:relative;z-index:1;
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(201,168,76,0.2);
+  border-radius:50px;padding:4px;
+  width:fit-content;margin-left:auto;margin-right:auto;
+}
+.oe-toggle-btn{
+  display:flex;align-items:center;gap:8px;
+  padding:11px 22px;border-radius:46px;
+  font-family:'Poppins',sans-serif;font-size:0.78rem;font-weight:500;
+  color:rgba(237,224,204,0.45);background:transparent;
+  transition:all 0.35s cubic-bezier(0.4,0,0.2,1);
+  min-height:44px;letter-spacing:0.5px;
+  cursor:pointer;white-space:nowrap;
+}
+.oe-toggle-btn.active{
+  background:linear-gradient(135deg,var(--maroon),var(--rose));
+  color:var(--gold);
+  box-shadow:0 4px 20px rgba(107,15,26,0.5);
+}
+.oe-toggle-btn:hover:not(.active){color:rgba(237,224,204,0.7)}
+.oe-toggle-icon{font-size:1rem}
+.oe-toggle-divider{width:1px;height:24px;background:rgba(201,168,76,0.15);flex-shrink:0}
+
+/* Timeline fade animation on switch */
+.oe-timeline{transition:opacity 0.35s ease,transform 0.35s ease}
+.oe-timeline.tl-exit{opacity:0;transform:translateX(-12px);pointer-events:none}
+.oe-timeline.tl-enter{opacity:0;transform:translateX(12px)}
+.oe-timeline.tl-visible{opacity:1;transform:translateX(0)}
+
+/* New icon colors */
+.haldi-ic{background:radial-gradient(circle at 35% 35%,rgba(255,200,50,0.35),#080101 70%)}
+.baraat-ic{background:radial-gradient(circle at 35% 35%,rgba(255,140,0,0.35),#080101 70%)}
+.vidaai-ic{background:radial-gradient(circle at 35% 35%,rgba(255,100,150,0.35),#080101 70%)}
