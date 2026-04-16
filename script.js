@@ -59,43 +59,20 @@ document.addEventListener('DOMContentLoaded', function(){
     const pp=el('pp');
     if(pp){ const em=['\uD83C\uDF39','\uD83C\uDF38','\uD83C\uDF3A','\uD83C\uDF37','\u273F']; for(let i=0;i<12;i++){const p=document.createElement('div');p.className='ep';p.textContent=em[Math.floor(Math.random()*em.length)];p.style.left=(Math.random()*100)+'%';p.style.fontSize=(Math.random()*.6+.5)+'rem';p.style.animationDuration=(Math.random()*6+6)+'s';p.style.animationDelay=(Math.random()*5)+'s';pp.appendChild(p);} }
     const btn=el('photo-cta-btn');
-    if(btn) btn.addEventListener('click',startEnvelope);
+    if(btn) btn.addEventListener('click', function(){
+      // Hide card immediately, play music, go straight to main
+      safe(()=>playMusic());
+      screen.style.transition='opacity 0.6s';
+      screen.style.opacity='0';
+      setTimeout(()=>{
+        screen.style.display='none';
+        showMain();
+      }, 650);
+    });
   }
 
-  // ── ENVELOPE ──
-  function startEnvelope(){
-    const photo=el('photo-reveal'), env=el('envelope');
-    if(!env){ showMain(); return; }
-    safe(()=>playMusic());
-    if(photo){ photo.style.transition='opacity 0.5s'; photo.style.opacity='0'; }
-
-    setTimeout(()=>{
-      if(photo) photo.style.display='none';
-      env.style.display='flex'; env.style.opacity='0'; env.style.transition='opacity 0.5s';
-      env.classList.remove('hidden');
-      safe(()=>mkCanvas('envc',45,['#C9A84C','#C41E3A']));
-      safe(()=>mkPetals('envp',14));
-      setTimeout(()=>{ env.style.opacity='1'; },50);
-      setTimeout(()=>{ safe(()=>el('eflap').classList.add('open')); safe(()=>el('eseal').classList.add('gone')); },700);
-      setTimeout(()=>safe(()=>el('ecrev').classList.add('up')),1900);
-      setTimeout(()=>safe(()=>el('eburst').classList.add('on')),2700);
-
-      // Guaranteed transition to main — multiple fallbacks
-      function goToMain(){
-        if(env.style.display==='none') return; // already done
-        env.style.opacity='0';
-        setTimeout(()=>{ env.style.display='none'; showMain(); },600);
-      }
-      setTimeout(goToMain, 3700);
-      setTimeout(goToMain, 5500); // hard fallback
-
-      // Tap anywhere on envelope to skip
-      env.addEventListener('click', function onEnvClick(){
-        env.removeEventListener('click', onEnvClick);
-        goToMain();
-      });
-    },500);
-  }
+  // ── ENVELOPE (kept but bypassed — direct transition used instead) ──
+  function startEnvelope(){ showMain(); }
 
   // ── LOADER ──
   function initLoader(){
