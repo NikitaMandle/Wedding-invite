@@ -23,9 +23,15 @@ function mkPetals(id,n){
 // ── LOADER ──
 (function(){
   const loader=document.getElementById('loader');
-  mkCanvas('lc',50,['#C9A84C','#C41E3A','#E8C97A','#8B1A2A']);
+  try { mkCanvas('lc',50,['#C9A84C','#C41E3A','#E8C97A','#8B1A2A']); } catch(e){}
   let p=0;const iv=setInterval(()=>{p+=Math.random()*14+4;if(p>=100){p=100;clearInterval(iv);}},100);
-  setTimeout(()=>{loader.classList.add('out');setTimeout(()=>{loader.style.display='none';showPhoto();},1000);},2600);
+  function exitLoader(){
+    try{loader.classList.add('out');}catch(e){}
+    setTimeout(()=>{try{loader.style.display='none';}catch(e){}showPhoto();},900);
+  }
+  setTimeout(exitLoader,2600);
+  // Safety net: force exit after 5s no matter what
+  setTimeout(()=>{if(loader&&!loader.classList.contains('out'))exitLoader();},5000);
 })();
 
 // ── STEP 2: PHOTO REVEAL ──
