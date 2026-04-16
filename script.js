@@ -49,37 +49,37 @@ function mkPetals(id,n){
 }
 
 // ── LOADER ──
-// Guaranteed to exit — no infinite loading possible
+// Simple, guaranteed exit — no CSS class dependency
 (function initLoader(){
-  const loader=el('loader');
+  const loader = el('loader');
   if(!loader){ showPhoto(); return; }
 
   safe(()=>mkCanvas('lc',50,['#C9A84C','#C41E3A','#E8C97A','#8B1A2A']));
 
+  // Animate dots progress (cosmetic only)
   let p=0;
   const iv=setInterval(()=>{
     p+=Math.random()*14+4;
     if(p>=100){ p=100; clearInterval(iv); }
-    const bar=el('loader-bar');
-    if(bar) bar.style.width=p+'%';
   },100);
 
-  let exited=false;
-  function exitLoader(){
-    if(exited) return;
-    exited=true;
+  let done=false;
+  function exitNow(){
+    if(done) return;
+    done=true;
     clearInterval(iv);
-    // Fade out loader
-    loader.style.transition='opacity 0.8s ease';
+    // Direct DOM removal — no CSS transition needed
     loader.style.opacity='0';
+    loader.style.transition='opacity 0.6s';
     setTimeout(()=>{
-      loader.style.display='none';
+      loader.remove(); // completely remove from DOM
       showPhoto();
-    },850);
+    },650);
   }
 
-  setTimeout(exitLoader,2600);   // normal exit
-  setTimeout(exitLoader,5000);   // hard safety net
+  // Exit at 2.5s, hard fallback at 4s
+  setTimeout(exitNow, 2500);
+  setTimeout(exitNow, 4000);
 })();
 
 // ── STEP 2: INVITATION CARD ──
@@ -87,11 +87,10 @@ function showPhoto(){
   const screen=el('photo-reveal');
   if(!screen){ showMainDirect(); return; }
 
-  // Remove hidden FIRST so element has dimensions, THEN init canvas
-  screen.style.display='flex';
+  // Force show — override any hidden/display:none
   screen.classList.remove('hidden');
+  screen.style.cssText='display:flex!important;opacity:1;visibility:visible;';
 
-  // Wait one frame for layout to compute before canvas resize
   requestAnimationFrame(()=>{
     safe(()=>mkCanvas('pc',60,['#C9A84C','#C41E3A','#8B1A2A','#E8C97A']));
   });
@@ -145,7 +144,7 @@ function startEnvelope(){
 function showMain(){
   const main=el('main'); if(!main) return;
   main.classList.remove('hidden');
-  main.style.opacity='0'; main.style.transition='opacity .7s';
+  main.style.cssText='display:block;opacity:0;transition:opacity 0.7s;';
   setTimeout(()=>{ main.style.opacity='1'; },50);
   initMain();
 }

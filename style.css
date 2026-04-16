@@ -7,9 +7,9 @@ html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent}
 body{font-family:'Poppins',sans-serif;background:var(--ink);color:var(--text);overflow-x:hidden;max-width:480px;margin:0 auto;-webkit-font-smoothing:antialiased}
 a{text-decoration:none;color:inherit}
 button{font-family:'Poppins',sans-serif;cursor:pointer;border:none;outline:none}
-.hidden{display:none!important}
-/* Override hidden for fixed-position screens so they can be shown with display:flex */
-#photo-reveal.hidden,#envelope.hidden,#main.hidden{display:none!important}
+/* hidden utility — JS overrides with inline style when needed */
+.hidden{display:none}
+#photo-reveal.hidden,#envelope.hidden,#main.hidden{display:none}
 ::-webkit-scrollbar{width:2px}::-webkit-scrollbar-thumb{background:var(--gold-d);border-radius:2px}
 
 /* ── LOADER ── */
