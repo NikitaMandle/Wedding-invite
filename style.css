@@ -38,8 +38,8 @@ button{font-family:'Poppins',sans-serif;cursor:pointer;border:none;outline:none}
 
 .inv-card-wrap{
   position:relative;z-index:2;
-  display:flex;flex-direction:column;align-items:center;gap:18px;
-  padding:16px 20px;width:100%;max-width:340px;
+  display:flex;flex-direction:column;align-items:center;gap:12px;
+  padding:12px 16px;width:100%;max-width:320px;
   animation:photoReveal 0.9s cubic-bezier(0.4,0,0.2,1) forwards;
 }
 
@@ -89,14 +89,14 @@ button{font-family:'Poppins',sans-serif;cursor:pointer;border:none;outline:none}
 .inv-band-roses::before{content:'🌸 ✦ 🌹 ✦ 🌸';font-size:0.82rem;letter-spacing:5px}
 
 /* Card body */
-.inv-body{padding:18px 22px 20px;text-align:center;position:relative;z-index:2}
+.inv-body{padding:14px 18px 16px;text-align:center;position:relative;z-index:2}
 
-/* ── GUEST NAME BLOCK — most prominent element ── */
+/* ── GUEST NAME BLOCK ── */
 .inv-guest-wrap{
-  margin-bottom:16px;
+  margin-bottom:10px;
   background:linear-gradient(135deg,rgba(107,15,26,0.4),rgba(60,5,10,0.3));
   border:1px solid rgba(201,168,76,0.25);
-  border-radius:14px;padding:14px 16px;
+  border-radius:12px;padding:10px 14px;
   position:relative;overflow:hidden;
 }
 .inv-guest-wrap::before{
@@ -107,81 +107,81 @@ button{font-family:'Poppins',sans-serif;cursor:pointer;border:none;outline:none}
 .inv-guest-inner{position:relative;z-index:1}
 .inv-guest-dear{
   font-family:'Cinzel',serif;
-  font-size:0.55rem;letter-spacing:5px;text-transform:uppercase;
-  color:rgba(201,168,76,0.6);display:block;margin-bottom:4px;
+  font-size:0.5rem;letter-spacing:5px;text-transform:uppercase;
+  color:rgba(201,168,76,0.6);display:block;margin-bottom:2px;
 }
 .inv-guest-name{
   font-family:'Great Vibes',cursive;
-  font-size:2.6rem;color:#fff;line-height:1.1;
-  text-shadow:0 0 40px rgba(201,168,76,0.4),0 2px 12px rgba(0,0,0,0.6);
+  font-size:2rem;color:#fff;line-height:1.1;
+  text-shadow:0 0 30px rgba(201,168,76,0.4),0 2px 10px rgba(0,0,0,0.6);
   animation:guestNameReveal 0.8s cubic-bezier(0.4,0,0.2,1) 0.2s both;
 }
-@keyframes guestNameReveal{from{opacity:0;transform:translateY(10px) scale(0.9)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes guestNameReveal{from{opacity:0;transform:translateY(8px) scale(0.92)}to{opacity:1;transform:translateY(0) scale(1)}}
 .inv-guest-line{
   display:flex;align-items:center;gap:8px;
-  justify-content:center;margin-top:6px;
+  justify-content:center;margin-top:4px;
 }
 .inv-guest-line span:not(.inv-guest-gem){
-  flex:1;max-width:40px;height:1px;
+  flex:1;max-width:36px;height:1px;
   background:linear-gradient(90deg,transparent,rgba(201,168,76,0.4));
 }
 .inv-guest-line span:last-child{background:linear-gradient(90deg,rgba(201,168,76,0.4),transparent)}
-.inv-guest-gem{color:var(--gold);font-size:0.45rem;opacity:0.6}
+.inv-guest-gem{color:var(--gold);font-size:0.4rem;opacity:0.6}
 
 /* Eyebrow */
 .inv-eyebrow{
   font-family:'Cinzel',serif;
-  font-size:0.52rem;letter-spacing:5px;text-transform:uppercase;
-  color:rgba(201,168,76,0.6);margin-bottom:12px;font-weight:400;
+  font-size:0.48rem;letter-spacing:5px;text-transform:uppercase;
+  color:rgba(201,168,76,0.6);margin-bottom:10px;font-weight:400;
 }
 
-/* Mandala — dual rings */
+/* Mandala */
 .inv-mandala{
-  width:48px;height:48px;border-radius:50%;
-  margin:0 auto 12px;
+  width:38px;height:38px;border-radius:50%;
+  margin:0 auto 10px;
   display:flex;align-items:center;justify-content:center;
   position:relative;
-  box-shadow:0 0 20px rgba(201,168,76,0.12);
+  box-shadow:0 0 16px rgba(201,168,76,0.1);
 }
 .inv-mandala-ring{position:absolute;border-radius:50%;border:1px solid rgba(201,168,76,0.3)}
 .r1{inset:0;animation:spinSlow 12s linear infinite}
-.r2{inset:7px;border-color:rgba(201,168,76,0.15);animation:spinSlow 8s linear infinite reverse}
-.inv-mandala-icon{font-size:1.3rem;position:relative;z-index:1}
+.r2{inset:6px;border-color:rgba(201,168,76,0.15);animation:spinSlow 8s linear infinite reverse}
+.inv-mandala-icon{font-size:1.1rem;position:relative;z-index:1}
 
 /* Cordially */
 .inv-cordially{
-  font-size:0.6rem;color:rgba(237,224,204,0.42);
-  line-height:1.7;margin-bottom:12px;letter-spacing:0.3px;
+  font-size:0.58rem;color:rgba(237,224,204,0.42);
+  line-height:1.6;margin-bottom:10px;letter-spacing:0.3px;
 }
 
-/* Names */
-.inv-names-wrap{margin-bottom:14px}
+/* Names — smaller for mobile */
+.inv-names-wrap{margin-bottom:12px}
 .inv-name-groom,.inv-name-bride{
   font-family:'Great Vibes',cursive;
-  font-size:4.2rem;color:#fff;line-height:1.05;
-  text-shadow:0 0 60px rgba(201,168,76,0.22),0 2px 14px rgba(0,0,0,0.7);
+  font-size:3.2rem;color:#fff;line-height:1.05;
+  text-shadow:0 0 50px rgba(201,168,76,0.2),0 2px 12px rgba(0,0,0,0.6);
 }
-.inv-names-divider{display:flex;align-items:center;gap:10px;justify-content:center;margin:2px 0}
-.inv-div-line{flex:1;max-width:44px;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,0.35))}
+.inv-names-divider{display:flex;align-items:center;gap:8px;justify-content:center;margin:1px 0}
+.inv-div-line{flex:1;max-width:36px;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,0.35))}
 .inv-div-line:last-child{background:linear-gradient(90deg,rgba(201,168,76,0.35),transparent)}
-.inv-amp{font-family:'Great Vibes',cursive;font-size:2.8rem;color:var(--gold);line-height:1;text-shadow:0 0 28px rgba(201,168,76,0.5)}
+.inv-amp{font-family:'Great Vibes',cursive;font-size:2.2rem;color:var(--gold);line-height:1;text-shadow:0 0 24px rgba(201,168,76,0.45)}
 
 /* Date block */
 .inv-date-block{
   background:rgba(201,168,76,0.06);
   border:1px solid rgba(201,168,76,0.2);
-  border-radius:12px;padding:10px 16px;margin-bottom:12px;
+  border-radius:10px;padding:8px 14px;margin-bottom:10px;
 }
-.inv-date-row{display:flex;align-items:center;justify-content:center;gap:14px}
+.inv-date-row{display:flex;align-items:center;justify-content:center;gap:12px}
 .inv-date-item{display:flex;flex-direction:column;align-items:center;gap:1px}
-.inv-date-num{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:600;color:var(--gold);line-height:1}
-.inv-date-lbl{font-size:0.52rem;letter-spacing:2px;text-transform:uppercase;color:var(--dim);font-weight:400}
-.inv-date-dot{color:var(--gold);font-size:0.45rem;opacity:0.45}
+.inv-date-num{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;color:var(--gold);line-height:1}
+.inv-date-lbl{font-size:0.5rem;letter-spacing:2px;text-transform:uppercase;color:var(--dim);font-weight:400}
+.inv-date-dot{color:var(--gold);font-size:0.4rem;opacity:0.45}
 
 /* Venue */
 .inv-venue-block{margin-top:2px}
-.inv-venue-name{font-family:'Cormorant Garamond',serif;font-size:0.95rem;color:var(--cream);font-weight:500;letter-spacing:1px;margin-bottom:2px}
-.inv-venue-addr{font-size:0.6rem;color:var(--dim);letter-spacing:0.5px}
+.inv-venue-name{font-family:'Cormorant Garamond',serif;font-size:0.88rem;color:var(--cream);font-weight:500;letter-spacing:1px;margin-bottom:2px}
+.inv-venue-addr{font-size:0.58rem;color:var(--dim);letter-spacing:0.5px}
 
 /* Open button */
 .inv-open-btn{
@@ -189,12 +189,12 @@ button{font-family:'Poppins',sans-serif;cursor:pointer;border:none;outline:none}
   display:inline-flex;align-items:center;justify-content:center;gap:10px;
   background:linear-gradient(135deg,var(--maroon),var(--rose));
   color:var(--gold);border:1px solid rgba(201,168,76,0.35);
-  border-radius:50px;padding:15px 36px;font-size:0.82rem;font-weight:500;
-  letter-spacing:1.5px;min-height:52px;width:100%;
-  box-shadow:0 4px 28px rgba(107,15,26,0.65),inset 0 1px 0 rgba(255,255,255,0.06);
+  border-radius:50px;padding:13px 32px;font-size:0.8rem;font-weight:500;
+  letter-spacing:1.5px;min-height:48px;width:100%;
+  box-shadow:0 4px 24px rgba(107,15,26,0.6),inset 0 1px 0 rgba(255,255,255,0.06);
   transition:all 0.3s;animation:btnPulse 2.5s ease-in-out infinite;cursor:pointer;
 }
-.inv-open-btn:hover{transform:translateY(-3px);box-shadow:0 10px 44px rgba(107,15,26,0.85)}
+.inv-open-btn:hover{transform:translateY(-2px);box-shadow:0 8px 36px rgba(107,15,26,0.8)}
 .inv-btn-ripple{position:absolute;inset:0;background:radial-gradient(circle at center,rgba(255,255,255,0.08),transparent 70%);opacity:0;transition:opacity 0.3s}
 .inv-open-btn:active .inv-btn-ripple{opacity:1}
 .inv-btn-arrow{font-size:1rem;transition:transform 0.3s}
