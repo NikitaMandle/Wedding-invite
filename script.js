@@ -304,8 +304,65 @@ document.addEventListener('DOMContentLoaded', function(){
   window.openNav  = function(){ safe(()=>{ el('nav-panel').classList.add('open');    document.body.style.overflow='hidden'; }); };
   window.closeNav = function(){ safe(()=>{ el('nav-panel').classList.remove('open'); document.body.style.overflow=''; }); };
 
-  // ── SHARE / SCROLL ──
-  window.doShare  = function(){
+  // ── CHATBOT — calls /api/chat backend (API key never in frontend) ──
+  let botOpen = false;
+  window.toggleBot = function(){
+    botOpen = !botOpen;
+    safe(()=>el('bot-win').classList.toggle('open', botOpen));
+    if(botOpen) setTimeout(()=>safe(()=>el('bot-inp').focus()), 300);
+  };
+  window.botQ = function(t){ const i=el('bot-inp'); if(i){i.value=t;} botSend(); };
+
+  async function botSend(){
+    const inp = el('bot-inp');
+    const t   = inp ? inp.value.trim() : '';
+    if(!t) return;
+    if(inp) inp.value = '';
+    addBotMsg(t, 'user');
+    const tid = addTyping();
+    try{
+      const res = await fetch('/api/chat', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ message: t })
+      });
+      removeTyping(tid);
+      if(!res.ok) throw new Error('API ' + res.status);
+      const d = await res.json();
+      addBotMsg(d.reply || localReply(t), 'bot');
+    }catch(e){
+      removeTyping(tid);
+      addBotMsg(localReply(t), 'bot');
+    }
+  }
+  window.botSend = botSend;
+
+  function localReply(m){
+    const q = m.toLowerCase();
+    if(q.match(/event|program|timing|schedule/)) return '🎉 Events:\n🌿 Mehndi — 8 May, 4PM\n🎶 Sangeet — 9 May, 7PM\n💍 Wedding — 10 May, 11AM\n🥂 Reception — 10 May, 7PM\nAll at Sweta Lawn, Nigdi, Pune';
+    if(q.match(/venue|location|where|address|sweta|nigdi|pune/)) return '📍 Sweta Lawn\nMata Amritanandamayi Math\nNigdi, Pune – 411044';
+    if(q.match(/dress|wear|attire|code/)) return '👗 Mehndi: Yellow/Green · Sangeet: Cocktail/Festive · Wedding: Traditional/Formal · Reception: Ethnic/Formal';
+    if(q.match(/rsvp|confirm|attend/)) return '✉ Scroll to the RSVP section and fill in the form!';
+    if(q.match(/date|when|may/)) return '💍 Wedding: 10 May 2026 · Mehndi: 8 May · Sangeet: 9 May · Reception: 10 May evening';
+    if(q.match(/hi|hello|hey|namaste/)) return "Namaste! 🙏 Welcome to Nikhil & Prachi's wedding!";
+    return 'I can help with events, venue, dress code, RSVP and more! 🌹';
+  }
+
+  function addBotMsg(txt, role){
+    const msgs = el('bot-msgs'); if(!msgs) return;
+    const d = document.createElement('div'); d.className='bm '+role;
+    d.innerHTML = '<div class="bb">'+txt.replace(/\n/g,'<br/>')+'</div>';
+    msgs.appendChild(d); msgs.scrollTop=msgs.scrollHeight;
+  }
+  function addTyping(){
+    const msgs=el('bot-msgs'); if(!msgs) return '';
+    const id='ty'+Date.now();
+    const d=document.createElement('div'); d.className='bm bot'; d.id=id;
+    d.innerHTML='<div class="bb"><div class="tdots"><span></span><span></span><span></span></div></div>';
+    msgs.appendChild(d); msgs.scrollTop=msgs.scrollHeight;
+    return id;
+  }
+  function removeTyping(id){ const e=el(id); if(e) e.remove(); }
     const d={title:'Nikhil & Prachi Wedding',text:"You're invited! 10 May 2026 💍",url:window.location.href};
     if(navigator.share) navigator.share(d);
     else navigator.clipboard.writeText(window.location.href).then(()=>alert('Link copied!')).catch(()=>{});
