@@ -432,6 +432,12 @@ sunset enjoy करत होतो… पाण्यात खेळत हो
     if(navigator.share) navigator.share(d);
     else navigator.clipboard.writeText(window.location.href).then(()=>alert('Link copied!')).catch(()=>{});
   };
+  // Update WhatsApp link with actual page URL
+  const waBtn=el('wa-share-btn');
+  if(waBtn){
+    const msg=encodeURIComponent("You're invited to Nikhil & Prachi's Wedding! 💍\n📅 10 May 2026 | Sweta Lawn, Nigdi, Pune\n\nOpen invitation → "+window.location.href);
+    waBtn.href='https://wa.me/?text='+msg;
+  }
 
   // ── START ──
   initLoader();

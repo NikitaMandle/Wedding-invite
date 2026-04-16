@@ -691,3 +691,12 @@ button{font-family:'Poppins',sans-serif;cursor:pointer;border:none;outline:none}
 @keyframes smokeDrift{0%{transform:translateY(0) translateX(0);opacity:0.7}50%{transform:translateY(-6px) translateX(3px);opacity:0.4}100%{transform:translateY(-10px) translateX(-2px);opacity:0}}
 @keyframes heartFloat{0%,100%{transform:translateX(-50%) translateY(0) scale(1)}50%{transform:translateX(-50%) translateY(-6px) scale(1.2)}}
 @keyframes bubblePop{from{transform:scale(0.8);opacity:0}to{transform:scale(1);opacity:1}}
+
+/* FOOTER BUTTON ICONS */
+.ft-btn span:first-child{font-size:0.9rem}
+.ft-btn-wa{
+  background:linear-gradient(135deg,#075e54,#128c7e)!important;
+  border-color:rgba(37,211,102,0.3)!important;
+  color:#25d366!important;
+}
+.ft-btn-wa:hover{background:linear-gradient(135deg,#128c7e,#25d366)!important;color:#fff!important}
