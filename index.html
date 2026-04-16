@@ -105,7 +105,6 @@
     </div>
   </div>
   <div class="env-burst" id="eburst"></div>
-  <p class="env-skip-hint">Tap anywhere to continue →</p>
 </div>
 
 <!-- MAIN SITE -->
@@ -218,55 +217,34 @@
     </div>
   </section>
 
-  <!-- EVENTS — Premium Interactive Timeline -->
+  <!-- EVENTS — Interactive Timeline -->
   <section id="s-events" class="s events-s reveal">
     <div class="sf-l"></div><div class="sf-r"></div>
     <div class="s-label">The Big Day</div>
     <h2 class="s-title-oe">Order <em>of</em> Events</h2>
-    <p class="oe-sub">Click any event to see venue, map &amp; outfit details</p>
-
+    <p class="oe-sub">Tap any event for venue, map &amp; outfit details</p>
     <div class="oe-timeline">
-      <!-- LEFT items -->
       <div class="oe-item oe-left reveal-child" style="--i:0" onclick="openEventModal('mehndi')">
-        <div class="oe-content">
-          <p class="oe-time">08 May · 4:00 PM</p>
-          <h3 class="oe-name">Mehndi Ceremony</h3>
-        </div>
+        <div class="oe-content"><p class="oe-time">08 May · 4:00 PM</p><h3 class="oe-name">Mehndi Ceremony</h3></div>
         <div class="oe-connector"><div class="oe-dot"></div></div>
         <div class="oe-icon-wrap mehndi-bg"><span>🌿</span></div>
       </div>
-
-      <!-- RIGHT item -->
       <div class="oe-item oe-right reveal-child" style="--i:1" onclick="openEventModal('sangeet')">
         <div class="oe-icon-wrap sangeet-bg"><span>🎶</span></div>
         <div class="oe-connector"><div class="oe-dot"></div></div>
-        <div class="oe-content">
-          <p class="oe-time">09 May · 7:00 PM</p>
-          <h3 class="oe-name">Sangeet Night</h3>
-        </div>
+        <div class="oe-content"><p class="oe-time">09 May · 7:00 PM</p><h3 class="oe-name">Sangeet Night</h3></div>
       </div>
-
-      <!-- LEFT item -->
       <div class="oe-item oe-left oe-featured reveal-child" style="--i:2" onclick="openEventModal('wedding')">
-        <div class="oe-content">
-          <p class="oe-time">10 May · 11:00 AM</p>
-          <h3 class="oe-name">Wedding Ceremony</h3>
-        </div>
+        <div class="oe-content"><p class="oe-time">10 May · 11:00 AM</p><h3 class="oe-name">Wedding Ceremony</h3></div>
         <div class="oe-connector"><div class="oe-dot oe-dot-gold"></div></div>
         <div class="oe-icon-wrap wedding-bg"><span>💍</span></div>
       </div>
-
-      <!-- RIGHT item -->
       <div class="oe-item oe-right reveal-child" style="--i:3" onclick="openEventModal('reception')">
         <div class="oe-icon-wrap reception-bg"><span>🥂</span></div>
         <div class="oe-connector"><div class="oe-dot"></div></div>
-        <div class="oe-content">
-          <p class="oe-time">10 May · 7:00 PM</p>
-          <h3 class="oe-name">Wedding Reception</h3>
-        </div>
+        <div class="oe-content"><p class="oe-time">10 May · 7:00 PM</p><h3 class="oe-name">Wedding Reception</h3></div>
       </div>
     </div>
-
     <p class="oe-footer">Thank you for celebrating this day with us<br/><span class="oe-couple">Nikhil &amp; Prachi</span></p>
   </section>
 
@@ -283,9 +261,7 @@
         <div class="ev-modal-row"><span>📍</span><span id="em-venue"></span></div>
         <div class="ev-modal-row"><span>👗</span><span id="em-dress"></span></div>
       </div>
-      <div class="ev-modal-map">
-        <iframe id="em-map" src="" width="100%" height="160" style="border:0;border-radius:12px;" allowfullscreen loading="lazy"></iframe>
-      </div>
+      <div class="ev-modal-map"><iframe id="em-map" src="" width="100%" height="160" style="border:0;border-radius:12px;" allowfullscreen loading="lazy"></iframe></div>
       <div class="ev-modal-btns">
         <a id="em-dir-btn" href="#" target="_blank" class="btn-p">📍 Get Directions</a>
         <a id="em-cal-btn" href="#" target="_blank" class="btn-o">📅 Add to Calendar</a>

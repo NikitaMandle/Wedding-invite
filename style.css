@@ -107,8 +107,6 @@ button{font-family:'Poppins',sans-serif;cursor:pointer;border:none;outline:none}
 .ecr-tag{font-size:0.58rem;color:#999;letter-spacing:2px;text-transform:uppercase}
 .env-burst{position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at center,rgba(255,215,0,0.2),transparent 55%);opacity:0;transition:opacity 0.5s;z-index:0}
 .env-burst.on{opacity:1;animation:burst 2s ease-out forwards}
-.env-skip-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);font-size:0.65rem;color:rgba(201,168,76,0.5);letter-spacing:3px;text-transform:uppercase;z-index:3;animation:fadeInOut 2s ease-in-out infinite;pointer-events:none}
-@keyframes fadeInOut{0%,100%{opacity:0.3}50%{opacity:0.8}}
 
 /* NAV */
 .nav{position:fixed;top:0;left:50%;transform:translateX(-50%);width:min(480px,100vw);z-index:500;display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:rgba(10,2,2,0.82);backdrop-filter:blur(20px) saturate(1.5);border-bottom:1px solid var(--bdr);transition:box-shadow 0.3s,background 0.3s}
@@ -379,54 +377,37 @@ button{font-family:'Poppins',sans-serif;cursor:pointer;border:none;outline:none}
   #music-fab{left:calc(50% - 224px) !important}
 }
 
-/* ── ORDER OF EVENTS TIMELINE ── */
+/* ORDER OF EVENTS TIMELINE */
 .events-s{background:linear-gradient(180deg,#0a0202,#0d0202);text-align:center}
-.s-title-oe{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:300;color:var(--cream);margin-bottom:6px;line-height:1;position:relative;z-index:1}
-.s-title-oe em{font-family:'Great Vibes',cursive;font-size:3.2rem;color:var(--gold);font-style:normal;vertical-align:middle}
-.oe-sub{font-size:0.65rem;color:var(--dim2);letter-spacing:2px;margin-bottom:36px;position:relative;z-index:1}
-
-/* Timeline container */
+.s-title-oe{font-family:'Cormorant Garamond',serif;font-size:2.6rem;font-weight:300;color:var(--cream);margin-bottom:6px;line-height:1;position:relative;z-index:1}
+.s-title-oe em{font-family:'Great Vibes',cursive;font-size:3rem;color:var(--gold);font-style:normal;vertical-align:middle}
+.oe-sub{font-size:0.62rem;color:var(--dim2);letter-spacing:2px;margin-bottom:32px;position:relative;z-index:1}
 .oe-timeline{position:relative;padding:0 0 20px;z-index:1}
-/* Center vertical line */
 .oe-timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:1px;background:linear-gradient(180deg,transparent,rgba(201,168,76,0.5) 10%,rgba(201,168,76,0.5) 90%,transparent);transform:translateX(-50%)}
-
-/* Each timeline row */
-.oe-item{display:flex;align-items:center;margin-bottom:28px;cursor:pointer;transition:transform 0.25s}
+.oe-item{display:flex;align-items:center;margin-bottom:24px;cursor:pointer;transition:transform 0.25s}
 .oe-item:hover{transform:scale(1.02)}
-.oe-item:active{transform:scale(0.98)}
-
-/* LEFT side: content on left, icon on right */
-.oe-left .oe-content{flex:1;text-align:right;padding-right:16px}
+.oe-item:active{transform:scale(0.97)}
+.oe-left .oe-content{flex:1;text-align:right;padding-right:14px}
 .oe-left .oe-connector{display:flex;align-items:center;justify-content:center;flex-shrink:0;width:20px}
-.oe-left .oe-icon-wrap{flex-shrink:0;margin-left:16px}
-
-/* RIGHT side: icon on left, content on right */
-.oe-right .oe-icon-wrap{flex-shrink:0;margin-right:16px}
+.oe-left .oe-icon-wrap{flex-shrink:0;margin-left:14px}
+.oe-right .oe-icon-wrap{flex-shrink:0;margin-right:14px}
 .oe-right .oe-connector{display:flex;align-items:center;justify-content:center;flex-shrink:0;width:20px}
-.oe-right .oe-content{flex:1;text-align:left;padding-left:16px}
-
-/* Content text */
-.oe-time{font-size:0.62rem;color:var(--gold);letter-spacing:1px;margin-bottom:4px;font-weight:500}
-.oe-name{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--cream);font-weight:600;line-height:1.2}
-.oe-featured .oe-name{color:var(--gold);font-size:1.15rem}
-
-/* Connector dot */
+.oe-right .oe-content{flex:1;text-align:left;padding-left:14px}
+.oe-time{font-size:0.6rem;color:var(--gold);letter-spacing:1px;margin-bottom:4px;font-weight:500}
+.oe-name{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--cream);font-weight:600;line-height:1.2}
+.oe-featured .oe-name{color:var(--gold);font-size:1.1rem}
 .oe-dot{width:10px;height:10px;border-radius:50%;background:rgba(201,168,76,0.4);border:1px solid rgba(201,168,76,0.6);flex-shrink:0}
-.oe-dot-gold{background:var(--gold);box-shadow:0 0 12px rgba(201,168,76,0.6);width:14px;height:14px}
-
-/* Icon circles */
-.oe-icon-wrap{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;border:1px solid rgba(201,168,76,0.2);box-shadow:0 4px 16px rgba(0,0,0,0.4);flex-shrink:0;transition:box-shadow 0.25s}
+.oe-dot-gold{background:var(--gold);box-shadow:0 0 12px rgba(201,168,76,0.6);width:14px;height:14px;animation:calPulse 2s ease-in-out infinite}
+.oe-icon-wrap{width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.4rem;border:1px solid rgba(201,168,76,0.2);box-shadow:0 4px 16px rgba(0,0,0,0.4);flex-shrink:0;transition:box-shadow 0.25s}
 .oe-item:hover .oe-icon-wrap{box-shadow:0 4px 24px rgba(201,168,76,0.25)}
 .mehndi-bg{background:radial-gradient(circle,rgba(76,175,80,0.2),rgba(10,2,2,0.8))}
 .sangeet-bg{background:radial-gradient(circle,rgba(156,39,176,0.2),rgba(10,2,2,0.8))}
-.wedding-bg{background:radial-gradient(circle,rgba(201,168,76,0.25),rgba(10,2,2,0.8));border-color:rgba(201,168,76,0.4)!important;box-shadow:0 0 20px rgba(201,168,76,0.2)!important}
+.wedding-bg{background:radial-gradient(circle,rgba(201,168,76,0.25),rgba(10,2,2,0.8));border-color:rgba(201,168,76,0.4)!important}
 .reception-bg{background:radial-gradient(circle,rgba(230,74,25,0.2),rgba(10,2,2,0.8))}
-
-/* Footer */
 .oe-footer{font-size:0.75rem;color:var(--dim);margin-top:8px;line-height:1.8;position:relative;z-index:1}
 .oe-couple{font-family:'Great Vibes',cursive;font-size:1.6rem;color:var(--gold);display:block;margin-top:4px}
 
-/* ── EVENT DETAIL MODAL ── */
+/* EVENT MODAL */
 .ev-modal{position:fixed;inset:0;z-index:800;display:flex;align-items:flex-end;justify-content:center}
 .ev-modal-bg{position:absolute;inset:0;background:rgba(0,0,0,0.75);backdrop-filter:blur(6px)}
 .ev-modal-card{position:relative;z-index:1;background:linear-gradient(180deg,#1a0404,#0e0202);border:1px solid var(--bdr);border-radius:24px 24px 0 0;padding:28px 24px 40px;width:min(480px,100vw);max-height:90vh;overflow-y:auto;animation:slideUp 0.35s cubic-bezier(0.4,0,0.2,1)}
