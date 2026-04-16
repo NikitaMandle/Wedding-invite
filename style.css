@@ -725,3 +725,31 @@ button{font-family:'Poppins',sans-serif;cursor:pointer;border:none;outline:none}
 .qr-icon{font-size:4rem;margin-bottom:12px}
 .qr-score{font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--gold);margin-bottom:8px}
 .qr-msg{font-size:0.82rem;color:var(--dim);line-height:1.8}
+
+/* CALENDAR — All event date highlights */
+.cal-subtitle{font-size:0.6rem;letter-spacing:3px;text-transform:uppercase;color:var(--dim2);margin-top:4px}
+.cal-leg-full{display:flex;flex-wrap:wrap;gap:8px 14px;justify-content:center;margin-bottom:16px}
+.cal-leg-full span{display:flex;align-items:center;gap:5px;font-size:0.62rem;color:var(--dim)}
+.cal-dot{display:inline-block;width:8px;height:8px;border-radius:50%;flex-shrink:0}
+
+/* Each event color */
+.ev-gondhal{background:rgba(255,140,0,0.25);color:#ffb74d;border:1px solid rgba(255,140,0,0.45);box-shadow:0 0 8px rgba(255,140,0,0.15)}
+.ev-mehendi-g{background:rgba(76,175,80,0.22);color:#a5d6a7;border:1px solid rgba(76,175,80,0.4);box-shadow:0 0 8px rgba(76,175,80,0.12)}
+.ev-haldi-g{background:rgba(255,235,59,0.22);color:#fff176;border:1px solid rgba(255,235,59,0.4);box-shadow:0 0 8px rgba(255,235,59,0.12)}
+.ev-mehndi-b{background:rgba(0,188,212,0.22);color:#80deea;border:1px solid rgba(0,188,212,0.4);box-shadow:0 0 8px rgba(0,188,212,0.12)}
+.ev-sangeet{background:rgba(156,39,176,0.25);color:#ce93d8;border:1px solid rgba(156,39,176,0.45);box-shadow:0 0 8px rgba(156,39,176,0.15)}
+.ev-wedding{background:linear-gradient(135deg,rgba(107,15,26,0.7),rgba(139,26,42,0.7));color:var(--gold);border:1px solid rgba(201,168,76,0.55);box-shadow:0 0 16px rgba(201,168,76,0.3);animation:calPulse 2s ease-in-out infinite;font-weight:700}
+.ev-travel{background:rgba(100,149,237,0.2);color:#90caf9;border:1px solid rgba(100,149,237,0.35);box-shadow:0 0 8px rgba(100,149,237,0.1)}
+.ev-reception{background:rgba(230,74,25,0.22);color:#ffab91;border:1px solid rgba(230,74,25,0.4);box-shadow:0 0 8px rgba(230,74,25,0.12)}
+.ev-pooja{background:rgba(255,215,0,0.2);color:#ffe082;border:1px solid rgba(255,215,0,0.35);box-shadow:0 0 8px rgba(255,215,0,0.1)}
+
+/* Legend dot colors matching above */
+.ev-gondhal.cal-dot{background:rgba(255,140,0,0.8)}
+.ev-mehendi-g.cal-dot{background:rgba(76,175,80,0.8)}
+.ev-haldi-g.cal-dot{background:rgba(255,235,59,0.8)}
+.ev-mehndi-b.cal-dot{background:rgba(0,188,212,0.8)}
+.ev-sangeet.cal-dot{background:rgba(156,39,176,0.8)}
+.ev-wedding.cal-dot{background:var(--gold);animation:none}
+.ev-travel.cal-dot{background:rgba(100,149,237,0.8)}
+.ev-reception.cal-dot{background:rgba(230,74,25,0.8)}
+.ev-pooja.cal-dot{background:rgba(255,215,0,0.8)}
