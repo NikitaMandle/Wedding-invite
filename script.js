@@ -103,14 +103,7 @@ document.addEventListener('DOMContentLoaded', function(){
     const card = el('pwa-card');
     const btn = el('pwa-install-btn');
     if(!card || !btn) return;
-    card.style.display = 'none';
-
-    if(isStandaloneMode()){
-      card.style.display = 'none';
-      return;
-    }
-
-    const setCardVisible = () => { card.style.display = 'block'; };
+    card.style.display = 'block';
 
     const triggerInstall = async () => {
       if(!deferredInstallPrompt) return;
@@ -122,15 +115,11 @@ document.addEventListener('DOMContentLoaded', function(){
     window.addEventListener('beforeinstallprompt', (event) => {
       event.preventDefault();
       deferredInstallPrompt = event;
-      setCardVisible();
     });
 
     window.addEventListener('appinstalled', () => {
       deferredInstallPrompt = null;
       btn.textContent = 'Installed';
-      setTimeout(() => {
-        card.style.display = 'none';
-      }, 1200);
     });
 
     window.installPWA = triggerInstall;
