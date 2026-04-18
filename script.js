@@ -100,35 +100,40 @@ document.addEventListener('DOMContentLoaded', function(){
     if(addHomeInitialized) return;
     addHomeInitialized = true;
 
-    const btn = el('add-home-btn');
-    if(!btn) return;
-    btn.classList.remove('hidden');
-    btn.style.display = 'inline-flex';
+    const card = el('pwa-card');
+    const btn = el('pwa-install-btn');
+    if(!card || !btn) return;
+    card.style.display = 'none';
 
     if(isStandaloneMode()){
-      btn.classList.add('hidden');
+      card.style.display = 'none';
       return;
     }
+
+    const setCardVisible = () => { card.style.display = 'block'; };
+
+    const triggerInstall = async () => {
+      if(!deferredInstallPrompt) return;
+      deferredInstallPrompt.prompt();
+      try{ await deferredInstallPrompt.userChoice; }catch(_err){}
+      deferredInstallPrompt = null;
+    };
 
     window.addEventListener('beforeinstallprompt', (event) => {
       event.preventDefault();
       deferredInstallPrompt = event;
+      setCardVisible();
     });
 
     window.addEventListener('appinstalled', () => {
       deferredInstallPrompt = null;
       btn.textContent = 'Installed';
       setTimeout(() => {
-        btn.classList.add('hidden');
+        card.style.display = 'none';
       }, 1200);
     });
 
-    btn.addEventListener('click', async () => {
-      if(!deferredInstallPrompt) return;
-      deferredInstallPrompt.prompt();
-      try{ await deferredInstallPrompt.userChoice; }catch(_err){}
-      deferredInstallPrompt = null;
-    });
+    window.installPWA = triggerInstall;
   }
 
   // ── COUNTDOWN ──
