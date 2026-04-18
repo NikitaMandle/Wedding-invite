@@ -105,8 +105,21 @@ document.addEventListener('DOMContentLoaded', function(){
     if(!card || !btn) return;
     card.style.display = 'block';
 
+    const showUnavailableState = () => {
+      const original = btn.textContent;
+      btn.textContent = 'Install not available';
+      btn.disabled = true;
+      setTimeout(()=>{
+        btn.textContent = original;
+        btn.disabled = false;
+      }, 1400);
+    };
+
     const triggerInstall = async () => {
-      if(!deferredInstallPrompt) return;
+      if(!deferredInstallPrompt){
+        showUnavailableState();
+        return;
+      }
       deferredInstallPrompt.prompt();
       try{ await deferredInstallPrompt.userChoice; }catch(_err){}
       deferredInstallPrompt = null;
@@ -120,9 +133,11 @@ document.addEventListener('DOMContentLoaded', function(){
     window.addEventListener('appinstalled', () => {
       deferredInstallPrompt = null;
       btn.textContent = 'Installed';
+      btn.disabled = true;
     });
 
     window.installPWA = triggerInstall;
+    btn.addEventListener('click', triggerInstall);
   }
 
   // ── COUNTDOWN ──
