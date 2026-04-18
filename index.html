@@ -7,27 +7,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Great+Vibes&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet"/>
-<link rel="manifest" href="manifest.json"/>
-<meta name="theme-color" content="#0a0202"/>
-<meta name="apple-mobile-web-app-capable" content="yes"/>
-<meta name="apple-mobile-web-app-title" content="N&amp;P Wedding"/>
 <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-
-<!-- SECURITY LOCK SCREEN -->
-<div id="security-lock" style="display:none">
-  <canvas id="slc"></canvas>
-  <div class="sl-inner">
-    <div class="sl-icon">🔒</div>
-    <h2 class="sl-title">Private Invitation</h2>
-    <p class="sl-msg">This invitation is private.<br/>Please use your personal link.</p>
-    <p class="sl-hint">Contact the couple for your invitation link.</p>
-    <div class="sl-contact">
-      <a href="https://wa.me/919999999999" class="sl-wa">💬 Contact on WhatsApp</a>
-    </div>
-  </div>
-</div>
 
 <!-- ══ STEP 1: LOADER ══ -->
 <div id="loader">
@@ -44,46 +26,24 @@
   <canvas id="pc"></canvas>
   <div class="photo-petals" id="pp"></div>
   <div class="inv-card-wrap">
-
     <div class="inv-card">
-      <!-- Animated shimmer overlay -->
-      <div class="inv-shimmer"></div>
-
-      <!-- Corner brackets -->
+      <!-- Corner ornaments -->
       <div class="inv-corner inv-c-tl"></div>
       <div class="inv-corner inv-c-tr"></div>
       <div class="inv-corner inv-c-bl"></div>
       <div class="inv-corner inv-c-br"></div>
-
-      <!-- Top band -->
-      <div class="inv-top-band"><div class="inv-band-roses"></div></div>
-
+      <!-- Top floral band -->
+      <div class="inv-top-band">
+        <div class="inv-band-roses"></div>
+      </div>
       <!-- Card body -->
       <div class="inv-body">
-
-        <!-- GUEST NAME BLOCK — prominent at top -->
-        <div class="inv-guest-wrap hidden" id="inv-guest-wrap">
-          <div class="inv-guest-inner">
-            <span class="inv-guest-dear">Welcome</span>
-            <p class="inv-guest-name" id="inv-guest-name"></p>
-            <div class="inv-guest-line"><span></span><span class="inv-guest-gem">✦</span><span></span></div>
-          </div>
-        </div>
-
-        <!-- Eyebrow -->
-        <p class="inv-eyebrow">✦ Wedding Invitation ✦</p>
-
-        <!-- Spinning mandala -->
+        <p class="inv-eyebrow">— Wedding Invitation —</p>
         <div class="inv-mandala">
-          <div class="inv-mandala-ring r1"></div>
-          <div class="inv-mandala-ring r2"></div>
-          <span class="inv-mandala-icon">💍</span>
+          <div class="inv-mandala-ring"></div>
+          <span class="inv-mandala-icon">✦</span>
         </div>
-
-        <!-- Cordially text -->
         <p class="inv-cordially">You are cordially invited to celebrate the wedding of</p>
-
-        <!-- Names -->
         <div class="inv-names-wrap">
           <h1 class="inv-name-groom">Nikhil</h1>
           <div class="inv-names-divider">
@@ -93,42 +53,28 @@
           </div>
           <h1 class="inv-name-bride">Prachi</h1>
         </div>
-
-        <!-- Date block -->
         <div class="inv-date-block">
           <div class="inv-date-row">
-            <span class="inv-date-item">
-              <span class="inv-date-num">10</span>
-              <span class="inv-date-lbl">May</span>
-            </span>
+            <span class="inv-date-item"><span class="inv-date-num">10</span><span class="inv-date-lbl">May</span></span>
             <span class="inv-date-dot">◆</span>
-            <span class="inv-date-item">
-              <span class="inv-date-num">2026</span>
-              <span class="inv-date-lbl">Sunday</span>
-            </span>
+            <span class="inv-date-item"><span class="inv-date-num">2026</span><span class="inv-date-lbl">Sunday</span></span>
           </div>
         </div>
-
-        <!-- Venue -->
         <div class="inv-venue-block">
-          <p class="inv-venue-name">Mata Amritanandamayi Math</p>
+          <p class="inv-venue-name">Sweta Lawn</p>
           <p class="inv-venue-addr">Nigdi, Pune — Maharashtra</p>
         </div>
-
       </div>
-
-      <!-- Bottom band -->
-      <div class="inv-bot-band"><div class="inv-band-roses"></div></div>
+      <!-- Bottom floral band -->
+      <div class="inv-bot-band">
+        <div class="inv-band-roses"></div>
+      </div>
     </div>
-
-    <!-- Open button -->
     <button class="inv-open-btn" id="photo-cta-btn">
-      <span class="inv-btn-ripple"></span>
       <span>✉</span>
       <span>Open Invitation</span>
       <span class="inv-btn-arrow">→</span>
     </button>
-
   </div>
 </div>
 
@@ -163,10 +109,7 @@
 
   <!-- NAV -->
   <header id="nav" class="nav">
-    <div class="nav-left">
-      <div class="nav-brand">N <em>&amp;</em> P</div>
-      <div class="nav-guest" id="nav-guest"></div>
-    </div>
+    <div class="nav-brand">N <em>&amp;</em> P</div>
     <button class="nav-btn" id="nav-btn" onclick="openNav()" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
@@ -202,7 +145,7 @@
         <a href="#s-quiz" onclick="closeNav()"><span class="np-num">10</span><span>Quiz 🎯</span></a>
       </nav>
       <div class="np-footer">
-        <p>10 · 05 · 2026 &nbsp;·&nbsp; Mata Amritanandamayi Math, Pune</p>
+        <p>10 · 05 · 2026 &nbsp;·&nbsp; Mata Amritanandamayi Math, Nigdi, Pune, Maharashtra - 411044</p>
       </div>
     </div>
   </div>
@@ -213,14 +156,14 @@
     <div class="hero-rose-tl"></div><div class="hero-rose-tr"></div>
     <div class="hero-rose-bl"></div><div class="hero-rose-br"></div>
     <div class="hero-body">
-      <p class="hero-tag anim-fade-up" style="--d:.1s">You are cordially invited</p>
+      <p class="hero-tag anim-fade-up" style="--d:.1s" id="welcomeText">You are cordially invited</p>
       <h1 class="hero-names">
         <span class="hn-nikhil anim-fade-up" style="--d:.25s">Nikhil</span>
         <span class="hn-amp anim-fade-up" style="--d:.4s">&amp;</span>
         <span class="hn-prachi anim-fade-up" style="--d:.55s">Prachi</span>
       </h1>
       <div class="hero-rule anim-fade-up" style="--d:.7s"><span></span><span class="hr-gem">◆</span><span></span></div>
-      <p class="hero-date-line anim-fade-up" style="--d:.8s">10 May 2026 &nbsp;·&nbsp; Mata Amritanandamayi Math, Pune</p>
+      <p class="hero-date-line anim-fade-up" style="--d:.8s">10 May 2026 &nbsp;·&nbsp; Mata Amritanandamayi Math, Nigdi, Pune, Maharashtra - 411044</p>
       <p class="hero-copy anim-fade-up" style="--d:.95s">We invite you to share in the joy of our wedding celebration — a day filled with love, laughter and beautiful memories.</p>
       <a href="#s-events" class="hero-cta anim-fade-up" style="--d:1.1s">
         <span>Explore Events</span>
@@ -230,13 +173,11 @@
     <div class="hero-scroll"><span></span></div>
   </section>
 
-  <!-- COUNTDOWN + DUAL CALENDAR -->
+  <!-- COUNTDOWN + CALENDAR -->
   <section id="s-cd" class="s cd-s reveal">
     <div class="sf-l"></div><div class="sf-r"></div>
-    <div class="s-label">Counting Down To</div>
+    <div class="s-label">Counting Down</div>
     <h2 class="s-title">10 May 2026</h2>
-
-    <!-- Countdown -->
     <div class="cd-wrap">
       <div class="cd-box"><span class="cd-n" id="cd-d">00</span><span class="cd-l">Days</span></div>
       <div class="cd-colon">:</div>
@@ -247,222 +188,177 @@
       <div class="cd-box"><span class="cd-n" id="cd-s">00</span><span class="cd-l">Secs</span></div>
     </div>
 
-    <!-- Simple Calendar — only wedding date highlighted -->
     <div class="cal reveal-child">
       <div class="cal-head">
         <span class="cal-title">May 2026</span>
+        <p class="cal-subtitle">All Wedding Events</p>
       </div>
       <div class="cal-grid">
         <b>Su</b><b>Mo</b><b>Tu</b><b>We</b><b>Th</b><b>Fr</b><b>Sa</b>
         <i></i><i></i><i></i><i></i><i></i><s>1</s><s>2</s>
-        <s>3</s><s>4</s><s>5</s><s>6</s><s>7</s><s>8</s><s>9</s>
-        <s class="wedding" title="💍 Wedding Day">10</s>
-        <s>11</s><s>12</s><s>13</s><s>14</s><s>15</s><s>16</s>
-        <s>17</s><s>18</s><s>19</s><s>20</s><s>21</s><s>22</s><s>23</s>
-        <s>24</s><s>25</s><s>26</s><s>27</s><s>28</s><s>29</s><s>30</s>
-        <s>31</s><i></i><i></i><i></i><i></i><i></i><i></i>
+        <s>3</s><s>4</s>
+        <!-- 5 May: Gondhal (Groom) -->
+        <s class="ev ev-gondhal" title="Gondhal Ceremony — Amravati">5</s>
+        <!-- 6 May: Mehendi (Groom) -->
+        <s class="ev ev-mehendi-g" title="Mehendi Ceremony — Amravati">6</s>
+        <!-- 7 May: Haldi & Devkundi (Groom) -->
+        <s class="ev ev-haldi-g" title="Haldi & Devkundi — Amravati">7</s>
+        <!-- 8 May: Travel + Bride Mehndi -->
+        <s class="ev ev-mehndi-b" title="Departure to Pune + Bride Mehndi">8</s>
+        <!-- 9 May: Arrival + Sangeet + Bride Haldi -->
+        <s class="ev ev-sangeet" title="Arrival in Pune + Sangeet Night + Bride Haldi">9</s>
+        <!-- 10 May: WEDDING DAY 💍 -->
+        <s class="ev ev-wedding" title="💍 Wedding Ceremony — The Big Day!">10</s>
+        <!-- 11 May: Return -->
+        <s class="ev ev-travel" title="Return to Amravati">11</s>
+        <!-- 12 May: Reception -->
+        <s class="ev ev-reception" title="Reception & Satyanarayan — Amravati">12</s>
+        <!-- 13 May: Travel to Pune -->
+        <s class="ev ev-travel" title="Travel to Pune">13</s>
+        <!-- 14 May: Satyanarayan Pune -->
+        <s class="ev ev-pooja" title="Satyanarayan Pooja — Pune">14</s>
+        <s>15</s><s>16</s><s>17</s><s>18</s><s>19</s><s>20</s><s>21</s>
+        <s>22</s><s>23</s><s>24</s><s>25</s><s>26</s><s>27</s><s>28</s>
+        <s>29</s><s>30</s><s>31</s><i></i><i></i><i></i><i></i>
       </div>
-      <a class="btn-g" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Nikhil+%26+Prachi+Wedding&dates=20260510T110000/20260510T180000&location=Mata+Amritanandamayi+Math,+Nigdi,+Pune" target="_blank">📅 Add to Calendar</a>
-    </div>
 
+      <!-- Legend for all events -->
+      <div class="cal-leg cal-leg-full">
+        <span><em class="ev-gondhal cal-dot"></em>Gondhal</span>
+        <span><em class="ev-mehendi-g cal-dot"></em>Mehendi</span>
+        <span><em class="ev-haldi-g cal-dot"></em>Haldi</span>
+        <span><em class="ev-mehndi-b cal-dot"></em>Mehndi+Travel</span>
+        <span><em class="ev-sangeet cal-dot"></em>Sangeet</span>
+        <span><em class="ev-wedding cal-dot"></em>💍 Wedding</span>
+        <span><em class="ev-reception cal-dot"></em>Reception</span>
+        <span><em class="ev-pooja cal-dot"></em>Pooja</span>
+      </div>
+
+      <a class="btn-g" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Nikhil+%26+Prachi+Wedding&dates=20260510T110000/20260510T235900&location=Sweta+Lawn,+Nigdi,+Pune" target="_blank">📅 Add to Calendar</a>
+    </div>
   </section>
 
-  <!-- EVENTS — Premium Timeline -->
+  <!-- EVENTS — Order of Events Timeline -->
   <section id="s-events" class="s events-s reveal">
     <div class="sf-l"></div><div class="sf-r"></div>
-    <div class="s-label">The Big Day</div>
-    <h2 class="s-title">Programme</h2>
 
-    <!-- TOGGLE -->
-    <div class="ev-toggle-wrap">
-      <button class="ev-toggle-btn active" id="btn-groom" onclick="switchTimeline('groom')">
-        <span class="etb-icon">🤵</span>
-        <span class="etb-label">Groom</span>
-        <span class="etb-sub">Nikhil's Events</span>
+    <!-- Header -->
+    <div class="oe-header">
+      <p class="oe-top-label">✦ The Big Day ✦</p>
+      <h2 class="oe-main-title">Order <em>of</em> Events</h2>
+      <p class="oe-tap-hint">Tap any event to see venue, map &amp; outfit</p>
+    </div>
+
+    <!-- TOGGLE SWITCH: Groom / Bride -->
+    <div class="oe-toggle-wrap">
+      <button class="oe-toggle-btn active" id="btn-groom" onclick="switchTimeline('groom')">
+        <span class="oe-toggle-icon">🤵</span>
+        <span>Groom's Events</span>
       </button>
-      <button class="ev-toggle-btn" id="btn-bride" onclick="switchTimeline('bride')">
-        <span class="etb-icon">👰</span>
-        <span class="etb-label">Bride</span>
-        <span class="etb-sub">Prachi's Events</span>
+      <div class="oe-toggle-divider"></div>
+      <button class="oe-toggle-btn" id="btn-bride" onclick="switchTimeline('bride')">
+        <span class="oe-toggle-icon">👰</span>
+        <span>Bride's Events</span>
       </button>
     </div>
 
-    <!-- GROOM TIMELINE -->
-    <div class="ev-timeline" id="timeline-groom">
-      <div class="ev-tl-item" onclick="openEventModal('g_gondhal')">
-        <div class="ev-tl-date"><span class="ev-tl-day">05</span><span class="ev-tl-mon">May</span></div>
-        <div class="ev-tl-line"><div class="ev-tl-dot" style="background:#FF8C00"></div></div>
-        <div class="ev-tl-card">
-          <div class="ev-tl-top"><span class="ev-tl-icon">🪔</span><span class="ev-tl-badge" style="background:rgba(255,140,0,0.15);color:#FFB74D">Amravati</span></div>
-          <h3 class="ev-tl-name">Gondhal Ceremony</h3>
-          <p class="ev-tl-time">Evening · Nikhil's Home, Rajapeth</p>
-          <p class="ev-tl-dress">👗 Traditional Attire</p>
-          <div class="ev-tl-actions">
-            <span class="ev-tl-days" id="days-g_gondhal"></span>
-            <button class="ev-tl-cal" onclick="event.stopPropagation();addToCal('g_gondhal')">+ Calendar</button>
-          </div>
-        </div>
+    <!-- GROOM TIMELINE — Real Events -->
+    <div class="oe-timeline" id="timeline-groom">
+      <div class="oe-row oe-row-left" onclick="openEventModal('g_gondhal')">
+        <div class="oe-left-side"><p class="oe-ev-time">05 May · Amravati</p><h3 class="oe-ev-name">Gondhal Ceremony</h3></div>
+        <div class="oe-center-col"><div class="oe-icon-circle" style="background:radial-gradient(circle at 35% 35%,rgba(255,165,0,0.35),#080101 70%)">🪔</div><div class="oe-v-line"></div></div>
+        <div class="oe-right-side oe-right-empty"></div>
       </div>
-      <div class="ev-tl-item" onclick="openEventModal('g_mehendi')">
-        <div class="ev-tl-date"><span class="ev-tl-day">06</span><span class="ev-tl-mon">May</span></div>
-        <div class="ev-tl-line"><div class="ev-tl-dot" style="background:#4CAF50"></div></div>
-        <div class="ev-tl-card">
-          <div class="ev-tl-top"><span class="ev-tl-icon">🌿</span><span class="ev-tl-badge" style="background:rgba(76,175,80,0.15);color:#A5D6A7">Amravati</span></div>
-          <h3 class="ev-tl-name">Mehendi Ceremony</h3>
-          <p class="ev-tl-time">Afternoon · Nikhil's Home, Rajapeth</p>
-          <p class="ev-tl-dress">👗 Casual / Traditional</p>
-          <div class="ev-tl-actions">
-            <span class="ev-tl-days" id="days-g_mehendi"></span>
-            <button class="ev-tl-cal" onclick="event.stopPropagation();addToCal('g_mehendi')">+ Calendar</button>
-          </div>
-        </div>
+      <div class="oe-row oe-row-right" onclick="openEventModal('g_mehendi')">
+        <div class="oe-left-side oe-left-empty"></div>
+        <div class="oe-center-col"><div class="oe-v-line"></div><div class="oe-icon-circle mehndi-ic">🌿</div><div class="oe-v-line"></div></div>
+        <div class="oe-right-side"><p class="oe-ev-time">06 May · Amravati</p><h3 class="oe-ev-name">Mehendi Ceremony</h3></div>
       </div>
-      <div class="ev-tl-item" onclick="openEventModal('g_haldi')">
-        <div class="ev-tl-date"><span class="ev-tl-day">07</span><span class="ev-tl-mon">May</span></div>
-        <div class="ev-tl-line"><div class="ev-tl-dot" style="background:#FFEB3B"></div></div>
-        <div class="ev-tl-card">
-          <div class="ev-tl-top"><span class="ev-tl-icon">🌼</span><span class="ev-tl-badge" style="background:rgba(255,235,59,0.15);color:#FFF176">Amravati</span></div>
-          <h3 class="ev-tl-name">Haldi &amp; Devkundi</h3>
-          <p class="ev-tl-time">Morning · Nikhil's Home, Rajapeth</p>
-          <p class="ev-tl-dress">👗 Yellow / White Traditional</p>
-          <div class="ev-tl-actions">
-            <span class="ev-tl-days" id="days-g_haldi"></span>
-            <button class="ev-tl-cal" onclick="event.stopPropagation();addToCal('g_haldi')">+ Calendar</button>
-          </div>
-        </div>
+      <div class="oe-row oe-row-left" onclick="openEventModal('g_haldi')">
+        <div class="oe-left-side"><p class="oe-ev-time">07 May · Amravati</p><h3 class="oe-ev-name">Haldi &amp; Devkundi</h3></div>
+        <div class="oe-center-col"><div class="oe-v-line"></div><div class="oe-icon-circle haldi-ic">🌼</div><div class="oe-v-line"></div></div>
+        <div class="oe-right-side oe-right-empty"></div>
       </div>
-      <div class="ev-tl-item" onclick="openEventModal('g_travel')">
-        <div class="ev-tl-date"><span class="ev-tl-day">08</span><span class="ev-tl-mon">May</span></div>
-        <div class="ev-tl-line"><div class="ev-tl-dot" style="background:#64B5F6"></div></div>
-        <div class="ev-tl-card">
-          <div class="ev-tl-top"><span class="ev-tl-icon">🚂</span><span class="ev-tl-badge" style="background:rgba(100,181,246,0.15);color:#90CAF9">Travel</span></div>
-          <h3 class="ev-tl-name">Departure to Pune</h3>
-          <p class="ev-tl-time">Morning · Amravati → Pune</p>
-          <p class="ev-tl-dress">👗 Comfortable Wear</p>
-          <div class="ev-tl-actions">
-            <span class="ev-tl-days" id="days-g_travel"></span>
-            <button class="ev-tl-cal" onclick="event.stopPropagation();addToCal('g_travel')">+ Calendar</button>
-          </div>
-        </div>
+      <!-- <div class="oe-row oe-row-right" onclick="openEventModal('g_travel')">
+        <div class="oe-left-side oe-left-empty"></div>
+        <div class="oe-center-col"><div class="oe-v-line"></div><div class="oe-icon-circle" style="background:radial-gradient(circle at 35% 35%,rgba(100,149,237,0.35),#080101 70%)">🚂</div><div class="oe-v-line"></div></div>
+        <div class="oe-right-side"><p class="oe-ev-time">08 May · Travel</p><h3 class="oe-ev-name">Departure to Pune</h3></div>
+      </div> -->
+      <!-- <div class="oe-row oe-row-right" onclick="openEventModal('g_arrival')">
+        <div class="oe-left-side"><p class="oe-ev-time">09 May · Pune</p><h3 class="oe-ev-name">Arrival &amp; Preparations</h3></div>
+        <div class="oe-center-col"><div class="oe-v-line"></div><div class="oe-icon-circle" style="background:radial-gradient(circle at 35% 35%,rgba(144,238,144,0.35),#080101 70%)">🏡</div><div class="oe-v-line"></div></div>
+        <div class="oe-right-side oe-right-empty"></div> -->
+       
+      <div class="oe-row oe-row-left oe-row-featured" onclick="openEventModal('g_wedding')">
+        <div class="oe-left-side oe-left-empty"></div>
+        <div class="oe-center-col"><div class="oe-v-line"></div><div class="oe-icon-circle wedding-ic">💍</div><div class="oe-v-line"></div></div>
+        <div class="oe-right-side"><p class="oe-ev-time">10 May · Pune</p><h3 class="oe-ev-name oe-ev-gold">Wedding Ceremony 💍</h3></div>
       </div>
-      <div class="ev-tl-item ev-tl-featured" onclick="openEventModal('g_wedding')">
-        <div class="ev-tl-date ev-tl-date-gold"><span class="ev-tl-day">10</span><span class="ev-tl-mon">May</span></div>
-        <div class="ev-tl-line"><div class="ev-tl-dot ev-tl-dot-gold"></div></div>
-        <div class="ev-tl-card ev-tl-card-gold">
-          <div class="ev-tl-top"><span class="ev-tl-icon">💍</span><span class="ev-tl-badge" style="background:rgba(201,168,76,0.2);color:#E8C97A">The Big Day</span></div>
-          <h3 class="ev-tl-name ev-tl-name-gold">Wedding Ceremony</h3>
-          <p class="ev-tl-time">11:00 AM · Mata Amritanandamayi Math, Nigdi, Pune</p>
-          <p class="ev-tl-dress">👗 Sherwani / Formal</p>
-          <div class="ev-tl-actions">
-            <span class="ev-tl-days" id="days-g_wedding"></span>
-            <button class="ev-tl-cal" onclick="event.stopPropagation();addToCal('g_wedding')">+ Calendar</button>
-          </div>
+      <div class="oe-row oe-row-left" onclick="openEventModal('g_reception')">
+        <div class="oe-left-side">
+          <p class="oe-ev-time">12 May · Amravati</p>
+          <h3 class="oe-ev-name">Reception</h3>
         </div>
+        <div class="oe-center-col">
+          <div class="oe-v-line"></div>
+          <div class="oe-icon-circle reception-ic">🥂</div>
+          <div class="oe-v-line"></div>
+        </div>
+        <div class="oe-right-side oe-right-empty"></div>
       </div>
-      <div class="ev-tl-item" onclick="openEventModal('g_reception')">
-        <div class="ev-tl-date"><span class="ev-tl-day">12</span><span class="ev-tl-mon">May</span></div>
-        <div class="ev-tl-line"><div class="ev-tl-dot" style="background:#E64A19"></div></div>
-        <div class="ev-tl-card">
-          <div class="ev-tl-top"><span class="ev-tl-icon">🥂</span><span class="ev-tl-badge" style="background:rgba(230,74,25,0.15);color:#FFAB91">Amravati</span></div>
-          <h3 class="ev-tl-name">Reception &amp; Satyanarayan</h3>
-          <p class="ev-tl-time">Evening · Nikhil's Home, Rajapeth</p>
-          <p class="ev-tl-dress">👗 Ethnic / Formal Elegant</p>
-          <div class="ev-tl-actions">
-            <span class="ev-tl-days" id="days-g_reception"></span>
-            <button class="ev-tl-cal" onclick="event.stopPropagation();addToCal('g_reception')">+ Calendar</button>
-          </div>
+   
+      <div class="oe-row oe-row-right" onclick="openEventModal('g_amt2')">
+        <div class="oe-left-side oe-left-empty"></div>
+        <div class="oe-center-col"><div class="oe-v-line"></div><div class="oe-icon-circle" style="background:radial-gradient(circle at 35% 35%,rgba(255,215,0,0.35),#080101 70%)">🙏</div></div>
+        <div class="oe-right-side"><p class="oe-ev-time">12 May · Amravati</p><h3 class="oe-ev-name">Satyanarayan Pooja</h3></div>
+      </div>
+    </div>
+
+    <!-- BRIDE TIMELINE -->
+    <div class="oe-timeline hidden" id="timeline-bride">
+      <div class="oe-row oe-row-left" onclick="openEventModal('b_mehndi')">
+        <div class="oe-left-side"><p class="oe-ev-time">08 May · 4:00 PM</p><h3 class="oe-ev-name">Mehndi Ceremony</h3></div>
+        <div class="oe-center-col"><div class="oe-icon-circle mehndi-ic">🌿</div><div class="oe-v-line"></div></div>
+        <div class="oe-right-side oe-right-empty"></div>
+      </div>
+      <div class="oe-row oe-row-right" onclick="openEventModal('b_sangeet')">
+        <div class="oe-left-side oe-left-empty"></div>
+        <div class="oe-center-col"><div class="oe-v-line"></div><div class="oe-icon-circle sangeet-ic">🎶</div><div class="oe-v-line"></div></div>
+        <div class="oe-right-side"><p class="oe-ev-time">09 May · 7:00 PM</p><h3 class="oe-ev-name">Sangeet Night</h3></div>
+      </div>
+      <div class="oe-row oe-row-left" onclick="openEventModal('b_haldi')">
+        <div class="oe-left-side"><p class="oe-ev-time">09 May · 11:00 AM</p><h3 class="oe-ev-name">Haldi Ceremony</h3></div>
+        <div class="oe-center-col"><div class="oe-v-line"></div><div class="oe-icon-circle haldi-ic">🌼</div><div class="oe-v-line"></div></div>
+        <div class="oe-right-side oe-right-empty"></div>
+      </div>
+      <div class="oe-row oe-row-right oe-row-featured" onclick="openEventModal('b_wedding')">
+        <div class="oe-left-side oe-left-empty"></div>
+        <div class="oe-center-col"><div class="oe-v-line"></div><div class="oe-icon-circle wedding-ic">💍</div><div class="oe-v-line"></div></div>
+        <div class="oe-right-side"><p class="oe-ev-time">10 May · 11:00 AM</p><h3 class="oe-ev-name oe-ev-gold">Wedding Ceremony</h3></div>
+      </div>
+      <div class="oe-row oe-row-left" onclick="openEventModal('b_vidaai')">
+        <div class="oe-left-side"><p class="oe-ev-time">10 May · 2:00 PM</p><h3 class="oe-ev-name">Vidaai</h3></div>
+        <div class="oe-center-col"><div class="oe-v-line"></div><div class="oe-icon-circle vidaai-ic">🌸</div></div>
+        <div class="oe-right-side oe-right-empty"></div>
+      </div>
+      <div class="oe-row oe-row-right" onclick="openEventModal('g_pune2')">
+        <div class="oe-left-side oe-left-empty"></div>
+        <div class="oe-center-col">
+          <div class="oe-v-line"></div>
+          <div class="oe-icon-circle" style="background:radial-gradient(circle at 35% 35%,rgba(255,215,0,0.35),#080101 70%)">
+            🙏</div>
+        </div>
+        <div class="oe-right-side">
+          <p class="oe-ev-time">13–14 May · Pune</p>
+          <h3 class="oe-ev-name">Satyanarayan Pooja</h3>
         </div>
       </div>
     </div>
 
-    <!-- BRIDE TIMELINE — completely different events -->
-    <div class="ev-timeline hidden" id="timeline-bride">
-      <div class="ev-tl-item" onclick="openEventModal('b_haldi')">
-        <div class="ev-tl-date"><span class="ev-tl-day">07</span><span class="ev-tl-mon">May</span></div>
-        <div class="ev-tl-line"><div class="ev-tl-dot" style="background:#FFEB3B"></div></div>
-        <div class="ev-tl-card">
-          <div class="ev-tl-top"><span class="ev-tl-icon">🌼</span><span class="ev-tl-badge" style="background:rgba(255,235,59,0.15);color:#FFF176">Pune</span></div>
-          <h3 class="ev-tl-name">Haldi Ceremony</h3>
-          <p class="ev-tl-time">Morning · Mata Amritanandamayi Math, Nigdi, Pune</p>
-          <p class="ev-tl-dress">👗 Yellow / Floral Traditional</p>
-          <div class="ev-tl-actions">
-            <span class="ev-tl-days" id="days-b_haldi"></span>
-            <button class="ev-tl-cal" onclick="event.stopPropagation();addToCal('b_haldi')">+ Calendar</button>
-          </div>
-        </div>
-      </div>
-      <div class="ev-tl-item" onclick="openEventModal('b_mehndi')">
-        <div class="ev-tl-date"><span class="ev-tl-day">08</span><span class="ev-tl-mon">May</span></div>
-        <div class="ev-tl-line"><div class="ev-tl-dot" style="background:#4CAF50"></div></div>
-        <div class="ev-tl-card">
-          <div class="ev-tl-top"><span class="ev-tl-icon">🌿</span><span class="ev-tl-badge" style="background:rgba(76,175,80,0.15);color:#A5D6A7">Pune</span></div>
-          <h3 class="ev-tl-name">Mehndi Ceremony</h3>
-          <p class="ev-tl-time">4:00 PM onwards · Mata Amritanandamayi Math, Nigdi</p>
-          <p class="ev-tl-dress">👗 Yellow / Green Traditional</p>
-          <div class="ev-tl-actions">
-            <span class="ev-tl-days" id="days-b_mehndi"></span>
-            <button class="ev-tl-cal" onclick="event.stopPropagation();addToCal('b_mehndi')">+ Calendar</button>
-          </div>
-        </div>
-      </div>
-      <div class="ev-tl-item" onclick="openEventModal('b_sangeet')">
-        <div class="ev-tl-date"><span class="ev-tl-day">09</span><span class="ev-tl-mon">May</span></div>
-        <div class="ev-tl-line"><div class="ev-tl-dot" style="background:#9C27B0"></div></div>
-        <div class="ev-tl-card">
-          <div class="ev-tl-top"><span class="ev-tl-icon">🎶</span><span class="ev-tl-badge" style="background:rgba(156,39,176,0.15);color:#CE93D8">Pune</span></div>
-          <h3 class="ev-tl-name">Sangeet Night</h3>
-          <p class="ev-tl-time">7:00 PM onwards · Mata Amritanandamayi Math, Nigdi</p>
-          <p class="ev-tl-dress">👗 Cocktail / Festive Colourful</p>
-          <div class="ev-tl-actions">
-            <span class="ev-tl-days" id="days-b_sangeet"></span>
-            <button class="ev-tl-cal" onclick="event.stopPropagation();addToCal('b_sangeet')">+ Calendar</button>
-          </div>
-        </div>
-      </div>
-      <div class="ev-tl-item ev-tl-featured" onclick="openEventModal('b_wedding')">
-        <div class="ev-tl-date ev-tl-date-gold"><span class="ev-tl-day">10</span><span class="ev-tl-mon">May</span></div>
-        <div class="ev-tl-line"><div class="ev-tl-dot ev-tl-dot-gold"></div></div>
-        <div class="ev-tl-card ev-tl-card-gold">
-          <div class="ev-tl-top"><span class="ev-tl-icon">💍</span><span class="ev-tl-badge" style="background:rgba(201,168,76,0.2);color:#E8C97A">The Big Day</span></div>
-          <h3 class="ev-tl-name ev-tl-name-gold">Wedding Ceremony</h3>
-          <p class="ev-tl-time">11:00 AM · Mata Amritanandamayi Math, Nigdi, Pune</p>
-          <p class="ev-tl-dress">👗 Bridal Lehenga / Traditional</p>
-          <div class="ev-tl-actions">
-            <span class="ev-tl-days" id="days-b_wedding"></span>
-            <button class="ev-tl-cal" onclick="event.stopPropagation();addToCal('b_wedding')">+ Calendar</button>
-          </div>
-        </div>
-      </div>
-      <div class="ev-tl-item" onclick="openEventModal('b_vidaai')">
-        <div class="ev-tl-date"><span class="ev-tl-day">10</span><span class="ev-tl-mon">May</span></div>
-        <div class="ev-tl-line"><div class="ev-tl-dot" style="background:#F48FB1"></div></div>
-        <div class="ev-tl-card">
-          <div class="ev-tl-top"><span class="ev-tl-icon">🌸</span><span class="ev-tl-badge" style="background:rgba(244,143,177,0.15);color:#F48FB1">Pune</span></div>
-          <h3 class="ev-tl-name">Vidaai</h3>
-          <p class="ev-tl-time">2:00 PM · Mata Amritanandamayi Math, Nigdi, Pune</p>
-          <p class="ev-tl-dress">👗 Bridal Attire</p>
-          <div class="ev-tl-actions">
-            <span class="ev-tl-days" id="days-b_vidaai"></span>
-            <button class="ev-tl-cal" onclick="event.stopPropagation();addToCal('b_vidaai')">+ Calendar</button>
-          </div>
-        </div>
-      </div>
-      <div class="ev-tl-item" onclick="openEventModal('b_reception')">
-        <div class="ev-tl-date"><span class="ev-tl-day">10</span><span class="ev-tl-mon">May</span></div>
-        <div class="ev-tl-line"><div class="ev-tl-dot" style="background:#E64A19"></div></div>
-        <div class="ev-tl-card">
-          <div class="ev-tl-top"><span class="ev-tl-icon">🥂</span><span class="ev-tl-badge" style="background:rgba(230,74,25,0.15);color:#FFAB91">Pune</span></div>
-          <h3 class="ev-tl-name">Wedding Reception</h3>
-          <p class="ev-tl-time">7:00 PM onwards · Mata Amritanandamayi Math, Nigdi</p>
-          <p class="ev-tl-dress">👗 Ethnic / Formal Elegant</p>
-          <div class="ev-tl-actions">
-            <span class="ev-tl-days" id="days-b_reception"></span>
-            <button class="ev-tl-cal" onclick="event.stopPropagation();addToCal('b_reception')">+ Calendar</button>
-          </div>
-        </div>
-      </div>
+    <div class="oe-footer-block">
+      <p class="oe-thank">Thank you for celebrating this day with us</p>
+      <p class="oe-couple-name">Nikhil &amp; Prachi</p>
     </div>
-
   </section>
 
   <!-- EVENT DETAIL MODAL -->
@@ -494,11 +390,11 @@
     <div class="loc-card reveal-child">
       <div class="loc-icon">🏛</div>
       <h3>Mata Amritanandamayi Math</h3>
-      <p class="loc-sub">Mata Amritanandamayi Math</p>
+      <!-- <p class="loc-sub">Mata Amritanandamayi Math</p> -->
       <p class="loc-addr">Nigdi, Pune – 411044<br/>Maharashtra, India</p>
     </div>
     <div class="map-frame reveal-child">
-      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3781.0!2d73.7700!3d18.6500!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2b9e4b7c3b1a1%3A0xabc!2sNigdi%2C+Pune%2C+Maharashtra+411044!5e0!3m2!1sen!2sin!4v1680000000000" width="100%" height="220" style="border:0;" allowfullscreen loading="lazy"></iframe>
+      <iframe src="https://www.google.com/maps?q=Mata+Amritanandamayi+Math+Nigdi+Pune&output=embed" width="100%" height="220" style="border:0;" allowfullscreen loading="lazy"></iframe>
     </div>
     <div class="loc-btns reveal-child">
       <a href="https://maps.google.com/?q=Mata+Amritanandamayi+Math+Nigdi+Pune" target="_blank" class="btn-p">Get Directions</a>
@@ -520,46 +416,104 @@
     <p class="dc-note reveal-child">We would be grateful if you dressed in the spirit of the occasion.</p>
   </section>
 
-  <!-- STORY — 3 Real Marathi Stories -->
+  <!-- STORY -->
   <section id="s-story" class="s story-s reveal">
     <div class="sf-l"></div>
-    <div class="s-label">❤️ आमची प्रेमकहाणी</div>
+    <div class="s-label">❤️ आमची प्रेमकहाणी ❤️</div>
     <h2 class="s-title">Our Story</h2>
-    <p class="story-intro reveal-child">Three moments that changed everything — told in their own words.</p>
+    <p class="story-intro reveal-child">Four moments that changed everything — told in their own words.</p>
+    <div class="story-lang-switch reveal-child" role="group" aria-label="Story language switch">
+      <button class="story-lang-btn active" id="story-lang-mr" onclick="setStoryLang('mr')">मराठी</button>
+      <button class="story-lang-btn" id="story-lang-en" onclick="setStoryLang('en')">English</button>
+    </div>
+
+    <!-- Story Cards -->
     <div class="story-cards">
+
+      <!-- Story 1: EDC Practical -->
       <div class="story-card reveal-child" style="--i:0">
         <div class="sc-header">
           <div class="sc-num">01</div>
           <div class="sc-meta">
             <span class="sc-tag">College Days</span>
-            <h3 class="sc-title">आमची EDC प्रॅक्टिकल स्टोरी</h3>
+            <h3 class="sc-title">
+              <span class="story-mr">आमची EDC प्रॅक्टिकल स्टोरी</span>
+              <span class="story-en">Our EDC Practical Story</span>
+            </h3>
           </div>
         </div>
-        <div class="sc-preview"><p>त्या दिवशी EDC चा प्रॅक्टिकल एक्झाम होता… मी अजिबात तयार नव्हतो 😅 आणि नशिबाने प्राची माझ्या ग्रुपमध्ये आली…</p></div>
-        <button class="sc-read-btn" onclick="openStory(0)"><span>पूर्ण स्टोरी वाचा</span><span class="sc-arrow">→</span></button>
+        <div class="sc-preview">
+          <p class="story-mr">त्या दिवशी EDC चा प्रॅक्टिकल एक्झाम होता… मी अजिबात तयार नव्हतो 😅 आणि नशिबाने प्राची माझ्या ग्रुपमध्ये आली…</p>
+          <p class="story-en">That day was our EDC practical exam… I was not prepared at all 😅 and luckily Prachi landed in my group…</p>
+        </div>
+        <button class="sc-read-btn" onclick="openStory(0)">
+          <span>पूर्ण स्टोरी वाचा / Read Full Story</span><span class="sc-arrow">→</span>
+        </button>
       </div>
+
+      <!-- Story 2: Chichaati Trip -->
       <div class="story-card reveal-child" style="--i:1">
         <div class="sc-header">
           <div class="sc-num">02</div>
           <div class="sc-meta">
             <span class="sc-tag">First Trip Together</span>
-            <h3 class="sc-title">चिचाटी ट्रिप आणि 5:45 ची ट्विस्ट</h3>
+            <h3 class="sc-title">
+              <span class="story-mr">चिचाटी ट्रिप आणि 5:45 ची ट्विस्ट</span>
+              <span class="story-en">Chichaati Trip and the 5:45 Twist</span>
+            </h3>
           </div>
         </div>
-        <div class="sc-preview"><p>मी प्राचीला चिचाटीला घेऊन गेलो… उन्हाळ्यात! जिथे पाणी असायला हवं होतं तिथे फक्त दगड आणि कडक ऊन… 😄</p></div>
-        <button class="sc-read-btn" onclick="openStory(1)"><span>पूर्ण स्टोरी वाचा</span><span class="sc-arrow">→</span></button>
+        <div class="sc-preview">
+          <p class="story-mr">मी प्राचीला चिचाटीला घेऊन गेलो… उन्हाळ्यात! जिथे पाणी असायला हवं होतं तिथे फक्त दगड आणि कडक ऊन… 😄</p>
+          <p class="story-en">I took Prachi to Chichaati… in peak summer! Where there should have been water, there were only rocks and heat… 😄</p>
+        </div>
+        <button class="sc-read-btn" onclick="openStory(1)">
+          <span>पूर्ण स्टोरी वाचा / Read Full Story</span><span class="sc-arrow">→</span>
+        </button>
       </div>
+
+      <!-- Story 3: Goa Trip -->
       <div class="story-card reveal-child" style="--i:2">
         <div class="sc-header">
           <div class="sc-num">03</div>
           <div class="sc-meta">
             <span class="sc-tag">Goa Trip</span>
-            <h3 class="sc-title">गोवा ट्रिप… आणि प्रेमाची सुरुवात</h3>
+            <h3 class="sc-title">
+              <span class="story-mr">गोवा ट्रिप… आणि प्रेमाची सुरुवात</span>
+              <span class="story-en">Goa Trip… Where Love Began</span>
+            </h3>
           </div>
         </div>
-        <div class="sc-preview"><p>कोरोनानंतरचं ते वर्ष… मित्रांनी गोवा ट्रिपचा प्लॅन केला… सुरुवातीला मी नाही म्हणालो होतो… पण नंतर कळलं — प्राची पण येणार आहे 😏</p></div>
-        <button class="sc-read-btn" onclick="openStory(2)"><span>पूर्ण स्टोरी वाचा</span><span class="sc-arrow">→</span></button>
+        <div class="sc-preview">
+          <p class="story-mr">कोरोनानंतरचं ते वर्ष… मित्रांनी गोवा ट्रिपचा प्लॅन केला… सुरुवातीला मी नाही म्हणालो होतो… पण नंतर कळलं — प्राची पण येणार आहे 😏</p>
+          <p class="story-en">After COVID, friends planned a Goa trip… I first said no… then I found out Prachi was coming too 😏</p>
+        </div>
+        <button class="sc-read-btn" onclick="openStory(2)">
+          <span>पूर्ण स्टोरी वाचा / Read Full Story</span><span class="sc-arrow">→</span>
+        </button>
       </div>
+
+      <!-- Story 4: Alibag Trip -->
+      <div class="story-card reveal-child" style="--i:3">
+        <div class="sc-header">
+          <div class="sc-num">04</div>
+          <div class="sc-meta">
+            <span class="sc-tag">Birthday Surprise</span>
+            <h3 class="sc-title">
+              <span class="story-mr">अलिबाग ट्रिप… आणि Kiwi Cake</span>
+              <span class="story-en">Alibag Trip… and Kiwi Cake</span>
+            </h3>
+          </div>
+        </div>
+        <div class="sc-preview">
+          <p class="story-mr">प्राचीच्या birthday साठी surprise प्लॅन केला… अलिबाग ट्रिप perfect झाली… पण रात्री 12 वाजता मिळाला तो एकमेव cake — Kiwi! 😅</p>
+          <p class="story-en">A birthday surprise at Alibag turned unforgettable when the only midnight cake left was Kiwi! 😅</p>
+        </div>
+        <button class="sc-read-btn" onclick="openStory(3)">
+          <span>पूर्ण स्टोरी वाचा / Read Full Story</span><span class="sc-arrow">→</span>
+        </button>
+      </div>
+
     </div>
   </section>
 
@@ -569,6 +523,10 @@
     <div class="sm-card">
       <button class="sm-close" onclick="closeStory()">✕</button>
       <div class="sm-emoji" id="sm-emoji"></div>
+      <div class="sm-lang-switch" role="group" aria-label="Story modal language switch">
+        <button class="sm-lang-btn active" id="sm-lang-mr" onclick="setStoryLang('mr')">मराठी</button>
+        <button class="sm-lang-btn" id="sm-lang-en" onclick="setStoryLang('en')">English</button>
+      </div>
       <span class="sm-tag" id="sm-tag"></span>
       <h2 class="sm-title" id="sm-title"></h2>
       <div class="sm-body" id="sm-body"></div>
@@ -639,15 +597,15 @@
     <div class="sf-l"></div><div class="sf-r"></div>
     <div class="s-label">Guest Form</div>
     <h2 class="s-title">RSVP</h2>
-    <div class="rsvp-hero reveal-child"><p class="rh-date">10.05.2026</p><p class="rh-time">11:00 AM</p></div>
+    <div class="rsvp-hero reveal-child"><p class="rh-date">10.05.2026</p><p class="rh-time">10:56 AM</p></div>
     <p class="rsvp-sub reveal-child">We will be happy to see you among our closest guests!</p>
     <form class="rsvp-form reveal-child" id="rf" onsubmit="doRSVP(event)">
-      <div class="fi"><span>👤</span><input type="text" placeholder="Your Full Name" required/></div>
-      <div class="fi"><span>📞</span><input type="tel" placeholder="Phone Number"/></div>
-      <div class="fi"><span>✓</span><select required><option value="">Will you attend?</option><option>Yes, I will be there! 🎉</option><option>Sorry, I cannot make it</option><option>Maybe</option></select></div>
-      <div class="fi"><span>📅</span><select><option value="">Select Event</option><option>Mehndi — 8 May</option><option>Sangeet — 9 May</option><option>Wedding — 10 May</option><option>Reception — 10 May</option><option>All Events</option></select></div>
-      <div class="fi"><span>👥</span><input type="number" placeholder="Number of Guests" min="1" max="10"/></div>
-      <div class="fi fi-ta"><textarea placeholder="Your warm wishes for the couple..." rows="3"></textarea></div>
+      <div class="fi"><span>👤</span><input type="text" name="fullName" placeholder="Your Full Name" required/></div>
+      <div class="fi"><span>📞</span><input type="tel" name="phone" placeholder="Phone Number"/></div>
+      <div class="fi"><span>✓</span><select name="attendance" required><option value="">Will you attend?</option><option value="yes">Yes, I will be there! 🎉</option><option value="no">Sorry, I cannot make it</option><option value="maybe">Maybe</option></select></div>
+      <div class="fi"><span>📅</span><select name="event"><option value="">Select Event</option><option value="mehndi">Mehndi — 8 May</option><option value="sangeet">Sangeet — 9 May</option><option value="wedding">Wedding — 10 May</option><option value="reception">Reception — 10 May</option><option value="all">All Events</option></select></div>
+      <div class="fi"><span>👥</span><input type="number" name="guestCount" placeholder="Number of Guests" min="1" max="10"/></div>
+      <div class="fi fi-ta"><textarea name="note" placeholder="Your warm wishes for the couple..." rows="3"></textarea></div>
       <button type="submit" class="btn-p">Confirm Attendance 💌</button>
     </form>
     <div id="rsvp-ok" class="rsvp-ok hidden"><div class="rok-icon">🎊</div><h3>Thank You!</h3><p>We can't wait to celebrate with you on 10 May 2026!</p></div>
@@ -670,6 +628,7 @@
     </div>
   </section>
 
+  <!-- FOOTER -->
   <!-- QUIZ SECTION -->
   <section id="s-quiz" class="s quiz-s reveal">
     <div class="sf-r"></div>
@@ -679,7 +638,7 @@
     <div id="quiz-wrap" class="quiz-wrap reveal-child">
       <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quiz-progress"></div></div>
       <p class="quiz-q-num" id="quiz-qnum">Question 1 of 5</p>
-      <div class="quiz-card">
+      <div class="quiz-card" id="quiz-card">
         <p class="quiz-question" id="quiz-question"></p>
         <div class="quiz-options" id="quiz-options"></div>
       </div>
@@ -692,51 +651,8 @@
     </div>
   </section>
 
-  <!-- CONFETTI CANVAS -->
+  <!-- CONFETTI CANVAS (hidden, triggered on RSVP) -->
   <canvas id="confetti-canvas" style="position:fixed;inset:0;pointer-events:none;z-index:9000;display:none;"></canvas>
-
-  <!-- REMINDER + SAVE THE DATE + PWA SECTION -->
-  <section id="s-extras" class="s extras-s reveal">
-    <div class="sf-l"></div><div class="sf-r"></div>
-    <div class="s-label">Stay Connected</div>
-    <h2 class="s-title">Don't Miss It</h2>
-
-    <!-- REMINDER NOTIFICATIONS -->
-    <div class="reminder-card reveal-child">
-      <div class="reminder-icon">🔔</div>
-      <h3 class="reminder-title">Set a Reminder</h3>
-      <p class="reminder-sub">Get notified before the wedding day</p>
-      <div class="reminder-btns">
-        <button class="reminder-btn" onclick="setReminder(7)">7 Days Before</button>
-        <button class="reminder-btn" onclick="setReminder(5)">5 Days Before</button>
-        <button class="reminder-btn" onclick="setReminder(3)">3 Days Before</button>
-        <button class="reminder-btn reminder-btn-gold" onclick="setReminder(1)">1 Day Before</button>
-      </div>
-      <p class="reminder-status" id="reminder-status"></p>
-    </div>
-
-    <!-- SAVE THE DATE -->
-    <div class="std-card reveal-child">
-      <div class="std-preview" id="std-canvas-wrap">
-        <canvas id="std-canvas" width="400" height="240"></canvas>
-      </div>
-      <h3 class="std-title">Save the Date Card</h3>
-      <p class="std-sub">Download &amp; share on WhatsApp Status / Instagram</p>
-      <div class="std-btns">
-        <button class="btn-p" onclick="downloadSaveDate()">⬇ Download Card</button>
-        <a class="btn-o" id="std-wa-btn" href="#" target="_blank">💬 Share on WhatsApp</a>
-      </div>
-    </div>
-
-    <!-- PWA INSTALL -->
-    <div class="pwa-card reveal-child" id="pwa-card" style="display:none">
-      <div class="pwa-icon">📱</div>
-      <h3 class="pwa-title">Add to Home Screen</h3>
-      <p class="pwa-sub">Keep this invitation on your phone like an app</p>
-      <button class="btn-p" id="pwa-install-btn" onclick="installPWA()">Install App</button>
-    </div>
-
-  </section>
 
   <!-- FOOTER -->
   <footer class="footer reveal">
@@ -747,12 +663,14 @@
       <div class="ft-rule"><span></span><span>◆</span><span></span></div>
       <p class="ft-msg">Thank you for being part of our special day.<br/>With love &amp; gratitude 🙏</p>
       <div class="ft-acts">
-        <a class="ft-btn ft-btn-wa" id="wa-share-btn" href="#" target="_blank"><span>💬</span> WhatsApp</a>
+        <a class="ft-btn ft-btn-wa" id="wa-share-btn" href="https://wa.me/?text=You're%20invited%20to%20Nikhil%20%26%20Prachi's%20Wedding!%20%F0%9F%92%8D%0A%F0%9F%93%85%2010%20May%202026%20%7C%20Sweta%20Lawn%2C%20Nigdi%2C%20Pune%0A%0AOpen%20invitation%20%E2%86%92%20" target="_blank">
+          <span>💬</span> WhatsApp
+        </a>
         <button class="ft-btn" onclick="doShare()"><span>📤</span> Share</button>
         <a class="ft-btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Nikhil+%26+Prachi+Wedding&dates=20260510T110000/20260510T235900&location=Sweta+Lawn,+Nigdi,+Pune" target="_blank"><span>📅</span> Calendar</a>
       </div>
-      <p class="ft-credit">Made with ❤️ for Nikhil &amp; Prachi · 2026</p>
-      <p class="ft-dev">made by roshan mandale</p>
+      <p class="ft-credit">Made with ❤️ for Nikhil &amp; Prachi</p>
+      <p class="ft-dev">made by Nikita Mandle &amp; Roshan Mandale</p>
     </div>
   </footer>
 
@@ -767,14 +685,10 @@
   <span id="music-fab-label">Play Music</span>
 </button>
 
-<!-- Wedding background music — Indian classical/shehnai style -->
+<!-- Wedding background music -->
 <audio id="aud" loop preload="auto">
-  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3" type="audio/mpeg"/>
+  <source src="https://cdn.pixabay.com/audio/2022/08/04/audio_2dde668d05.mp3" type="audio/mpeg"/>
 </audio>
 <script src="script.js"></script>
 </body>
 </html>
-
-
-
-

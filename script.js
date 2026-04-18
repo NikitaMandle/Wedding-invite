@@ -38,8 +38,6 @@ document.addEventListener('DOMContentLoaded', function(){
     if(!screen){ showMain(); return; }
     screen.style.display='flex'; screen.style.opacity='1'; screen.style.visibility='visible';
     screen.classList.remove('hidden');
-    // Show guest name on card immediately
-    initGuestName();
     requestAnimationFrame(()=>safe(()=>mkCanvas('pc',60,['#C9A84C','#C41E3A','#8B1A2A','#E8C97A'])));
     const pp=el('pp');
     if(pp){ const em=['🌹','🌸','🌺','🌷','✿']; for(let i=0;i<12;i++){const p=document.createElement('div');p.className='ep';p.textContent=em[Math.floor(Math.random()*em.length)];p.style.left=(Math.random()*100)+'%';p.style.fontSize=(Math.random()*.6+.5)+'rem';p.style.animationDuration=(Math.random()*6+6)+'s';p.style.animationDelay=(Math.random()*5)+'s';pp.appendChild(p);} }
@@ -85,79 +83,20 @@ document.addEventListener('DOMContentLoaded', function(){
   // ── MAIN INIT ──
   function initMain(){
     safe(()=>mkCanvas('hc',60,['#C9A84C','#C41E3A','#8B1A2A']));
-    initCountdown(); initReveal(); initNav(); initGallery();
-    initGuestName();
+    initCountdown(); initReveal(); initNav(); initGallery(); initWishes();
   }
 
-  // ── GUEST NAME — reads ?guest=Name from URL ──
-  function initGuestName(){
-    try{
-      const params = new URLSearchParams(window.location.search);
-      const raw = params.get('guest');
-      if(!raw || !raw.trim()) return;
-      const name = decodeURIComponent(raw.trim())
-        .replace(/\+/g,' ')
-        .replace(/\b\w/g, c => c.toUpperCase());
-
-      // Show in nav top-left
-      const navG = el('nav-guest');
-      if(navG){ navG.textContent='Welcome, '+name; navG.classList.add('visible'); }
-
-      // Show on invitation card
-      const cardWrap = el('inv-guest-wrap');
-      const cardName = el('inv-guest-name');
-      if(cardWrap && cardName){
-        cardName.textContent = name;
-        cardWrap.classList.remove('hidden');
-      }
-    }catch(e){}
-  }
-
-  // ── COUNTDOWN with flip animation ──
+  // ── COUNTDOWN ──
   function initCountdown(){
     const target=new Date('2026-05-10T11:00:00+05:30').getTime();
-    const prev={d:'',h:'',m:'',s:''};
     function tick(){
       const diff=target-Date.now(); if(diff<=0)return;
-      const d=Math.floor(diff/86400000),h=Math.floor((diff%86400000)/3600000);
-      const m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);
-      const set=(id,v,key)=>{
-        const e=el(id); if(!e)return;
-        const str=String(v).padStart(2,'0');
-        if(str!==prev[key]){
-          e.classList.add('flip');
-          setTimeout(()=>{ e.textContent=str; e.classList.remove('flip'); },150);
-          prev[key]=str;
-        }
-      };
-      set('cd-d',d,'d'); set('cd-h',h,'h'); set('cd-m',m,'m'); set('cd-s',s,'s');
-      set('hcd-d',d,'d'); set('hcd-h',h,'h'); set('hcd-m',m,'m'); set('hcd-s',s,'s');
+      const set=(id,v)=>{ const e=el(id); if(e) e.textContent=String(v).padStart(2,'0'); };
+      set('cd-d',Math.floor(diff/86400000)); set('cd-h',Math.floor((diff%86400000)/3600000));
+      set('cd-m',Math.floor((diff%3600000)/60000)); set('cd-s',Math.floor((diff%60000)/1000));
     }
     tick(); setInterval(tick,1000);
   }
-
-  // ── CALENDAR TOGGLE (Groom / Bride) ──
-  window.switchCal = function(side){
-    const cg=el('cal-groom'), cb=el('cal-bride');
-    const bg=el('cal-btn-groom'), bb=el('cal-btn-bride');
-    if(!cg||!cb) return;
-    const hideEl=side==='groom'?cb:cg;
-    const showEl=side==='groom'?cg:cb;
-    hideEl.classList.add('cal-exit');
-    setTimeout(()=>{
-      hideEl.classList.add('hidden'); hideEl.classList.remove('cal-exit');
-      showEl.classList.remove('hidden'); showEl.classList.add('cal-enter');
-      requestAnimationFrame(()=>requestAnimationFrame(()=>{ showEl.classList.remove('cal-enter'); }));
-    },300);
-    if(bg) bg.classList.toggle('active',side==='groom');
-    if(bb) bb.classList.toggle('active',side==='bride');
-  };
-
-  // ── CALENDAR TAB FILTER (legacy — keep for compatibility) ──
-  window.switchCalTab = function(tab){
-    document.querySelectorAll('.cal-tab').forEach(b=>b.classList.remove('active'));
-    const activeBtn=el('cal-tab-'+tab); if(activeBtn) activeBtn.classList.add('active');
-  };
 
   // ── SCROLL REVEAL ──
   function initReveal(){
@@ -208,82 +147,49 @@ document.addEventListener('DOMContentLoaded', function(){
   window.lbN     = function(){ lbI=(lbI+1)%lbBg.length; showLb(); };
   window.openLb  = openLb;
 
-  // ── TIMELINE TOGGLE ──
-  window.switchTimeline = function(side){
-    const tg=el('timeline-groom'), tb=el('timeline-bride');
-    const bg=el('btn-groom'), bb=el('btn-bride');
-    if(!tg||!tb) return;
-    const hideEl=side==='groom'?tb:tg;
-    const showEl=side==='groom'?tg:tb;
-    hideEl.classList.add('tl-exit');
-    setTimeout(()=>{
-      hideEl.classList.add('hidden'); hideEl.classList.remove('tl-exit');
-      showEl.classList.remove('hidden'); showEl.classList.add('tl-enter');
-      requestAnimationFrame(()=>requestAnimationFrame(()=>{ showEl.classList.remove('tl-enter'); }));
-    },280);
-    if(bg) bg.classList.toggle('active',side==='groom');
-    if(bb) bb.classList.toggle('active',side==='bride');
-  };
-
-  // ── EVENT DAYS COUNTDOWN ──
-  const EVENT_DATES={
-    g_gondhal:'2026-05-05',g_mehendi:'2026-05-06',g_haldi:'2026-05-07',
-    g_travel:'2026-05-08',g_wedding:'2026-05-10',g_reception:'2026-05-12',
-    b_haldi:'2026-05-07',b_mehndi:'2026-05-08',b_sangeet:'2026-05-09',
-    b_wedding:'2026-05-10',b_vidaai:'2026-05-10',b_reception:'2026-05-10'
-  };
-  function initEventDays(){
-    const now=Date.now();
-    Object.entries(EVENT_DATES).forEach(([key,dateStr])=>{
-      const el_d=el('days-'+key); if(!el_d)return;
-      const diff=new Date(dateStr).getTime()-now;
-      if(diff<=0){ el_d.textContent='Today! 🎉'; }
-      else{
-        const days=Math.ceil(diff/86400000);
-        el_d.textContent=days===1?'Tomorrow!':days+' days away';
+  // ── GUEST PERSONALIZATION ──
+  // Usage: https://yoursite.com/?guest=Rahul+Sharma
+  (function(){
+    try{
+      const p=new URLSearchParams(window.location.search);
+      const raw=p.get('guest');
+      const wt=el('welcomeText');
+      if(wt && raw && raw.trim()){
+        const name=decodeURIComponent(raw.trim()).replace(/\+/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
+        wt.textContent='Welcome '+name+' \uD83C\uDF89';
       }
-    });
-  }
-  initEventDays();
-
-  // ── ADD TO CALENDAR ──
-  const CAL_URLS={
-    g_gondhal:'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Gondhal+Ceremony&dates=20260505T180000/20260505T220000&location=Rajapeth,+Amravati',
-    g_mehendi:'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Mehendi+Ceremony&dates=20260506T140000/20260506T200000&location=Rajapeth,+Amravati',
-    g_haldi:'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Haldi+%26+Devkundi&dates=20260507T090000/20260507T140000&location=Rajapeth,+Amravati',
-    g_travel:'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Travel+to+Pune&dates=20260508T080000/20260508T200000',
-    g_wedding:'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Nikhil+%26+Prachi+Wedding&dates=20260510T110000/20260510T180000&location=Sweta+Lawn,+Nigdi,+Pune',
-    g_reception:'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Reception+%26+Satyanarayan&dates=20260512T170000/20260512T235900&location=Rajapeth,+Amravati',
-    b_haldi:'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Haldi+Ceremony&dates=20260507T090000/20260507T130000&location=Sweta+Lawn,+Nigdi,+Pune',
-    b_mehndi:'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Mehndi+Ceremony&dates=20260508T160000/20260508T210000&location=Sweta+Lawn,+Nigdi,+Pune',
-    b_sangeet:'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Sangeet+Night&dates=20260509T190000/20260509T235900&location=Sweta+Lawn,+Nigdi,+Pune',
-    b_wedding:'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Wedding+Ceremony&dates=20260510T110000/20260510T140000&location=Sweta+Lawn,+Nigdi,+Pune',
-    b_vidaai:'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Vidaai&dates=20260510T140000/20260510T160000&location=Sweta+Lawn,+Nigdi,+Pune',
-    b_reception:'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Wedding+Reception&dates=20260510T190000/20260510T235900&location=Sweta+Lawn,+Nigdi,+Pune',
-  };
-  window.addToCal=function(key){ const u=CAL_URLS[key]; if(u) window.open(u,'_blank'); };
+    }catch(e){}
+  })();
 
   // ── EVENT MODAL ──
-  const AMRAVATI='Nikhil\'s Home, Rajapeth Chatrapati Sahu Nagar, Near Shitla Mata Mandir, Amravati – 444607';
-  const AMAP='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3723.0!2d77.7523!3d20.9374!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd6a9e4b7c3b1a1%3A0xabc!2sRajapeth%2C+Amravati!5e0!3m2!1sen!2sin!4v1680000000000';
-  const AURL='https://maps.google.com/?q=Rajapeth+Chatrapati+Sahu+Nagar+Amravati';
-  const PUNE='Mata Amritanandamayi Math, Nigdi, Pune – 411044';
-  const PMAP='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3781.0!2d73.7700!3d18.6500!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2b9e4b7c3b1a1%3A0xabc!2sNigdi%2C+Pune!5e0!3m2!1sen!2sin!4v1680000000000';
-  const PURL='https://maps.google.com/?q=Mata+Amritanandamayi+Math+Nigdi+Pune';
+  const AMRAVATI_ADDR='Rajapeth Chatrapati Sahu Nagar, Near Shitla Mata Mandir, Amravati – 444607';
+  const AMRAVATI_MAP='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3723.0!2d77.7523!3d20.9374!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd6a9e4b7c3b1a1%3A0xabc!2sRajapeth%2C+Amravati!5e0!3m2!1sen!2sin!4v1680000000000';
+  const AMRAVATI_URL='https://maps.google.com/?q=Rajapeth+Chatrapati+Sahu+Nagar+Amravati';
+  const PUNE_VENUE='Mata Amritanandamayi Math, Nigdi, Pune, Maharashtra - 411044';
+  const PUNE_MAP='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3781.0!2d73.7700!3d18.6500!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2b9e4b7c3b1a1%3A0xabc!2sNigdi%2C+Pune!5e0!3m2!1sen!2sin!4v1680000000000';
+  const PUNE_URL='https://maps.google.com/?q=Mata+Amritanandamayi+Math+Nigdi+Pune';
+
   const EVDATA={
-    g_gondhal: {icon:'🪔',title:'Gondhal Ceremony',      date:'5 May 2026', time:'Evening',         venue:AMRAVATI,dress:'Traditional Attire',        mapSrc:AMAP,mapUrl:AURL,calUrl:'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Gondhal+Ceremony&dates=20260505T180000/20260505T220000'},
-    g_mehendi: {icon:'🌿',title:'Mehendi Ceremony',      date:'6 May 2026', time:'Afternoon',        venue:AMRAVATI,dress:'Casual / Traditional',       mapSrc:AMAP,mapUrl:AURL,calUrl:'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Mehendi+Ceremony&dates=20260506T140000/20260506T200000'},
-    g_haldi:   {icon:'🌼',title:'Haldi & Devkundi',      date:'7 May 2026', time:'Morning',          venue:AMRAVATI,dress:'Yellow / White Traditional', mapSrc:AMAP,mapUrl:AURL,calUrl:'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Haldi+%26+Devkundi&dates=20260507T090000/20260507T140000'},
-    g_travel:  {icon:'🚂',title:'Departure to Pune',     date:'8 May 2026', time:'Morning',          venue:'Amravati → Pune',dress:'Comfortable',       mapSrc:AMAP,mapUrl:AURL,calUrl:'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Travel+to+Pune&dates=20260508T080000/20260508T200000'},
-    g_wedding: {icon:'💍',title:'Wedding Ceremony 💍',   date:'10 May 2026',time:'11:00 AM',         venue:PUNE,   dress:'Sherwani / Formal',           mapSrc:PMAP,mapUrl:PURL,calUrl:'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Nikhil+%26+Prachi+Wedding&dates=20260510T110000/20260510T180000&location=Sweta+Lawn,+Nigdi,+Pune'},
-    g_reception:{icon:'🥂',title:'Reception & Satyanarayan',date:'12 May 2026',time:'Evening',       venue:AMRAVATI,dress:'Ethnic / Formal Elegant',    mapSrc:AMAP,mapUrl:AURL,calUrl:'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Reception+%26+Satyanarayan&dates=20260512T170000/20260512T235900'},
-    b_mehndi:  {icon:'🌿',title:'Mehndi Ceremony',       date:'8 May 2026', time:'4:00 PM onwards',  venue:PUNE,   dress:'Yellow / Green Traditional',  mapSrc:PMAP,mapUrl:PURL,calUrl:'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Mehndi+Ceremony&dates=20260508T160000/20260508T210000&location=Sweta+Lawn,+Nigdi,+Pune'},
-    b_haldi:   {icon:'🌼',title:'Haldi Ceremony',        date:'9 May 2026', time:'11:00 AM',         venue:PUNE,   dress:'Yellow / Floral Traditional', mapSrc:PMAP,mapUrl:PURL,calUrl:'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Haldi+Ceremony&dates=20260509T110000/20260509T140000&location=Sweta+Lawn,+Nigdi,+Pune'},
-    b_sangeet: {icon:'🎶',title:'Sangeet Night',         date:'9 May 2026', time:'7:00 PM onwards',  venue:PUNE,   dress:'Cocktail / Festive Colourful',mapSrc:PMAP,mapUrl:PURL,calUrl:'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Sangeet+Night&dates=20260509T190000/20260509T235900&location=Sweta+Lawn,+Nigdi,+Pune'},
-    b_wedding: {icon:'💍',title:'Wedding Ceremony 💍',   date:'10 May 2026',time:'11:00 AM',         venue:PUNE,   dress:'Bridal Lehenga / Traditional',mapSrc:PMAP,mapUrl:PURL,calUrl:'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Wedding+Ceremony&dates=20260510T110000/20260510T140000&location=Sweta+Lawn,+Nigdi,+Pune'},
-    b_vidaai:  {icon:'🌸',title:'Vidaai',                date:'10 May 2026',time:'2:00 PM',          venue:PUNE,   dress:'Bridal Attire',               mapSrc:PMAP,mapUrl:PURL,calUrl:'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Vidaai&dates=20260510T140000/20260510T160000&location=Sweta+Lawn,+Nigdi,+Pune'},
-    b_reception:{icon:'🥂',title:'Wedding Reception',    date:'10 May 2026',time:'7:00 PM onwards',  venue:PUNE,   dress:'Ethnic / Formal Elegant',      mapSrc:PMAP,mapUrl:PURL,calUrl:'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Wedding+Reception&dates=20260510T190000/20260510T235900&location=Sweta+Lawn,+Nigdi,+Pune'},
+    // GROOM EVENTS (real data)
+    g_gondhal:  {icon:'🪔',title:'Gondhal Ceremony',       date:'5 May 2026', time:'Evening',         venue:"Nikhil's Home, "+AMRAVATI_ADDR, dress:'Traditional Attire',        mapSrc:AMRAVATI_MAP,mapUrl:AMRAVATI_URL,calUrl:'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Gondhal+Ceremony&dates=20260505T180000/20260505T220000&location=Rajapeth,+Amravati'},
+    g_mehendi:  {icon:'🌿',title:'Mehendi Ceremony',       date:'6 May 2026', time:'Afternoon',        venue:"Nikhil's Home, "+AMRAVATI_ADDR, dress:'Casual / Traditional',       mapSrc:AMRAVATI_MAP,mapUrl:AMRAVATI_URL,calUrl:'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Mehendi+Ceremony&dates=20260506T140000/20260506T200000&location=Rajapeth,+Amravati'},
+    g_haldi:    {icon:'🌼',title:'Haldi & Devkundi',       date:'7 May 2026', time:'Morning',          venue:"Nikhil's Home, "+AMRAVATI_ADDR, dress:'Yellow / White Traditional', mapSrc:AMRAVATI_MAP,mapUrl:AMRAVATI_URL,calUrl:'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Haldi+%26+Devkundi&dates=20260507T090000/20260507T140000&location=Rajapeth,+Amravati'},
+    g_travel:   {icon:'�',title:'Departure to Pune',      date:'8 May 2026', time:'Morning',          venue:'Amravati → Pune',               dress:'Comfortable Travel Wear',    mapSrc:AMRAVATI_MAP,mapUrl:AMRAVATI_URL,calUrl:'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Travel+to+Pune&dates=20260508T080000/20260508T200000'},
+    g_arrival:  {icon:'🏡',title:'Arrival & Preparations', date:'9 May 2026', time:'All Day',          venue:PUNE_VENUE,                      dress:'Comfortable',                mapSrc:PUNE_MAP,    mapUrl:PUNE_URL,    calUrl:'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Arrival+in+Pune&dates=20260509T100000/20260509T200000&location=Nigdi,+Pune'},
+    g_wedding:  {icon:'💍',title:'Wedding Ceremony 💍',    date:'10 May 2026',time:'11:00 AM',         venue:PUNE_VENUE,                      dress:'Sherwani / Formal',          mapSrc:PUNE_MAP,    mapUrl:PUNE_URL,    calUrl:'https://www.google.com/maps/dir//Mata+Amritanandamayi+Math,+Nigdi+Pune,+Sector+No.+21,+Yamunagar,+Nigdi,+Sector+No.+21,+Talwade,+4AB,+Mata+Amrit+Dyan+Marg,+Kounteya+Housing+Society,+Sector+Number+21,+Yamuna+Nagar,+Nigdi,+Pimpri-Chinchwad,+Pune,+Maharashtra+411044/@18.6627487,73.7758721,17z/data=!4m16!1m7!3m6!1s0x3bc2b7623ad813e5:0x9772226b8180bf15!2sMata+Amritanandamayi+Math,+Nigdi+Pune!8m2!3d18.6627487!4d73.778447!16s%2Fg%2F1td7lrnk!4m7!1m0!1m5!1m1!1s0x3bc2b7623ad813e5:0x9772226b8180bf15!2m2!1d73.778425!2d18.6628231!5m1!1e4?entry=ttu&g_ep=EgoyMDI2MDQxMy4wIKXMDSoASAFQAw%3D%3D'},
+    g_return:   {icon:'🏠',title:'Return to Amravati',     date:'11 May 2026',time:'Morning',          venue:'Pune → Amravati',               dress:'Comfortable',                mapSrc:PUNE_MAP,    mapUrl:PUNE_URL,    calUrl:'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Return+to+Amravati&dates=20260511T080000/20260511T200000'},
+    g_reception:{icon:'🥂',title:'Reception & Satyanarayan',date:'12 May 2026',time:'Evening',         venue:"Nikhil's Home, "+AMRAVATI_ADDR, dress:'Ethnic / Formal Elegant',    mapSrc:AMRAVATI_MAP,mapUrl:AMRAVATI_URL,calUrl:'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Reception+%26+Satyanarayan&dates=20260512T170000/20260512T235900&location=Rajapeth,+Amravati'},
+    g_amt2:    {icon:'🙏',title:'Satyanarayan Pooja',     date:'14 May 2026',time:'Morning',          venue:"Nikhil's Home, "+AMRAVATI_ADDR,  dress:'Traditional',                mapSrc:AMRAVATI_MAP,    mapUrl:AMRAVATI_URL,    calUrl:'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Satyanarayan+Pooja&dates=20260514T100000/20260514T140000&location=Rajapeth,+Amravati'},
+    // BRIDE EVENTS
+    b_mehndi:   {icon:'🌿',title:'Mehndi Ceremony',        date:'8 May 2026', time:'4:00 PM onwards',  venue:PUNE_VENUE,                      dress:'Yellow / Green Traditional', mapSrc:PUNE_MAP,    mapUrl:PUNE_URL,    calUrl:'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Mehndi+Ceremony&dates=20260508T160000/20260508T210000&location=Sweta+Lawn,+Nigdi,+Pune'},
+    b_sangeet:  {icon:'🎶',title:'Sangeet Night',          date:'9 May 2026', time:'7:00 PM onwards',  venue:PUNE_VENUE,                      dress:'Cocktail / Festive Colourful',mapSrc:PUNE_MAP,   mapUrl:PUNE_URL,    calUrl:'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Sangeet+Night&dates=20260509T190000/20260509T235900&location=Sweta+Lawn,+Nigdi,+Pune'},
+    b_haldi:    {icon:'🌼',title:'Haldi Ceremony',         date:'9 May 2026', time:'11:00 AM',         venue:PUNE_VENUE,                      dress:'Yellow / Floral Traditional', mapSrc:PUNE_MAP,   mapUrl:PUNE_URL,    calUrl:'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Haldi+Ceremony&dates=20260509T110000/20260509T140000&location=Sweta+Lawn,+Nigdi,+Pune'},
+    b_wedding:  {icon:'💍',title:'Wedding Ceremony 💍',    date:'10 May 2026',time:'11:00 AM',         venue:PUNE_VENUE,                      dress:'Bridal Lehenga / Traditional',mapSrc:PUNE_MAP,   mapUrl:PUNE_URL,    calUrl:'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Wedding+Ceremony&dates=20260510T110000/20260510T140000&location=Sweta+Lawn,+Nigdi,+Pune'},
+    b_vidaai:   {icon:'🌸',title:'Vidaai',                 date:'10 May 2026',time:'2:00 PM',          venue:PUNE_VENUE,                      dress:'Bridal Attire',               mapSrc:PUNE_MAP,   mapUrl:PUNE_URL,    calUrl:'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Vidaai&dates=20260510T140000/20260510T160000&location=Sweta+Lawn,+Nigdi,+Pune'},
+    g_pune2:    {icon:'🙏',title:'Satyanarayan Pooja',     date:'14 May 2026',time:'Morning',          venue:PUNE_VENUE,                      dress:'Traditional',                mapSrc:PUNE_MAP,    mapUrl:PUNE_URL,    calUrl:'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Satyanarayan+Pooja&dates=20260514T100000/20260514T140000&location=Nigdi,+Pune'},
+
   };
+
   window.openEventModal = function(key){
     const d=EVDATA[key]; if(!d)return;
     const m=el('event-modal'); if(!m)return;
@@ -300,20 +206,561 @@ document.addEventListener('DOMContentLoaded', function(){
     document.body.style.overflow='';
   };
 
+  // ── TIMELINE TOGGLE (Groom / Bride) ──
+  window.switchTimeline = function(side){
+    const tg=el('timeline-groom'), tb=el('timeline-bride');
+    const bg=el('btn-groom'), bb=el('btn-bride');
+    if(!tg||!tb) return;
+
+    const hideEl=side==='groom'?tb:tg;
+    const showEl=side==='groom'?tg:tb;
+
+    // Animate out
+    hideEl.classList.add('tl-exit');
+    setTimeout(()=>{
+      hideEl.classList.add('hidden');
+      hideEl.classList.remove('tl-exit');
+      // Animate in
+      showEl.classList.remove('hidden');
+      showEl.classList.add('tl-enter');
+      requestAnimationFrame(()=>{
+        requestAnimationFrame(()=>{
+          showEl.classList.remove('tl-enter');
+          showEl.classList.add('tl-visible');
+          setTimeout(()=>showEl.classList.remove('tl-visible'),400);
+        });
+      });
+    },300);
+
+    // Toggle button states
+    if(bg) bg.classList.toggle('active', side==='groom');
+    if(bb) bb.classList.toggle('active', side==='bride');
+  };
+
+  // ── STORIES ──
+  const STORIES = [
+    {
+      emoji: '💥',
+      tagMr: 'कॉलेजचे दिवस',
+      tagEn: 'College Days',
+      titleMr: 'आमची EDC प्रॅक्टिकल स्टोरी',
+      titleEn: 'Our EDC Practical Story',
+      bodyMr: `खूप वर्षांपूर्वीची गोष्ट आहे… कॉलेजचे दिवस… आणि त्या दिवसांची एक खास आठवण 💫
+
+त्या दिवशी आमचा EDC (Electronic Devices and Communication) चा प्रॅक्टिकल एक्झाम होता. खरं सांगायचं तर… मी अजिबात तयार नव्हतो 😅 डोक्यात काहीच नव्हतं… आणि थोडा टेन्शनमध्येही होतो.
+
+सरांनी ४-५ जणांचे ग्रुप बनवले… आणि नशिबाने प्राची माझ्या ग्रुपमध्ये आली.
+
+त्या क्षणी माझ्या मित्रांनी कानात सांगितलं,
+"अरे, प्राची खूप ब्रिलियंट आहे… स्टडीमध्ये पण टॉप… आणि प्रॅक्टिकलमध्ये तर एकदम प्रो!"
+
+बस! माझ्या चेहऱ्यावर स्माईल आली 😎
+मनात विचार आला — "झालं! आता आपला प्रॅक्टिकल तर मस्त जाणार!"
+
+प्रॅक्टिकल सुरू झाला… आणि प्राची पूर्ण कॉन्फिडन्सने लीड घेत होती. ती एकेक वायर जोडत होती, सर्किट सेट करत होती… आणि मी बाजूला उभा राहून तिच्याकडे इम्प्रेस होऊन बघत होतो 😄
+
+पण अचानक…
+ती एक वायर जोडते… आणि धाडकन! 💥
+किटमधून स्पार्क आला… धूर निघायला लागला… सगळे एकदम घाबरले!
+
+क्षणभर सगळे शॉकमध्ये… आणि मी? 😆
+मी तर अजूनच इम्प्रेस झालो!
+
+त्या सीननंतर मी लगेच माझा फोन काढला… आणि आईला कॉल केला 😜
+आणि म्हटलं — "आई… बहु मिळाली!" 😂❤️
+
+तो दिवस आजही आठवला की हसू येतं…
+कारण त्या एका "स्पार्क"मध्येच आमच्या स्टोरीची सुरुवात झाली होती ✨
+
+आजही मी तिला चिडवायला ही स्टोरी सांगतो…
+पण खरं सांगायचं तर…
+त्या दिवशीच्या त्या स्मोकमध्ये… मला माझं प्रेम सापडलं होतं ❤️`,
+      bodyEn: `This goes back to our college days 🎓, and it is still one of our favorite memories ✨.
+
+    On that day, we had our EDC (Electronic Devices and Communication) practical exam 🧪. Honestly, I was totally unprepared 😅 and very nervous 😬.
+
+    Our professor made groups of 4-5 students, and luckily Prachi ended up in my group 🍀.
+
+    My friends immediately told me, "Prachi is brilliant in studies and a pro in practicals" 😎.
+
+    I smiled and thought, "Great, our practical is going to be smooth now!" 😌
+
+    The practical started and she confidently took the lead, connecting wires and setting up the circuit 🔌. I was quietly standing there, already impressed 👀.
+
+    Then suddenly... spark! 💥 Smoke started coming out of the kit and everyone panicked 😱.
+
+    Everyone was shocked. And me? I got even more impressed 😄.
+
+    Right after that scene, I called my mother and joked, "Maa, I found your daughter-in-law!" 😂❤️
+
+    Even today, that memory makes us laugh 🤍. In that one spark, our story had already begun ✨.`
+    },
+    {
+      emoji: '🌄',
+      tagMr: 'पहिली ट्रिप',
+      tagEn: 'First Trip Together',
+      titleMr: 'चिचाटी ट्रिप आणि 5:45 ची ट्विस्ट',
+      titleEn: 'Chichaati Trip and the 5:45 Twist',
+      bodyMr: `तो दिवस अजूनही ताजा आहे…
+
+मी आणि माझे मित्र सगळे मिळून अमरावतीजवळच्या प्रसिद्ध चिचाटीला जायचं ठरवलं — धबधबा, निसर्ग आणि मजा 💫
+
+पण खरी मजा कुठे झाली माहिती आहे? 😄
+मी प्राचीला चिचाटीला घेऊन गेलो… थेट उन्हाळ्यात! 🌞
+
+जिथे पाणी असायला हवं होतं… तिथे फक्त दगड, कडक ऊन आणि कोरडं वातावरण!
+आजूबाजूला काहीच नव्हतं… ना धबधबा, ना थंड हवा…
+
+पण तरीही… त्या सगळ्या "सुक्या" वातावरणातही…
+आमची company मात्र एकदम फुल ऑन enjoyable होती ❤️
+
+परत येताना…
+प्राची माझ्या बाईकवर बसली होती… संध्याकाळचे ५ वाजले होते 🌅
+
+मी थोडा हळू चालवत होतो… आणि तिला विचारलं,
+"आपण हळू गेलो तर काही problem नाही ना?"
+ती म्हणाली, "हो, काही problem नाही."
+
+मी पुन्हा विचारलं… ती पुन्हा म्हणाली, "हो ना, काही problem नाही."
+
+थोड्यावेळाने ती म्हणाली —
+"मला काहीतरी सांगायचं आहे…"
+
+बस! 😳
+माझं heart beat एकदम वाढलं…
+मनात हजार विचार सुरू — "काय सांगणार आहे? काही special आहे का?" ❤️🔥
+
+मी तर full nervous झालो होतो…
+आणि मग तो "moment" आला…
+
+ती म्हणाली — "माझी last bus 5:45 ची आहे…" 😶
+
+आणि माझं काय झालं? 😵
+ज्याचं स्वप्न बघत होतो ते सगळं एका सेकंदात "फुसss!" 😂
+
+मग काय… मी लगेच bike ची speed वाढवली 🚀
+आणि ३० मिनिटांत ४० km cover करून bus stop ला पोचलो!
+
+इतकं effort घेतलं… आणि ट्विस्ट बघा —
+बसच ३० मिनिटांनी late होती! 🤣🤣
+
+मग आम्ही तिथेच थांबलो… थोडा वेळ अजून एकत्र घालवला… गप्पा मारल्या… हसलो… 💛
+
+आणि मग तो moment आला…
+जिथे तिला "sayonara" म्हणावं लागलं…
+
+ती बसमध्ये बसली… आणि मी परत निघालो…
+पण त्या दिवसाची आठवण मात्र आजही माझ्या मनात fresh आहे ❤️`,
+      bodyEn: `That day is still fresh in my memory 💫.
+
+    My friends and I planned a trip to Chichaati near Amravati, expecting waterfalls and nature 🌿.
+
+    The funny part? I took Prachi there in peak summer 🌞.
+
+    Where there should have been water, there were only rocks, heat, and dry land 🪨.
+
+    But even in that dry setting, our company made everything beautiful ❤️.
+
+    On the way back, she was sitting on my bike 🏍️. It was around 5 PM 🌅.
+
+    I kept asking if it was okay to go slowly. She said yes 🙂.
+
+    After some time she said, "I want to tell you something..." 😳
+
+    My heartbeat shot up and I thought maybe something special was coming 💓.
+
+    Then she said, "My last bus is at 5:45" 🚌.
+
+    My romantic dream broke in one second 😂.
+
+    I sped up 🚀, covered around 40 km in 30 minutes, and dropped her at the bus stop.
+
+    And the twist? The bus was 30 minutes late 🤣.
+
+    So we got some extra time together, talked, laughed, and made another unforgettable memory 🤍.`
+    },
+    {
+      emoji: '🌴',
+      tagMr: 'गोवा ट्रिप',
+      tagEn: 'Goa Trip',
+      titleMr: 'गोवा ट्रिप… आणि प्रेमाची सुरुवात',
+      titleEn: 'Goa Trip... Where Love Began',
+      bodyMr: `कोरोनानंतरचं ते वर्ष…
+सगळे पुन्हा normal life मध्ये येत होते… आणि आमच्या मित्रांनी एक मोठा प्लॅन केला —
+"गोवा ट्रिप!" 🌊🔥
+
+सुरुवातीला मी या ट्रिपसाठी नाही म्हणालो होतो…
+पण नंतर कळलं — प्राची पण येणार आहे… 😏
+
+बस! माझा decision लगेच बदलला 😂
+मी लगेच booking केलं… आणि ट्रिपसाठी तयार झालो ❤️
+
+ट्रॅव्हलचा दिवस आला…
+मी अमरावतीहून Madgaon Express पकडली… आणि पुण्याला पोचलो.
+तिथे सगळे friends भेटले… आणि ती पण होती…
+
+मी तिच्याकडे बघत होतो…
+आणि माझ्या मनात butterflies उडत होते 🦋
+
+ट्रेन मात्र… ६ तास late! 😵
+पण तिच्यासोबत वेळ कसा गेला ते कळलंच नाही…
+
+दुसऱ्या दिवशी… आम्ही शेवटी Goa ला पोचलो! 🌴✨
+
+नेहमीप्रमाणे… प्राची माझ्या बाईकवर होती 😜
+आणि आम्ही Goa explore करत होतो…
+
+एक मजेशीर moment… 😄
+आम्ही दोघं एका shop मध्ये गेलो…
+आम्ही इतके close दिसत होतो की… आम्ही couple वाटत होतो!
+
+तिथे एक married couple होतं…
+बायको shopping करत होती… आणि नवरा बाहेर उभा होता…
+ती बायको आमच्याकडे बघत होती…
+आणि अचानक तिच्या नवऱ्याला म्हणाली —
+"बघ किती cute आहेत हे दोघं… तू का नाही असा?" 😂😂
+
+आम्ही तर एकदम shy झालो…
+आणि त्या situation मध्ये आम्ही सगळेच हसू लागलो 😄
+
+नंतर आम्ही beach वर गेलो… 🌅
+sunset enjoy करत होतो… पाण्यात खेळत होतो…
+
+तेवढ्यात एक photographer आला…
+तो म्हणाला — "Sir, couple photo खिचाईये…"
+मी म्हणालो, "नाही…"
+तो पुन्हा insist करायला लागला…
+मग तो प्राचीला म्हणाला — "Madam, photo खिचाईये…"
+तीही म्हणाली, "नाही…"
+
+आणि त्यावर तो म्हणाला —
+"Madam ने नाही बोल दिया तो नहीं…" 😂😂
+
+त्या Goa trip मध्ये…
+काही official नव्हतं… काही बोललंही नव्हतं…
+पण त्या सगळ्या moments मध्ये…
+प्रेम हळूहळू सुरू झालं होतं… ❤️✨`,
+      bodyEn: `After COVID, life was getting normal again and our friends planned a big Goa trip 🌊🔥.
+
+    At first I said no 🙅. Then I found out Prachi was coming 😏.
+
+    I changed my decision immediately, booked my ticket, and got ready 🎒.
+
+    I came from Amravati by train to Pune 🚆, met all my friends, and she was there too.
+
+    The train was 6 hours late 😵, but with her around, time flew ⏳❤️.
+
+    Next day we finally reached Goa 🌴✨.
+
+    As always, she sat behind me on the bike 🏍️ and we explored the city.
+
+    At one shop, we looked so close that people thought we were already a couple 😄.
+
+    A married woman even told her husband, "Look how cute they are. Why can't you be like that?" 😂
+
+    We got shy and everyone laughed 😅.
+
+    Later, at the beach, a photographer kept insisting on taking our couple photos 📸.
+
+    We both kept saying no, and that became another funny moment 🤭.
+
+    Nothing was official then, and nothing was spoken clearly,
+    but in those little Goa moments, love had already started growing ❤️✨.`
+    },
+    {
+      emoji: '🎂',
+      tagMr: 'Birthday Surprise',
+      tagEn: 'Birthday Surprise',
+      titleMr: 'अलिबाग ट्रिप… आणि Kiwi Cake',
+      titleEn: 'Alibag Trip… and Kiwi Cake',
+      bodyMr: `🎂 अलिबाग ट्रिप… आणि Kiwi Cake ❤️🌊
+काही महिने गेले होते…
+आमच्या भेटी, बोलणं… हळूहळू सगळं वाढत होतं 💫
+आणि मला खूप दिवसांपासून प्राचीला भेटायचं होतं…
+ती पुण्यात… आणि मी अमरावतीत…
+मग एक प्लॅन ठरला —
+“चल, अलिबागला जाऊया!” 🌴
+खरं सांगायचं तर…
+तो फक्त ट्रिप नव्हता…
+तो तिच्या birthday चा surprise plan होता 🎁❤️
+पण माझं आणि surprise चं equation थोडं वेगळंच आहे 😅
+मी surprise द्यायला जातो… आणि उलट मला surprise मिळतो!
+मी तिला सांगितलं —
+“Friends सोबत अलिबागला जाऊया…”
+आणि ती तयार झाली 😄
+आम्ही अलिबागला पोचलो…
+beach, sunset, travel… सगळं एकदम perfect 🌅✨
+एक भन्नाट experience म्हणजे —
+दुपारी समुद्राचं पाणी इतकं मागे गेलं होतं की…
+आम्ही थेट किल्ल्यापर्यंत चालत गेलो! 🏝️
+पहिल्यांदाच असं काही बघितलं… आणि तो moment खूप special वाटला ❤️
+आता खरी story… 😄
+23 एप्रिल — तिचा birthday 🎂
+मी ठरवलं होतं —
+आज काहीतरी special surprise द्यायचं!
+संध्याकाळी मी cake घ्यायला बाहेर पडलो…
+पण almost सगळे shops बंद 😵
+शेवटी एक दुकान सापडलं…
+आणि तिथे फक्त एकच cake उरला होता…
+मी विचार केला —
+“Kiwi cake आहे… healthy आहे… unique आहे…
+ती नक्की impressed होईल!” 😎
+रात्री 12 वाजता…
+आम्ही celebration सुरू केलं 🎉
+तिने cake cut केला…
+मी तिला एक piece दिला…
+ती माझ्याकडे बघते… आणि विचारते —
+“हा कसला cake आहे?”
+मी full confidence मध्ये —
+“Kiwi…” 😄
+ती थोडी pause झाली…
+आणि मग मोठ्याने हसू लागली 😂😂
+मी पण हसू लागलो…
+पण आतून? — full embarrassment! 😅
+“Birthday ला kiwi cake कोण आणतं?” 🤦‍♂️
+पण तिची खास गोष्ट म्हणजे —
+तिने तो moment इतका gracefully handle केला…
+की सगळं awkwardness fun मध्ये बदललं ❤️
+आम्ही हसलो, enjoy केलं…
+आणि तो birthday एकदम special बनला ✨
+आजही…
+इतक्या वर्षांनी…
+ती मला अजूनही “Kiwi cake” वरून चिडवते 😂
+आणि मी?
+मी पण enjoy करतो… ❤️
+त्या दिवसानंतर एक lesson शिकलो —
+“Experimental food नको!” 😜
+पण खरं सांगायचं तर…
+त्या Kiwi cake च्या रात्री…
+आमच्या story ची खरी सुरुवात झाली होती… ❤️✨`,
+      bodyEn: `It had been a few months, and with every meeting and conversation, our bond kept growing 💫.
+
+    Prachi was in Pune and I was in Amravati, and I had really wanted to meet her for a long time.
+
+    So we made a plan: "Let's go to Alibag!" 🌴
+
+    Honestly, it was not just a trip.
+    It was secretly a birthday surprise plan for her 🎁❤️.
+
+    But my equation with surprises is always funny 😅.
+    Whenever I try to give a surprise, somehow I end up getting surprised myself.
+
+    I told her, "Let's go to Alibag with friends..." and she agreed 😄.
+
+    We reached Alibag and everything felt perfect:
+    beach, sunset, travel vibes... all of it 🌅✨.
+
+    One amazing experience was in the afternoon when the sea water had gone so far back that we could actually walk all the way to the fort 🏝️.
+    It was my first time seeing something like that, and that moment felt truly special ❤️.
+
+    Then came the real story 😄.
+    23 April - her birthday 🎂.
+
+    I had decided: today I have to make it special.
+
+    In the evening, I went out to buy a cake.
+    But almost all shops were closed 😵.
+
+    Finally I found one shop, and there was only one cake left.
+
+    I told myself confidently,
+    "It is Kiwi cake... healthy, unique...
+    She will definitely be impressed!" 😎
+
+    At 12 midnight, we started the celebration 🎉.
+    She cut the cake, I gave her a piece,
+    and she looked at me and asked,
+    "What cake is this?"
+
+    With full confidence, I said,
+    "Kiwi..." 😄
+
+    She paused for a second,
+    and then burst out laughing 😂😂.
+
+    I laughed too,
+    but inside? Full embarrassment! 😅
+    "Who brings Kiwi cake on a birthday?" 🤦‍♂️
+
+    But her best quality is this:
+    she handled that moment so gracefully,
+    that all awkwardness turned into fun ❤️.
+
+    We laughed, enjoyed, and that birthday became truly special ✨.
+
+    Even today,
+    after all these years,
+    she still teases me about the "Kiwi cake" 😂.
+
+    And me?
+    I enjoy it too... ❤️
+
+    I learned one lesson that day:
+    "No experimental food on birthdays!" 😜
+
+    But honestly,
+    that Kiwi-cake night
+    became the real beginning of our story ❤️✨.`
+    }
+  ];
+
+  let storyLang = 'mr';
+  let activeStoryIndex = null;
+
+  function renderStoryLanguageState(){
+    const isMr = storyLang === 'mr';
+    const mrBtns = [el('story-lang-mr'), el('sm-lang-mr')];
+    const enBtns = [el('story-lang-en'), el('sm-lang-en')];
+    mrBtns.forEach(b=>{ if(b) b.classList.toggle('active', isMr); });
+    enBtns.forEach(b=>{ if(b) b.classList.toggle('active', !isMr); });
+  }
+
+  function renderStoryModal(){
+    if(activeStoryIndex===null) return;
+    const s = STORIES[activeStoryIndex]; if(!s) return;
+    const isMr = storyLang === 'mr';
+    el('sm-emoji').textContent = s.emoji;
+    el('sm-tag').textContent = isMr ? s.tagMr : s.tagEn;
+    el('sm-title').textContent = isMr ? s.titleMr : s.titleEn;
+    el('sm-body').textContent = isMr ? s.bodyMr : s.bodyEn;
+  }
+
+  window.setStoryLang = function(lang){
+    storyLang = (lang === 'en') ? 'en' : 'mr';
+    renderStoryLanguageState();
+    renderStoryModal();
+  };
+
+  window.openStory = function(i){
+    const s=STORIES[i]; if(!s)return;
+    const m=el('story-modal'); if(!m)return;
+    activeStoryIndex=i;
+    renderStoryLanguageState();
+    renderStoryModal();
+    m.classList.remove('hidden'); m.style.display='flex';
+    document.body.style.overflow='hidden';
+    // Scroll to top of modal
+    setTimeout(()=>{ const c=m.querySelector('.sm-card'); if(c) c.scrollTop=0; },50);
+  };
+  window.closeStory = function(){
+    const m=el('story-modal'); if(!m)return;
+    m.classList.add('hidden'); m.style.display='none';
+    activeStoryIndex = null;
+    document.body.style.overflow='';
+  };
+
   // ── RSVP ──
-  window.doRSVP = function(e){
+  window.doRSVP = async function(e){
     e.preventDefault();
+    const form = el('rf');
+    if(!form) return;
+    const data = new FormData(form);
+    const payload = {
+      fullName: (data.get('fullName') || '').toString().trim(),
+      phone: (data.get('phone') || '').toString().trim(),
+      attendance: (data.get('attendance') || '').toString().trim(),
+      event: (data.get('event') || '').toString().trim(),
+      guestCount: Number((data.get('guestCount') || '').toString().trim() || 1),
+      note: (data.get('note') || '').toString().trim()
+    };
+
+    if(!payload.fullName || !payload.attendance){
+      alert('Please fill your name and attendance status.');
+      return;
+    }
+
+    if(payload.attendance === 'yes' && !payload.phone){
+      alert('Please add a phone number so the morning reminder can be queued.');
+      return;
+    }
+
+    try{
+      await fetch('/api/rsvp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+    }catch(_err){
+      // Keep UI flow smooth even if API is temporarily unavailable
+    }
+
+    const okBox = el('rsvp-ok');
+    const okMsg = okBox ? okBox.querySelector('p') : null;
+    if(okMsg){
+      okMsg.textContent = payload.attendance === 'yes'
+        ? 'Your daily 8 AM reminder is queued until 10 May.'
+        : 'Thank you for your response!';
+    }
+
     safe(()=>{ el('rf').classList.add('hidden'); el('rsvp-ok').classList.remove('hidden'); });
     triggerConfetti();
   };
 
   // ── WISHES ──
-  window.toggleWF = function(){ safe(()=>el('wf').classList.toggle('hidden')); };
-  window.addWish  = function(){
-    const n=el('wn').value.trim(), m=el('wm').value.trim(); if(!n||!m)return;
-    const c=document.createElement('div'); c.className='wc';
-    c.innerHTML='<span class="wq">"</span><p>'+m+'</p><span class="wa">— '+n+'</span>';
+  function escapeHtml(text){
+    return String(text)
+      .replace(/&/g,'&amp;')
+      .replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;')
+      .replace(/"/g,'&quot;')
+      .replace(/'/g,'&#39;');
+  }
+
+  function appendWishCard(name, message){
+    const c=document.createElement('div');
+    c.className='wc';
+    c.innerHTML='<span class="wq">"</span><p>'+escapeHtml(message)+'</p><span class="wa">— '+escapeHtml(name)+'</span>';
     safe(()=>el('wl').prepend(c));
+  }
+
+  function keepOnlyRecentWishes(limit){
+    const wl = el('wl');
+    if(!wl) return;
+    const cards = wl.querySelectorAll('.wc');
+    cards.forEach((card, idx) => {
+      if(idx >= limit) card.remove();
+    });
+  }
+
+  async function initWishes(){
+    try{
+      const res = await fetch('/api/wishes');
+      if(!res.ok) return;
+      const data = await res.json();
+      if(!Array.isArray(data.wishes)) return;
+
+      const wl = el('wl');
+      if(wl) wl.querySelectorAll('.wc').forEach(item=>item.remove());
+      data.wishes.slice(0,3).reverse().forEach(w=>{
+        if(w && w.name && w.message) appendWishCard(w.name, w.message);
+      });
+      keepOnlyRecentWishes(3);
+    }catch(_err){
+      // No-op: static fallback view remains
+    }
+  }
+
+  window.toggleWF = function(){ safe(()=>el('wf').classList.toggle('hidden')); };
+  window.addWish  = async function(){
+    const n=el('wn').value.trim(), m=el('wm').value.trim(); if(!n||!m)return;
+
+    try{
+      const res = await fetch('/api/wishes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: n, message: m })
+      });
+      if(!res.ok){
+        alert('Wish save failed. Please try again.');
+        return;
+      }
+    }catch(_err){
+      alert('Wish save failed. Please try again.');
+      return;
+    }
+
+    appendWishCard(n, m);
+    keepOnlyRecentWishes(3);
     el('wn').value=''; el('wm').value='';
     safe(()=>el('wf').classList.add('hidden'));
   };
@@ -347,123 +794,12 @@ document.addEventListener('DOMContentLoaded', function(){
     if(navigator.share) navigator.share(d);
     else navigator.clipboard.writeText(window.location.href).then(()=>alert('Link copied!')).catch(()=>{});
   };
-  // WhatsApp with actual URL
+  // Update WhatsApp link with actual page URL
   const waBtn=el('wa-share-btn');
-  if(waBtn){ const msg=encodeURIComponent("You're invited to Nikhil & Prachi's Wedding! 💍\n📅 10 May 2026 | Mata Amritanandamayi Math, Nigdi, Pune\n\nOpen invitation → "+window.location.href); waBtn.href='https://wa.me/?text='+msg; }
-
-  // ── STORIES ──
-  const STORIES=[
-    {emoji:'💥',tag:'College Days',title:'आमची EDC प्रॅक्टिकल स्टोरी',body:`खूप वर्षांपूर्वीची गोष्ट आहे… कॉलेजचे दिवस… आणि त्या दिवसांची एक खास आठवण 💫
-
-त्या दिवशी आमचा EDC (Electronic Devices and Communication) चा प्रॅक्टिकल एक्झाम होता. खरं सांगायचं तर… मी अजिबात तयार नव्हतो 😅 डोक्यात काहीच नव्हतं… आणि थोडा टेन्शनमध्येही होतो.
-
-सरांनी ४-५ जणांचे ग्रुप बनवले… आणि नशिबाने प्राची माझ्या ग्रुपमध्ये आली.
-
-त्या क्षणी माझ्या मित्रांनी कानात सांगितलं,
-"अरे, प्राची खूप ब्रिलियंट आहे… स्टडीमध्ये पण टॉप… आणि प्रॅक्टिकलमध्ये तर एकदम प्रो!"
-
-बस! माझ्या चेहऱ्यावर स्माईल आली 😎
-मनात विचार आला — "झालं! आता आपला प्रॅक्टिकल तर मस्त जाणार!"
-
-प्रॅक्टिकल सुरू झाला… आणि प्राची पूर्ण कॉन्फिडन्सने लीड घेत होती. ती एकेक वायर जोडत होती, सर्किट सेट करत होती… आणि मी बाजूला उभा राहून तिच्याकडे इम्प्रेस होऊन बघत होतो 😄
-
-पण अचानक…
-ती एक वायर जोडते… आणि धाडकन! 💥
-किटमधून स्पार्क आला… धूर निघायला लागला… सगळे एकदम घाबरले!
-
-क्षणभर सगळे शॉकमध्ये… आणि मी? 😆
-मी तर अजूनच इम्प्रेस झालो!
-
-त्या सीननंतर मी लगेच माझा फोन काढला… आणि आईला कॉल केला 😜
-आणि म्हटलं — "आई… बहु मिळाली!" 😂❤️
-
-तो दिवस आजही आठवला की हसू येतं…
-कारण त्या एका "स्पार्क"मध्येच आमच्या स्टोरीची सुरुवात झाली होती ✨`},
-    {emoji:'🌄',tag:'First Trip Together',title:'चिचाटी ट्रिप आणि 5:45 ची ट्विस्ट',body:`तो दिवस अजूनही ताजा आहे…
-
-मी आणि माझे मित्र सगळे मिळून अमरावतीजवळच्या प्रसिद्ध चिचाटीला जायचं ठरवलं — धबधबा, निसर्ग आणि मजा 💫
-
-पण खरी मजा कुठे झाली माहिती आहे? 😄
-मी प्राचीला चिचाटीला घेऊन गेलो… थेट उन्हाळ्यात! 🌞
-
-जिथे पाणी असायला हवं होतं… तिथे फक्त दगड, कडक ऊन आणि कोरडं वातावरण!
-पण तरीही… त्या सगळ्या "सुक्या" वातावरणातही…
-आमची company मात्र एकदम फुल ऑन enjoyable होती ❤️
-
-परत येताना…
-प्राची माझ्या बाईकवर बसली होती… संध्याकाळचे ५ वाजले होते 🌅
-
-मी थोडा हळू चालवत होतो… आणि तिला विचारलं,
-"आपण हळू गेलो तर काही problem नाही ना?"
-ती म्हणाली, "हो, काही problem नाही."
-
-थोड्यावेळाने ती म्हणाली —
-"मला काहीतरी सांगायचं आहे…"
-
-बस! 😳 माझं heart beat एकदम वाढलं…
-मनात हजार विचार सुरू — "काय सांगणार आहे? काही special आहे का?" ❤️🔥
-
-आणि मग तो "moment" आला…
-ती म्हणाली — "माझी last bus 5:45 ची आहे…" 😶
-
-आणि माझं काय झालं? 😵
-ज्याचं स्वप्न बघत होतो ते सगळं एका सेकंदात "फुसss!" 😂
-
-मग काय… मी लगेच bike ची speed वाढवली 🚀
-आणि ३० मिनिटांत ४० km cover करून bus stop ला पोचलो!
-
-इतकं effort घेतलं… आणि ट्विस्ट बघा —
-बसच ३० मिनिटांनी late होती! 🤣🤣
-
-मग आम्ही तिथेच थांबलो… थोडा वेळ अजून एकत्र घालवला… गप्पा मारल्या… हसलो… 💛
-त्या दिवसाची आठवण मात्र आजही माझ्या मनात fresh आहे ❤️`},
-    {emoji:'🌴',tag:'Goa Trip',title:'गोवा ट्रिप… आणि प्रेमाची सुरुवात',body:`कोरोनानंतरचं ते वर्ष…
-सगळे पुन्हा normal life मध्ये येत होते… आणि आमच्या मित्रांनी एक मोठा प्लॅन केला —
-"गोवा ट्रिप!" 🌊🔥
-
-सुरुवातीला मी या ट्रिपसाठी नाही म्हणालो होतो…
-पण नंतर कळलं — प्राची पण येणार आहे… 😏
-
-बस! माझा decision लगेच बदलला 😂
-मी लगेच booking केलं… आणि ट्रिपसाठी तयार झालो ❤️
-
-ट्रेन मात्र… ६ तास late! 😵
-पण तिच्यासोबत वेळ कसा गेला ते कळलंच नाही…
-
-गोव्यात एक मजेशीर moment… 😄
-आम्ही दोघं एका shop मध्ये गेलो…
-तिथे एक married couple होतं…
-बायको आमच्याकडे बघत होती…
-आणि अचानक तिच्या नवऱ्याला म्हणाली —
-"बघ किती cute आहेत हे दोघं… तू का नाही असा?" 😂😂
-
-नंतर beach वर एक photographer आला…
-तो म्हणाला — "Sir, couple photo खिचाईये…"
-मी म्हणालो, "नाही…"
-मग तो प्राचीला म्हणाला — "Madam, photo खिचाईये…"
-तीही म्हणाली, "नाही…"
-आणि त्यावर तो म्हणाला —
-"Madam ने नाही बोल दिया तो नहीं…" 😂😂
-
-त्या Goa trip मध्ये…
-काही official नव्हतं… काही बोललंही नव्हतं…
-पण त्या सगळ्या moments मध्ये…
-प्रेम हळूहळू सुरू झालं होतं… ❤️✨`}
-  ];
-  window.openStory=function(i){
-    const s=STORIES[i]; if(!s)return;
-    const m=el('story-modal'); if(!m)return;
-    el('sm-emoji').textContent=s.emoji; el('sm-tag').textContent=s.tag;
-    el('sm-title').textContent=s.title; el('sm-body').textContent=s.body;
-    m.classList.remove('hidden'); m.style.display='flex';
-    document.body.style.overflow='hidden';
-    setTimeout(()=>{ const c=m.querySelector('.sm-card'); if(c) c.scrollTop=0; },50);
-  };
-  window.closeStory=function(){
-    const m=el('story-modal'); if(!m)return;
-    m.classList.add('hidden'); m.style.display='none';
-    document.body.style.overflow='';
-  };
+  if(waBtn){
+    const msg=encodeURIComponent("You're invited to Nikhil & Prachi's Wedding! 💍\n📅 10 May 2026 | Sweta Lawn, Nigdi, Pune\n\nOpen invitation → "+window.location.href);
+    waBtn.href='https://wa.me/?text='+msg;
+  }
 
   // ── WEDDING QUIZ ──
   const QUIZ=[
@@ -476,47 +812,66 @@ document.addEventListener('DOMContentLoaded', function(){
   let qIdx=0,score=0;
   function startQuiz(){
     qIdx=0;score=0;
-    const qw=el('quiz-wrap'),qr=el('quiz-result');
-    if(qw) qw.classList.remove('hidden');
-    if(qr) qr.classList.add('hidden');
+    el('quiz-wrap').classList.remove('hidden');
+    el('quiz-result').classList.add('hidden');
     showQ();
   }
   function showQ(){
     const q=QUIZ[qIdx];
-    const qn=el('quiz-qnum'),qq=el('quiz-question'),qo=el('quiz-options'),qp=el('quiz-progress');
-    if(qn) qn.textContent='Question '+(qIdx+1)+' of '+QUIZ.length;
-    if(qq) qq.textContent=q.q;
-    if(qp) qp.style.width=((qIdx+1)/QUIZ.length*100)+'%';
-    if(qo){
-      qo.innerHTML='';
-      q.opts.forEach((opt,i)=>{
-        const btn=document.createElement('button');
-        btn.className='quiz-opt'; btn.textContent=opt;
-        btn.onclick=()=>answerQ(i);
-        qo.appendChild(btn);
-      });
-    }
+    el('quiz-qnum').textContent='Question '+(qIdx+1)+' of '+QUIZ.length;
+    el('quiz-question').textContent=q.q;
+    el('quiz-progress').style.width=((qIdx+1)/QUIZ.length*100)+'%';
+    const opts=el('quiz-options');
+    opts.innerHTML='';
+    q.opts.forEach((opt,i)=>{
+      const btn=document.createElement('button');
+      btn.className='quiz-opt';
+      btn.textContent=opt;
+      btn.onclick=()=>answerQ(i);
+      opts.appendChild(btn);
+    });
   }
   function answerQ(i){
     const q=QUIZ[qIdx];
-    document.querySelectorAll('.quiz-opt').forEach((o,idx)=>{
+    const opts=document.querySelectorAll('.quiz-opt');
+    opts.forEach((o,idx)=>{
       o.classList.add('disabled');
       if(idx===q.ans) o.classList.add('correct');
       else if(idx===i) o.classList.add('wrong');
     });
     if(i===q.ans) score++;
-    setTimeout(()=>{ qIdx++; if(qIdx<QUIZ.length) showQ(); else showResult(); },1200);
+    setTimeout(()=>{
+      qIdx++;
+      if(qIdx<QUIZ.length) showQ();
+      else showResult();
+    },1200);
   }
   function showResult(){
-    const qw=el('quiz-wrap'),res=el('quiz-result');
-    if(qw) qw.classList.add('hidden');
-    if(!res) return;
+    el('quiz-wrap').classList.add('hidden');
+    const res=el('quiz-result');
     res.classList.remove('hidden');
     const pct=Math.round(score/QUIZ.length*100);
     if(pct===100){ el('qr-icon').textContent='🏆'; el('qr-score').textContent='Perfect Score!'; el('qr-msg').textContent='You know Nikhil & Prachi better than they know themselves! 😄'; }
     else if(pct>=60){ el('qr-icon').textContent='🎉'; el('qr-score').textContent=score+' / '+QUIZ.length; el('qr-msg').textContent='Great job! You know them well! 👏'; }
     else{ el('qr-icon').textContent='😅'; el('qr-score').textContent=score+' / '+QUIZ.length; el('qr-msg').textContent='Not bad! But you should spend more time with them! 😄'; }
+    saveQuizResult(score, QUIZ.length, pct);
     triggerConfetti();
+  }
+
+  async function saveQuizResult(scoreValue, totalValue, percentValue){
+    try{
+      await fetch('/api/quiz', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          score: scoreValue,
+          total: totalValue,
+          percent: percentValue
+        })
+      });
+    }catch(_err){
+      // Silent fallback
+    }
   }
   window.restartQuiz=startQuiz;
   startQuiz();
@@ -524,160 +879,62 @@ document.addEventListener('DOMContentLoaded', function(){
   // ── CONFETTI ──
   function triggerConfetti(){
     const cv=el('confetti-canvas'); if(!cv)return;
-    cv.style.display='block'; cv.width=window.innerWidth; cv.height=window.innerHeight;
+    cv.style.display='block';
+    cv.width=window.innerWidth; cv.height=window.innerHeight;
     const ctx=cv.getContext('2d');
-    const pieces=Array.from({length:80},()=>({x:Math.random()*cv.width,y:-20,vx:(Math.random()-.5)*3,vy:Math.random()*3+2,r:Math.random()*4+2,c:['#C9A84C','#E8C97A','#C41E3A','#8B1A2A'][Math.floor(Math.random()*4)],rot:Math.random()*360,rotV:Math.random()*10-5}));
+    const pieces=Array.from({length:80},()=>({
+      x:Math.random()*cv.width,y:-20,
+      vx:(Math.random()-.5)*3,vy:Math.random()*3+2,
+      r:Math.random()*4+2,
+      c:['#C9A84C','#E8C97A','#C41E3A','#8B1A2A'][Math.floor(Math.random()*4)],
+      rot:Math.random()*360,rotV:Math.random()*10-5
+    }));
     let frame=0;
-    (function draw(){ctx.clearRect(0,0,cv.width,cv.height);pieces.forEach(p=>{p.y+=p.vy;p.x+=p.vx;p.rot+=p.rotV;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot*Math.PI/180);ctx.fillStyle=p.c;ctx.fillRect(-p.r/2,-p.r/2,p.r,p.r);ctx.restore();});frame++;if(frame<180)requestAnimationFrame(draw);else cv.style.display='none';})();
+    function draw(){
+      ctx.clearRect(0,0,cv.width,cv.height);
+      pieces.forEach(p=>{
+        p.y+=p.vy; p.x+=p.vx; p.rot+=p.rotV;
+        ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot*Math.PI/180);
+        ctx.fillStyle=p.c; ctx.fillRect(-p.r/2,-p.r/2,p.r,p.r);
+        ctx.restore();
+      });
+      frame++;
+      if(frame<180) requestAnimationFrame(draw);
+      else cv.style.display='none';
+    }
+    draw();
   }
-
-  // ── REMINDER NOTIFICATIONS ──
-  window.setReminder = async function(daysBefore){
-    const status = el('reminder-status');
-    if(!('Notification' in window)){
-      if(status) status.textContent = '❌ Notifications not supported on this browser';
-      return;
-    }
-    const perm = await Notification.requestPermission();
-    if(perm !== 'granted'){
-      if(status) status.textContent = '❌ Please allow notifications to set reminders';
-      return;
-    }
-    // Calculate reminder time
-    const weddingDate = new Date('2026-05-10T08:00:00+05:30');
-    const reminderDate = new Date(weddingDate.getTime() - daysBefore * 86400000);
-    const now = Date.now();
-    const delay = reminderDate.getTime() - now;
-    if(delay <= 0){
-      if(status) status.textContent = '⚠️ This date has already passed';
-      return;
-    }
-    // Store reminder in localStorage
-    const reminders = JSON.parse(localStorage.getItem('np_reminders')||'[]');
-    reminders.push({daysBefore, reminderDate: reminderDate.toISOString()});
-    localStorage.setItem('np_reminders', JSON.stringify(reminders));
-    // Show immediate confirmation notification
-    new Notification('Reminder Set! 🔔', {
-      body: `We'll remind you ${daysBefore} day${daysBefore>1?'s':''} before Nikhil & Prachi's wedding!`,
-      icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">💍</text></svg>'
-    });
-    if(status) status.textContent = `✅ Reminder set for ${daysBefore} day${daysBefore>1?'s':''} before the wedding!`;
-    // Schedule the actual reminder using setTimeout (works while tab is open)
-    if(delay < 2147483647){ // max setTimeout value
-      setTimeout(()=>{
-        new Notification('Wedding Tomorrow! 💍', {
-          body: `Nikhil & Prachi's wedding is in ${daysBefore} day${daysBefore>1?'s':''}! 10 May 2026, Mata Amritanandamayi Math, Pune`,
-          icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">💍</text></svg>'
-        });
-      }, delay);
-    }
-  };
-
-  // ── SAVE THE DATE CANVAS ──
-  function drawSaveDate(){
-    const canvas = el('std-canvas'); if(!canvas) return;
-    const ctx = canvas.getContext('2d');
-    const W=400, H=240;
-    canvas.width=W; canvas.height=H;
-
-    // Background gradient
-    const bg = ctx.createLinearGradient(0,0,W,H);
-    bg.addColorStop(0,'#1e0404'); bg.addColorStop(0.5,'#0e0202'); bg.addColorStop(1,'#1e0404');
-    ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
-
-    // Outer gold border
-    ctx.strokeStyle='rgba(201,168,76,0.7)'; ctx.lineWidth=2;
-    ctx.strokeRect(6,6,W-12,H-12);
-    // Inner border
-    ctx.strokeStyle='rgba(201,168,76,0.25)'; ctx.lineWidth=1;
-    ctx.strokeRect(12,12,W-24,H-24);
-
-    // Corner roses
-    ctx.font='20px serif';
-    ctx.fillText('🌹',14,32); ctx.fillText('🌹',W-36,32);
-    ctx.fillText('🌸',14,H-6); ctx.fillText('🌸',W-36,H-6);
-
-    // SAVE THE DATE label
-    ctx.textAlign='center';
-    ctx.fillStyle='rgba(201,168,76,0.8)';
-    ctx.font='bold 10px Arial';
-    ctx.fillText('✦   S A V E   T H E   D A T E   ✦', W/2, 44);
-
-    // Top divider
-    ctx.strokeStyle='rgba(201,168,76,0.3)'; ctx.lineWidth=1;
-    ctx.beginPath(); ctx.moveTo(50,52); ctx.lineTo(W-50,52); ctx.stroke();
-
-    // NIKHIL — line 1
-    ctx.fillStyle='#ffffff';
-    ctx.font='italic bold 40px Georgia,serif';
-    ctx.textAlign='center';
-    ctx.fillText('Nikhil', W/2, 95);
-
-    // & — line 2
-    ctx.fillStyle='#C9A84C';
-    ctx.font='italic 22px Georgia,serif';
-    ctx.fillText('&', W/2, 118);
-
-    // PRACHI — line 3
-    ctx.fillStyle='#ffffff';
-    ctx.font='italic bold 40px Georgia,serif';
-    ctx.fillText('Prachi', W/2, 158);
-
-    // Bottom divider
-    ctx.strokeStyle='rgba(201,168,76,0.3)'; ctx.lineWidth=1;
-    ctx.beginPath(); ctx.moveTo(50,168); ctx.lineTo(W-50,168); ctx.stroke();
-
-    // Date
-    ctx.fillStyle='#C9A84C';
-    ctx.font='bold 14px Arial';
-    ctx.fillText('10  ·  MAY  ·  2026', W/2, 188);
-
-    // Venue line 1
-    ctx.fillStyle='rgba(237,224,204,0.6)';
-    ctx.font='11px Arial';
-    ctx.fillText('Mata Amritanandamayi Math, Nigdi, Pune', W/2, 207);
-
-    // Tagline
-    ctx.fillStyle='rgba(201,168,76,0.4)';
-    ctx.font='10px Arial';
-    ctx.fillText('Together Forever  💍', W/2, 228);
-
-    // Update WhatsApp share link
-    const waBtn = el('std-wa-btn');
-    if(waBtn){
-      const msg=encodeURIComponent("Save the Date! 💍\nNikhil & Prachi are getting married!\n📅 10 May 2026\n📍 Mata Amritanandamayi Math, Nigdi, Pune\n\nOpen invitation → "+window.location.href);
-      waBtn.href='https://wa.me/?text='+msg;
-    }
-  }
-  window.downloadSaveDate = function(){
-    const canvas = el('std-canvas'); if(!canvas) return;
-    const link = document.createElement('a');
-    link.download = 'Nikhil-Prachi-SaveTheDate.png';
-    link.href = canvas.toDataURL('image/png');
-    link.click();
-  };
-
-  // ── PWA INSTALL ──
-  let pwaPrompt = null;
-  window.addEventListener('beforeinstallprompt', e=>{
-    e.preventDefault(); pwaPrompt=e;
-    const card=el('pwa-card'); if(card) card.style.display='block';
-  });
-  window.installPWA = async function(){
-    if(!pwaPrompt) return;
-    pwaPrompt.prompt();
-    const result = await pwaPrompt.userChoice;
-    if(result.outcome==='accepted'){ const c=el('pwa-card'); if(c) c.style.display='none'; }
-    pwaPrompt=null;
-  };
-
 
   // ── START ──
-  if('serviceWorker' in navigator){
-    navigator.serviceWorker.register('/sw.js').catch(()=>{});
-  }
+  (function hardenMediaProtection(){
+    const block = (e) => {
+      const target = e.target;
+      if(target && target.closest && target.closest('.gallery-s, .lb, .story-s')){
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    };
+
+    document.addEventListener('contextmenu', block);
+    document.addEventListener('dragstart', block);
+    document.addEventListener('copy', block);
+    document.addEventListener('keydown', (e) => {
+      const key = String(e.key || '').toLowerCase();
+      if (key === 'printscreen') {
+        e.preventDefault();
+      }
+      if (e.ctrlKey && ['s','p','u'].includes(key)) {
+        e.preventDefault();
+      }
+      if (e.ctrlKey && e.shiftKey && ['i','j','c'].includes(key)) {
+        e.preventDefault();
+      }
+      if (e.key === 'F12') {
+        e.preventDefault();
+      }
+    });
+  })();
+
   initLoader();
-  setTimeout(drawSaveDate, 500);
 
 });
-
