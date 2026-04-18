@@ -1127,7 +1127,7 @@ beach, sunset, travel… सगळं एकदम perfect 🌅✨
   // Update WhatsApp link with actual page URL
   const waBtn=el('wa-share-btn');
   if(waBtn){
-    const msg=encodeURIComponent("You're invited to Nikhil & Prachi's Wedding! 💍\n📅 10 May 2026 | Sweta Lawn, Nigdi, Pune\n\nOpen invitation → "+window.location.href);
+    const msg=encodeURIComponent("You're invited to Nikhil & Prachi's Wedding! 💍\n📅 10 May 2026 | Mata Amritanandamayi Math, Nigdi, Pune\n\nOpen invitation → "+window.location.href);
     waBtn.href='https://wa.me/?text='+msg;
   }
 

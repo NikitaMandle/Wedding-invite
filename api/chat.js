@@ -5,12 +5,12 @@ const WEDDING_DATA = {
   couple: { groom: "Nikhil", bride: "Prachi" },
   weddingDate: "10 May 2026",
   events: [
-    { name: "Mehndi Ceremony",   date: "8 May 2026",  time: "4:00 PM onwards", venue: "Sweta Lawn, Nigdi, Pune", dress: "Yellow / Green Traditional" },
-    { name: "Sangeet Night",     date: "9 May 2026",  time: "7:00 PM onwards", venue: "Sweta Lawn, Nigdi, Pune", dress: "Cocktail / Festive Colourful" },
-    { name: "Wedding Ceremony",  date: "10 May 2026", time: "11:00 AM",        venue: "Sweta Lawn, Nigdi, Pune", dress: "Traditional / Formal" },
-    { name: "Wedding Reception", date: "10 May 2026", time: "7:00 PM onwards", venue: "Sweta Lawn, Nigdi, Pune", dress: "Ethnic / Formal Elegant" }
+    { name: "Mehndi Ceremony",   date: "8 May 2026",  time: "4:00 PM onwards", venue: "Mata Amritanandamayi Math, Nigdi, Pune", dress: "Yellow / Green Traditional" },
+    { name: "Sangeet Night",     date: "9 May 2026",  time: "7:00 PM onwards", venue: "Mata Amritanandamayi Math, Nigdi, Pune", dress: "Cocktail / Festive Colourful" },
+    { name: "Wedding Ceremony",  date: "10 May 2026", time: "11:00 AM",        venue: "Mata Amritanandamayi Math, Nigdi, Pune", dress: "Traditional / Formal" },
+    { name: "Wedding Reception", date: "10 May 2026", time: "7:00 PM onwards", venue: "Mata Amritanandamayi Math, Nigdi, Pune", dress: "Ethnic / Formal Elegant" }
   ],
-  venue: { name: "Sweta Lawn", address: "Mata Amritanandamayi Math, Nigdi, Pune – 411044, Maharashtra" },
+  venue: { name: "Mata Amritanandamayi Math", address: "Mata Amritanandamayi Math, Nigdi, Pune – 411044, Maharashtra" },
   story: "Nikhil and Prachi began their journey in 2021. Nikhil proposed in 2023 and Prachi said yes. They are getting married on 10 May 2026.",
   rsvp: "Guests can confirm attendance by filling the RSVP form on this website."
 };
@@ -121,9 +121,9 @@ export default async function handler(req, res) {
 function getLocalReply(msg) {
   const q = msg.toLowerCase();
   if (q.match(/event|program|schedule|timing/))
-    return '🎉 Events: Mehndi (8 May, 4PM) · Sangeet (9 May, 7PM) · Wedding (10 May, 11AM) · Reception (10 May, 7PM) — all at Sweta Lawn, Nigdi, Pune!';
+    return '🎉 Events: Mehndi (8 May, 4PM) · Sangeet (9 May, 7PM) · Wedding (10 May, 11AM) · Reception (10 May, 7PM) — all at Mata Amritanandamayi Math, Nigdi, Pune!';
   if (q.match(/venue|location|where|address|sweta|nigdi|pune/))
-    return '📍 Sweta Lawn, Mata Amritanandamayi Math, Nigdi, Pune – 411044, Maharashtra.';
+    return '📍 Mata Amritanandamayi Math, Nigdi, Pune – 411044, Maharashtra.';
   if (q.match(/dress|wear|attire|code/))
     return '👗 Mehndi: Yellow/Green · Sangeet: Cocktail/Festive · Wedding: Traditional/Formal · Reception: Ethnic/Formal';
   if (q.match(/rsvp|confirm|attend|register/))
