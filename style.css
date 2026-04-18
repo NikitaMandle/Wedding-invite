@@ -496,6 +496,7 @@ button{font-family:'Poppins',sans-serif;cursor:pointer;border:none;outline:none}
 .ft-btn:hover{background:rgba(107,15,26,0.55);border-color:var(--bdr2)}
 .ft-credit{font-size:0.68rem;color:rgba(237,224,204,0.18);margin-bottom:6px}
 .ft-dev{font-size:0.56rem;color:rgba(237,224,204,0.1);letter-spacing:1.5px;margin-top:4px}
+.ft-install-wrap{margin-top:14px;display:flex;justify-content:center}
 .ft-rose-tl{position:absolute;top:0;left:-10px;transform:rotate(-22deg);font-size:6rem;opacity:0.22;filter:saturate(0.45) brightness(0.6);pointer-events:none}
 .ft-rose-tl::before{content:'🌹'}
 .ft-rose-br{position:absolute;bottom:40px;right:-10px;transform:rotate(158deg) scaleX(-1);font-size:6rem;opacity:0.22;filter:saturate(0.45) brightness(0.6);pointer-events:none}

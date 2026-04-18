@@ -83,7 +83,69 @@ document.addEventListener('DOMContentLoaded', function(){
   // ── MAIN INIT ──
   function initMain(){
     safe(()=>mkCanvas('hc',60,['#C9A84C','#C41E3A','#8B1A2A']));
-    initCountdown(); initReveal(); initNav(); initGallery(); initGalleryAccessGate(); initStoryCardsPreview(); initWishes();
+    initCountdown(); initReveal(); initNav(); initGallery(); initGalleryAccessGate(); initStoryCardsPreview(); initWishes(); initAddToHomeScreen();
+  }
+
+  // ── ADD TO HOME SCREEN ──
+  let deferredInstallPrompt = null;
+  let addHomeInitialized = false;
+
+  function isStandaloneMode(){
+    const displayMode = window.matchMedia && window.matchMedia('(display-mode: standalone)').matches;
+    const iosStandalone = window.navigator && window.navigator.standalone === true;
+    return Boolean(displayMode || iosStandalone);
+  }
+
+  function initAddToHomeScreen(){
+    if(addHomeInitialized) return;
+    addHomeInitialized = true;
+
+    const btn = el('add-home-btn');
+    if(!btn) return;
+
+    if(isStandaloneMode()){
+      btn.classList.add('hidden');
+      return;
+    }
+
+    const showInstallButton = () => {
+      btn.classList.remove('hidden');
+      btn.style.display = 'inline-flex';
+    };
+
+    window.addEventListener('beforeinstallprompt', (event) => {
+      event.preventDefault();
+      deferredInstallPrompt = event;
+      showInstallButton();
+    });
+
+    window.addEventListener('appinstalled', () => {
+      deferredInstallPrompt = null;
+      btn.textContent = 'Installed';
+      setTimeout(() => {
+        btn.classList.add('hidden');
+      }, 1200);
+    });
+
+    btn.addEventListener('click', async () => {
+      if(deferredInstallPrompt){
+        deferredInstallPrompt.prompt();
+        try{ await deferredInstallPrompt.userChoice; }catch(_err){}
+        deferredInstallPrompt = null;
+        return;
+      }
+
+      const ua = navigator.userAgent || '';
+      const isIOS = /iPad|iPhone|iPod/.test(ua);
+      if(isIOS){
+        alert('On iPhone/iPad: tap Share and then "Add to Home Screen".');
+      } else {
+        alert('Use your browser menu and choose "Install app" or "Add to Home screen".');
+      }
+    });
+
+    // Keep button visible for manual fallback when prompt is unavailable.
+    showInstallButton();
   }
 
   // ── COUNTDOWN ──
