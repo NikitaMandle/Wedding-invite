@@ -19,6 +19,88 @@ const IST_OFFSET_MINUTES = 330;
 let twilioAuthValid = null;
 let twilioAuthError = '';
 
+const GALLERY_ITEMS = [
+  {
+    category: 'pre',
+    tileClass: 'gp1',
+    tileLabel: 'Pre-Wedding',
+    lightboxLabel: 'Pre-Wedding 1',
+    bg: '#3d0808',
+    size: 'lg',
+    tileImage: '/public/gallery/slide-1.png',
+    slides: [
+      { label: 'Pre-Wedding 1', bg: '#3d0808', imageUrl: '/public/gallery/slide-1.png' },
+      { label: 'Pre-Wedding 1 - Portrait', bg: '#5a0d12', imageUrl: '/public/gallery/slide-2.png' },
+      { label: 'Pre-Wedding 1 - Candid', bg: '#2c0508', imageUrl: '/public/gallery/slide-3.png' }
+    ]
+  },
+  {
+    category: 'pre',
+    tileClass: 'gp2',
+    tileLabel: 'Together',
+    lightboxLabel: 'Pre-Wedding 2',
+    bg: '#1a0303',
+    tileImage: '/public/gallery/slide-4.png',
+    slides: [
+      { label: 'Pre-Wedding 2', bg: '#1a0303', imageUrl: '/public/gallery/slide-4.png' },
+      { label: 'Together - Smile', bg: '#2c0606', imageUrl: '/public/gallery/slide-5.png' },
+      { label: 'Together - Walk', bg: '#3f0a0a', imageUrl: '/public/gallery/slide-6.png' }
+    ]
+  },
+  {
+    category: 'ev',
+    tileClass: 'gp3',
+    tileLabel: 'Engagement',
+    lightboxLabel: 'Engagement',
+    bg: '#3d2d0d',
+    tileImage: '/public/gallery/slide-7.png',
+    slides: [
+      { label: 'Engagement Ring', bg: '#3d2d0d', imageUrl: '/public/gallery/slide-7.png' },
+      { label: 'Engagement Stage', bg: '#5d4514', imageUrl: '/public/gallery/slide-8.png' },
+      { label: 'Engagement Family', bg: '#2e220a', imageUrl: '/public/gallery/slide-9.png' }
+    ]
+  },
+  {
+    category: 'pre',
+    tileClass: 'gp4',
+    tileLabel: 'Moments',
+    lightboxLabel: 'Pre-Wedding 3',
+    bg: '#0d1a3d',
+    tileImage: '/public/gallery/slide-10.png',
+    slides: [
+      { label: 'Pre-Wedding 3', bg: '#0d1a3d', imageUrl: '/public/gallery/slide-10.png' },
+      { label: 'Moments - Sunset', bg: '#162a63', imageUrl: '/public/gallery/slide-11.png' },
+      { label: 'Moments - Pose', bg: '#091229', imageUrl: '/public/gallery/slide-12.png' }
+    ]
+  },
+  {
+    category: 'ev',
+    tileClass: 'gp5',
+    tileLabel: 'Celebration',
+    lightboxLabel: 'Celebration',
+    bg: '#0d3d0d',
+    tileImage: '/public/gallery/slide-13.png',
+    slides: [
+      { label: 'Celebration Lights', bg: '#0d3d0d', imageUrl: '/public/gallery/slide-13.png' },
+      { label: 'Celebration Dance', bg: '#186418', imageUrl: '/public/gallery/slide-14.png' },
+      { label: 'Celebration Cheers', bg: '#0a2b0a', imageUrl: '/public/gallery/slide-15.png' }
+    ]
+  },
+  {
+    category: 'ev',
+    tileClass: 'gp6',
+    tileLabel: 'Joy',
+    lightboxLabel: 'Joy',
+    bg: '#2d0d3d',
+    tileImage: '/public/gallery/slide-16.png',
+    slides: [
+      { label: 'Joyful Moment', bg: '#2d0d3d', imageUrl: '/public/gallery/slide-16.png' },
+      { label: 'Joy - Friends', bg: '#4a1764', imageUrl: '/public/gallery/slide-17.png' },
+      { label: 'Joy - Finale', bg: '#220a2e', imageUrl: '/public/gallery/slide-18.png' }
+    ]
+  }
+];
+
 function normalizePhone(input, defaultCountryCode = '+91') {
   const raw = String(input || '').trim();
   if (!raw) return '';
@@ -27,6 +109,47 @@ function normalizePhone(input, defaultCountryCode = '+91') {
   if (!digits) return '';
   if (digits.length === 10) return `${defaultCountryCode}${digits}`;
   return `+${digits}`;
+}
+
+function extractLast10Digits(value) {
+  const normalized = normalizePhone(value || '');
+  const digits = String(normalized).replace(/\D+/g, '');
+  return digits.slice(-10);
+}
+
+async function hasGalleryAccess(db, phoneInput) {
+  const inputPhone = normalizePhone(phoneInput);
+  const inputLast10 = extractLast10Digits(inputPhone);
+  if (!inputLast10) return false;
+
+  const galleryAccessCollection = db.collection('gallery_access');
+
+  const exact = await galleryAccessCollection.findOne({
+    $or: [
+      { phone: inputPhone },
+      { phone: inputLast10 },
+      { mobile: inputPhone },
+      { mobile: inputLast10 },
+      { mobileNo: inputPhone },
+      { mobileNo: inputLast10 },
+      { number: inputPhone },
+      { number: inputLast10 },
+      { contact: inputPhone },
+      { contact: inputLast10 }
+    ]
+  });
+
+  if (exact) return true;
+
+  const rows = await galleryAccessCollection
+    .find({}, { projection: { _id: 0, phone: 1, mobile: 1, mobileNo: 1, number: 1, contact: 1 } })
+    .limit(5000)
+    .toArray();
+
+  return rows.some((row) => {
+    const candidates = [row.phone, row.mobile, row.mobileNo, row.number, row.contact];
+    return candidates.some((candidate) => extractLast10Digits(candidate) === inputLast10);
+  });
 }
 
 async function ensureTwilioReady() {
@@ -362,6 +485,47 @@ app.post('/api/wishes', async (req, res) => {
   } catch (err) {
     console.error('Wishes POST API error:', err.message);
     return res.status(500).json({ error: 'Unable to save wish' });
+  }
+});
+
+app.post('/api/gallery/verify', async (req, res) => {
+  setCors(res);
+  try {
+    const db = await getDb();
+    const body = req.body || {};
+
+    if (!extractLast10Digits(body.phone)) {
+      return res.status(400).json({ authorized: false, error: 'phone is required' });
+    }
+
+    const authorized = await hasGalleryAccess(db, body.phone);
+
+    return res.status(200).json({ authorized });
+  } catch (err) {
+    console.error('Gallery verify API error:', err.message);
+    return res.status(500).json({ authorized: false, error: 'Unable to verify access' });
+  }
+});
+
+app.post('/api/gallery/items', async (req, res) => {
+  setCors(res);
+  try {
+    const db = await getDb();
+    const body = req.body || {};
+
+    if (!extractLast10Digits(body.phone)) {
+      return res.status(400).json({ authorized: false, error: 'phone is required', items: [] });
+    }
+
+    const authorized = await hasGalleryAccess(db, body.phone);
+    if (!authorized) {
+      return res.status(200).json({ authorized: false, items: [] });
+    }
+
+    return res.status(200).json({ authorized: true, items: GALLERY_ITEMS });
+  } catch (err) {
+    console.error('Gallery items API error:', err.message);
+    return res.status(500).json({ authorized: false, error: 'Unable to load gallery', items: [] });
   }
 });
 

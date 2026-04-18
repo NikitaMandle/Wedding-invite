@@ -543,41 +543,25 @@
       <button class="gt" data-c="pre">Pre-Wedding</button>
       <button class="gt" data-c="ev">Events</button>
     </div>
-    <div class="g-grid reveal-child" id="gg">
-      <div class="gi gi-lg" data-c="pre" onclick="openLb(0)">
-        <div class="gp gp1">
-          <div class="gp-overlay"><span class="gp-label">Pre-Wedding</span><span class="gp-icon">🔍</span></div>
-        </div>
-      </div>
-      <div class="gi" data-c="pre" onclick="openLb(1)">
-        <div class="gp gp2">
-          <div class="gp-overlay"><span class="gp-label">Together</span><span class="gp-icon">🔍</span></div>
-        </div>
-      </div>
-      <div class="gi" data-c="ev" onclick="openLb(2)">
-        <div class="gp gp3">
-          <div class="gp-overlay"><span class="gp-label">Engagement</span><span class="gp-icon">🔍</span></div>
-        </div>
-      </div>
-      <div class="gi" data-c="pre" onclick="openLb(3)">
-        <div class="gp gp4">
-          <div class="gp-overlay"><span class="gp-label">Moments</span><span class="gp-icon">🔍</span></div>
-        </div>
-      </div>
-      <div class="gi" data-c="ev" onclick="openLb(4)">
-        <div class="gp gp5">
-          <div class="gp-overlay"><span class="gp-label">Celebration</span><span class="gp-icon">🔍</span></div>
-        </div>
-      </div>
-      <div class="gi" data-c="ev" onclick="openLb(5)">
-        <div class="gp gp6">
-          <div class="gp-overlay"><span class="gp-label">Joy</span><span class="gp-icon">🔍</span></div>
-        </div>
+    <div class="g-grid reveal-child" id="gg"></div>
+    <p class="g-note reveal-child" id="gallery-note">Verify your number to load gallery content.</p>
+    <div id="gallery-gate" class="gallery-gate hidden" aria-hidden="true">
+      <div class="gallery-gate-card">
+        <p class="gallery-gate-label">Private Access</p>
+        <h3 class="gallery-gate-title">Enter Mobile Number</h3>
+        <p class="gallery-gate-copy">Access Gallery by verifying your mobile number.</p>
+        <form class="gallery-gate-form" onsubmit="verifyGalleryAccess(event)">
+          <div class="gallery-gate-input-wrap">
+            <span>📱</span>
+            <input id="gallery-phone" type="tel" placeholder="Enter mobile number" autocomplete="tel" required/>
+          </div>
+          <button id="gallery-verify-btn" class="btn-p" type="submit">Unlock Gallery</button>
+          <p id="gallery-gate-msg" class="gallery-gate-msg"></p>
+        </form>
       </div>
     </div>
-    <p class="g-note reveal-child">📷 Photos coming soon — stay tuned!</p>
-    <!-- Lightbox -->
-    <div id="lb" class="lb hidden">
+
+    <div id="lb" class="lb hidden" aria-hidden="true">
       <div class="lb-bg" onclick="closeLb()"></div>
       <div class="lb-box">
         <button class="lb-x" onclick="closeLb()">✕</button>
@@ -585,7 +569,7 @@
         <p class="lb-caption" id="lb-caption"></p>
         <div class="lb-nav">
           <button class="lb-p" onclick="lbP()">‹</button>
-          <span class="lb-counter" id="lb-counter">1 / 6</span>
+          <span class="lb-counter" id="lb-counter">1 / 1</span>
           <button class="lb-n" onclick="lbN()">›</button>
         </div>
       </div>
