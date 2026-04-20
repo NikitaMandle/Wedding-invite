@@ -8,6 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Great+Vibes&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet"/>
+<link rel="manifest" href="/manifest.json"/>
+<meta name="theme-color" content="#0a0202"/>
 <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
@@ -655,6 +657,14 @@
         </a>
         <button class="ft-btn" onclick="doShare()"><span>📤</span> Share</button>
         <a class="ft-btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Nikhil+%26+Prachi+Wedding&dates=20260510T110000/20260510T235900&location=Sweta+Lawn,+Nigdi,+Pune" target="_blank"><span>📅</span> Calendar</a>
+        <button class="ft-btn ft-btn-install" id="add-home-btn" onclick="addToHome()" aria-label="Add this invite to home screen">
+          <span class="ft-install-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" role="img" focusable="false" aria-hidden="true">
+              <path d="M12 3 4 10h2v10h5v-6h2v6h5V10h2L12 3z"></path>
+            </svg>
+          </span>
+          <span id="add-home-label">Add to Home</span>
+        </button>
       </div>
       <p class="ft-credit">Made with ❤️ for Nikhil &amp; Prachi</p>
       <p class="ft-dev">made by Nikita Mandle &amp; Roshan Mandale</p>

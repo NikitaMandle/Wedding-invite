@@ -5,6 +5,40 @@ function el(id){ return document.getElementById(id); }
 function safe(fn){ try{ return fn(); }catch(e){ console.warn(e); } }
 
 document.addEventListener('DOMContentLoaded', function(){
+  let deferredInstallPrompt = null;
+
+  function updateInstallButtonState(isReady){
+    const btn = el('add-home-btn');
+    const label = el('add-home-label');
+    if(!btn || !label) return;
+
+    btn.classList.toggle('is-ready', !!isReady);
+    label.textContent = isReady ? 'Add to Home' : 'Install Guide';
+  }
+
+  window.addToHome = async function(){
+    if(deferredInstallPrompt){
+      deferredInstallPrompt.prompt();
+      try{ await deferredInstallPrompt.userChoice; }catch(_err){}
+      deferredInstallPrompt = null;
+      updateInstallButtonState(false);
+      return;
+    }
+
+    alert('Install prompt not ready. In Chrome: tap menu (three dots) and choose "Add to Home screen".');
+  };
+
+  window.addEventListener('beforeinstallprompt', (event)=>{
+    event.preventDefault();
+    deferredInstallPrompt = event;
+    updateInstallButtonState(true);
+  });
+
+  window.addEventListener('appinstalled', ()=>{
+    deferredInstallPrompt = null;
+    updateInstallButtonState(false);
+    alert('Invitation added to your home screen.');
+  });
 
   // ── CANVAS PARTICLES ──
   function mkCanvas(id,n,cols){
@@ -1302,6 +1336,10 @@ beach, sunset, travel… सगळं एकदम perfect 🌅✨
   }
 
   initLoader();
+
+  if('serviceWorker' in navigator){
+    navigator.serviceWorker.register('/sw.js').catch(()=>{});
+  }
 
 });
 
